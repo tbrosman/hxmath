@@ -1,0 +1,12 @@
+{
+  "name": "vtg-math",
+  "url": "",
+  "license": "MIT",
+  "tags": ["math"],
+  "description": "A math library for Haxe.",
+  "version": "0.1.0",
+  "releasenote": "",
+  "contributors": ["tbrosman"],
+  "dependencies": {
+  }
+}
