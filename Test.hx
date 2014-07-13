@@ -3,6 +3,21 @@ import vtgmath.Quaternion;
 import vtgmath.Vector2;
 import vtgmath.Vector3;
 
+class MyVector2
+{
+    public var x:Float;
+    public var y:Float;
+    
+    public function new()
+    {
+        
+    }
+}
+
+abstract MyVector2Abstract(MyVector2) from MyVector2 to MyVector2
+{
+}
+
 class Test {
     static function main() {
         var p = new Vector2(1.0, 2.0);
@@ -28,6 +43,11 @@ class Test {
         trace(Matrix3x2.transform(m, v));
         
         trace(q * p);
+        
+        var myVec = new MyVector2();
+        var vec2:Vector2 = myVec;
+        trace(vec2);
+        
         
         #if sys
         Sys.stdin().readLine();

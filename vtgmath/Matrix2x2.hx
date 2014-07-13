@@ -20,6 +20,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             c: c, d: d };
     }
     
+    public static inline function identity():Matrix2x2
+    {
+        return new Matrix2x2(
+            1.0, 0.0,
+            0.0, 1.0);
+    }
+    
     public static inline function rotation(angle:Float):Matrix2x2
     {
         var s = Math.sin(angle);

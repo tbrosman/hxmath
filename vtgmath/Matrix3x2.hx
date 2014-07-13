@@ -13,9 +13,16 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0, tx:Float = 0.0, ty:Float = 0.0) 
     {
         this = {
-            a: a,   b: b,
-            c: c,   d: d,
-            tx: tx, ty: ty };
+            a: a, b: b, tx: tx, 
+            c: c, d: d, ty: ty };
+    }
+    
+    public static inline function identity():Matrix3x2
+    {
+        return new Matrix3x2(
+            1.0, 0.0,
+            0.0, 1.0,
+            0.0, 0.0);
     }
     
     // Treat as homogenous matrix multiplication, i.e. there is an implicit 3rd row [0, 0, 1] in both matrices
