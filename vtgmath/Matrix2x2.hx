@@ -12,9 +12,26 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     public var row2(get, set):Vector2;
     */
     
-    public function new(m11:Float = 1.0, m12:Float = 0.0, m21:Float = 0.0, m22:Float = 1.0) 
+    // Note: parameters are in row-major order for syntactic niceness
+    public function new(m11:Float = 1.0, m21:Float = 0.0, m12:Float = 0.0, m22:Float = 1.0) 
     {
         this = { a: m11, b: m21, c: m12, d: m22 };
+    }
+    
+    public static inline function rotation(angle:Float):Matrix2x2
+    {
+        var s = Math.sin(angle);
+        var c = Math.cos(angle);
+        return new Matrix2x2(
+             c, -s,
+             s,  c);
+    }
+    
+    public static inline function scale(sx:Float, sy:Float):Matrix2x2
+    {
+        return new Matrix2x2(
+            sx, 0.0,
+            0.0, sy);
     }
     
     // TODO
@@ -27,10 +44,10 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     public static inline function multiply(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
         return new Matrix2x2(
-            m.a * n.a + m.b * n.c,
-            m.a * n.b + m.b * n.d,
-            m.c * n.a + m.d * n.c,
-            m.c * n.b + m.d * n.d);
+            m.a * n.a + m.b * n.c,  // p11 = mi1 * n1i
+            m.a * n.b + m.b * n.d,  // p21 = mi1 * n2i
+            m.c * n.a + m.d * n.c,  // p12 = mi2 * n1i
+            m.c * n.b + m.d * n.d); // p22 = mi2 * n2i
     }
     
     @:op(A * B)

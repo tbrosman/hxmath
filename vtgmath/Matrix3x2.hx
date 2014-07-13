@@ -28,13 +28,14 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     public var t(get, set):Vector2;
     public var linearSubMatrix(get, never):Matrix2x2;
     
-    public function new(m11:Float = 1.0, m12:Float = 0.0, m21:Float = 0.0, m22:Float = 1.0, m31:Float = 0.0, m32:Float = 0.0) 
+    // Linear portion is row-major, affine portion is column-major
+    public function new(m11:Float = 1.0, m21:Float = 0.0, m12:Float = 0.0, m22:Float = 1.0, m31:Float = 0.0, m32:Float = 0.0) 
     {
         this = { a: m11, b: m21, c: m12, d: m22, tx: m31, ty: m32 };
     }
     
     // Treat as homogenous matrix multiplication, i.e. there is an implicit 3rd row [0, 0, 1] in both matrices
-    @:operator(A * B)
+    @:op(A * B)
     public static inline function concat(m:Matrix3x2, n:Matrix3x2):Matrix3x2
     {
         // TODO: speed this up if it becomes an issue
@@ -50,7 +51,7 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     }
     
     // Treat both arguments as homogenous objects
-    @:operator(A * B)
+    @:op(A * B)
     public static inline function transform(m:Matrix3x2, v:Vector2):Vector2
     {
         return m.linearSubMatrix * v + m.t;
