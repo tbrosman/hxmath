@@ -13,9 +13,11 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     */
     
     // Note: parameters are in row-major order for syntactic niceness
-    public function new(m11:Float = 1.0, m21:Float = 0.0, m12:Float = 0.0, m22:Float = 1.0) 
+    public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0) 
     {
-        this = { a: m11, b: m21, c: m12, d: m22 };
+        this = {
+            a: a, b: b,
+            c: c, d: d };
     }
     
     public static inline function rotation(angle:Float):Matrix2x2

@@ -1,12 +1,6 @@
 package vtgmath;
 import vtgmath.Vector2.PolarVectorShape;
 
-typedef Vector2Shape =
-{
-    public var x:Float;
-    public var y:Float;
-};
-
 typedef PolarVectorShape =
 {
     public var angle:Float;

@@ -1,12 +1,5 @@
 package vtgmath;
 
-typedef Vector3Shape =
-{
-    public var x:Float;
-    public var y:Float;
-    public var z:Float;
-};
-
 @:forward(x, y, z)
 abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
 {

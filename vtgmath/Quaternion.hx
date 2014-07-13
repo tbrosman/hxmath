@@ -1,12 +1,6 @@
 package vtgmath;
 import vtgmath.Vector3.Vector3Shape;
 
-typedef QuaternionShape =
-{
-    public var s:Float;
-    public var v:Vector3;
-}
-
 @:forward(s, v)
 abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
 {

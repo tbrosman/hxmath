@@ -1,37 +1,21 @@
 package vtgmath;
 
-
-typedef Matrix3x2Shape = 
-{
-    // m11
-    public var a:Float;
-    
-    // m21
-    public var b:Float;
-    
-    // m12
-    public var c:Float;
-    
-    // m22
-    public var d:Float;
-    
-    // m31
-    public var tx:Float;
-    
-    // m32
-    public var ty:Float;
-}
-
 @:forward(a, b, c, d, tx, ty)
 abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
 {
+    // Translation column vector
     public var t(get, set):Vector2;
+    
+    // 2x2 sub-matrix corresponding to the linear portion of the transformation
     public var linearSubMatrix(get, never):Matrix2x2;
     
     // Linear portion is row-major, affine portion is column-major
-    public function new(m11:Float = 1.0, m21:Float = 0.0, m12:Float = 0.0, m22:Float = 1.0, m31:Float = 0.0, m32:Float = 0.0) 
+    public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0, tx:Float = 0.0, ty:Float = 0.0) 
     {
-        this = { a: m11, b: m21, c: m12, d: m22, tx: m31, ty: m32 };
+        this = {
+            a: a,   b: b,
+            c: c,   d: d,
+            tx: tx, ty: ty };
     }
     
     // Treat as homogenous matrix multiplication, i.e. there is an implicit 3rd row [0, 0, 1] in both matrices
