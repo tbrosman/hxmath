@@ -3,7 +3,7 @@ package vtgmath;
 typedef Vector3Shape =
 {
     public var x:Float;
-	public var y:Float;
+    public var y:Float;
     public var z:Float;
 };
 
@@ -21,18 +21,18 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     {
         this = {x: x, y: y, z: z};
     }
-	
-	@:op(A + B)
-	public static inline function add(a:Vector3, b:Vector3):Vector3
-	{
-		return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
-	}
-	
-	@:op(A * B)
-	public static inline function dot(a:Vector3, b:Vector3):Float
-	{
-		return a.x * b.x + a.y * b.y + a.z * b.z;
-	}
+    
+    @:op(A + B)
+    public static inline function add(a:Vector3, b:Vector3):Vector3
+    {
+        return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
+    }
+    
+    @:op(A * B)
+    public static inline function dot(a:Vector3, b:Vector3):Float
+    {
+        return a.x * b.x + a.y * b.y + a.z * b.z;
+    }
     
     @:op(A ^ B)
     public static inline function cross(a:Vector3, b:Vector3):Vector3
@@ -42,23 +42,23 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             a.z * b.x - a.x * b.z,
             a.x * b.y - a.y * b.x);
     }
-	
-	@:op(A * B)
-	public static inline function scalarMultiply(s:Float, a:Vector3):Vector3
-	{
-		return new Vector3(s * a.x, s * a.y, s * a.z);
-	}
-	
-	public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3
-	{
-		return t*a + (1.0 - t)*b;
-	}
-	
-	public inline function clone():Vector3
-	{
-		var self:Vector3 = this;
-		return new Vector3(self.x, self.y, self.z);
-	}
+    
+    @:op(A * B)
+    public static inline function scalarMultiply(s:Float, a:Vector3):Vector3
+    {
+        return new Vector3(s * a.x, s * a.y, s * a.z);
+    }
+    
+    public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3
+    {
+        return t*a + (1.0 - t)*b;
+    }
+    
+    public inline function clone():Vector3
+    {
+        var self:Vector3 = this;
+        return new Vector3(self.x, self.y, self.z);
+    }
     
     private inline function get_length():Float
     {
