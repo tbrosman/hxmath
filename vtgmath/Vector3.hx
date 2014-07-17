@@ -18,13 +18,28 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     @:op(A + B)
     public static inline function add(a:Vector3, b:Vector3):Vector3
     {
-        return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
+        return new Vector3(
+            a.x + b.x,
+            a.y + b.y,
+            a.z + b.z);
+    }
+    
+    @:op(A - B)
+    public static inline function subtract(a:Vector3, b:Vector3):Vector3
+    {
+        return new Vector3(
+            a.x - b.x,
+            a.y - b.y,
+            a.z - b.z);
     }
     
     @:op(A * B)
     public static inline function dot(a:Vector3, b:Vector3):Float
     {
-        return a.x * b.x + a.y * b.y + a.z * b.z;
+        return
+            a.x * b.x +
+            a.y * b.y +
+            a.z * b.z;
     }
     
     @:op(A ^ B)
@@ -39,7 +54,10 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     @:op(A * B)
     public static inline function scalarMultiply(s:Float, a:Vector3):Vector3
     {
-        return new Vector3(s * a.x, s * a.y, s * a.z);
+        return new Vector3(
+            s * a.x,
+            s * a.y,
+            s * a.z);
     }
     
     public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3

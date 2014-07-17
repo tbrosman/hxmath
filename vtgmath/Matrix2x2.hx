@@ -53,14 +53,14 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     public static inline function multiply(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
         return new Matrix2x2(
-            m.a * n.a + m.b * n.c,  // p11 = mi1 * n1i
-            m.a * n.b + m.b * n.d,  // p21 = mi1 * n2i
-            m.c * n.a + m.d * n.c,  // p12 = mi2 * n1i
-            m.c * n.b + m.d * n.d); // p22 = mi2 * n2i
+            m.a * n.a + m.b * n.c,  // p_11 = m_i1 * n_1i
+            m.a * n.b + m.b * n.d,  // p_21 = m_i1 * n_2i
+            m.c * n.a + m.d * n.c,  // p_12 = m_i2 * n_1i
+            m.c * n.b + m.d * n.d); // p_22 = m_i2 * n_2i
     }
     
     @:op(A * B)
-    public static inline function multiplyVector2(m:Matrix2x2, v:Vector2):Vector2
+    public static inline function multiplyVector(m:Matrix2x2, v:Vector2):Vector2
     {
         return new Vector2(
             m.a * v.x + m.b * v.y,

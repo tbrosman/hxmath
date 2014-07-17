@@ -24,19 +24,33 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     @:op(A + B)
     public static inline function add(a:Vector2, b:Vector2):Vector2
     {
-        return new Vector2(a.x + b.x, a.y + b.y);
+        return new Vector2(
+            a.x + b.x,
+            a.y + b.y);
+    }
+    
+    @:op(A - B)
+    public static inline function subtract(a:Vector2, b:Vector2):Vector2
+    {
+        return new Vector2(
+            a.x - b.x,
+            a.y - b.y);
     }
     
     @:op(A * B)
     public static inline function dot(a:Vector2, b:Vector2):Float
     {
-        return a.x * b.x + a.y * b.y;
+        return
+            a.x * b.x +
+            a.y * b.y;
     }
     
     @:op(A * B)
     public static inline function scalarMultiply(s:Float, a:Vector2):Vector2
     {
-        return new Vector2(s * a.x, s * a.y);
+        return new Vector2(
+            s * a.x,
+            s * a.y);
     }
     
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
@@ -64,13 +78,17 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     private inline function get_length():Float
     {
         var self:Vector2 = this;
-        return Math.sqrt(self.x * self.x + self.y * self.y);
+        return Math.sqrt(
+            self.x * self.x +
+            self.y * self.y);
     }
     
     private inline function get_lengthSq():Float
     {
         var self:Vector2 = this;
-        return self.x * self.x + self.y * self.y;
+        return
+            self.x * self.x +
+            self.y * self.y;
     }
     
     private static inline function get_xAxis():Vector2
