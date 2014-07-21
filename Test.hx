@@ -1,3 +1,4 @@
+import test.TestMain;
 import vtgmath.Matrix3x2;
 import vtgmath.Quaternion;
 import vtgmath.Vector2;
@@ -20,6 +21,14 @@ abstract MyVector2Abstract(MyVector2) from MyVector2 to MyVector2
 
 class Test {
     static function main() {
+        
+        TestMain.main();
+        
+        #if sys
+        Sys.stdin().readLine();
+        #end
+        return;
+        
         var p = new Vector2(1.0, 2.0);
         var q = new Vector2(1.0, 4.0);
         trace(Vector2.dot(p, q));

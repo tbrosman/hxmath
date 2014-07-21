@@ -12,6 +12,7 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
 {
     public static var xAxis(get, never):Vector2;
     public static var yAxis(get, never):Vector2;
+    public static var zero(get, never):Vector2;
     
     public var length(get, never):Float;
     public var lengthSq(get, never):Float;
@@ -29,12 +30,28 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             a.y + b.y);
     }
     
+    @:op(A += B)
+    public static inline function addWith(a:Vector2, b:Vector2):Vector2
+    {
+        a.x += b.x;
+        a.y += b.y;
+        return a;
+    }
+    
     @:op(A - B)
     public static inline function subtract(a:Vector2, b:Vector2):Vector2
     {
         return new Vector2(
             a.x - b.x,
             a.y - b.y);
+    }
+    
+    @:op(A - B)
+    public static inline function subtractWith(a:Vector2, b:Vector2):Vector2
+    {
+        a.x -= b.x;
+        a.y -= b.y;
+        return a;
     }
     
     @:op(A * B)
@@ -46,11 +63,17 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     }
     
     @:op(A * B)
-    public static inline function scalarMultiply(s:Float, a:Vector2):Vector2
+    public static inline function multiplyScalar(s:Float, a:Vector2):Vector2
     {
         return new Vector2(
             s * a.x,
             s * a.y);
+    }
+    
+    @:op(A == B)
+    public static inline function equals(a:Vector2, b:Vector2):Bool
+    {
+        return a.x == b.x && a.y == b.y;
     }
     
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
@@ -99,6 +122,11 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     private static inline function get_yAxis():Vector2
     {
         return new Vector2(0.0, 1.0);
+    }
+    
+    private static inline function get_zero():Vector2
+    {
+        return new Vector2(0.0, 0.0);
     }
 }
 
