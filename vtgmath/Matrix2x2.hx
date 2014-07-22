@@ -16,7 +16,7 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             a: a, b: b,
             c: c, d: d };
     }
-    
+
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, m:Matrix2x2):Matrix2x2
     {
@@ -41,15 +41,6 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             m.a * n.b + m.b * n.d,  // p_10 = m_i0 * n_1i
             m.c * n.a + m.d * n.c,  // p_01 = m_i1 * n_0i
             m.c * n.b + m.d * n.d); // p_11 = m_i1 * n_1i
-    }
-    
-    @:op(A == B)
-    public static inline function equals(m:Matrix2x2, n:Matrix2x2):Bool
-    {
-        return m.a == n.a &&
-            m.b == n.b &&
-            m.c == n.c &&
-            m.d == n.d;
     }
     
     @:op(A + B)
@@ -88,6 +79,16 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return m;
     }
     
+    @:op(A == B)
+    public static inline function equals(m:Matrix2x2, n:Matrix2x2):Bool
+    {
+        return
+            m.a == n.a &&
+            m.b == n.b &&
+            m.c == n.c &&
+            m.d == n.d;
+    }
+    
     public static inline function rotation(angle:Float):Matrix2x2
     {
         var s = Math.sin(angle);
@@ -102,6 +103,15 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return new Matrix2x2(
             sx, 0.0,
             0.0, sy);
+    }
+    
+    public inline function clone():Matrix2x2
+    {
+        var self:Matrix2x2 = this;
+        return new Matrix2x2(
+            self.a, self.b,
+            self.c, self.d
+        );
     }
     
     public inline function element(column:Int, row:Int):Float

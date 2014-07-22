@@ -15,24 +15,6 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         this = {x: x, y: y, z: z};
     }
     
-    @:op(A + B)
-    public static inline function add(a:Vector3, b:Vector3):Vector3
-    {
-        return new Vector3(
-            a.x + b.x,
-            a.y + b.y,
-            a.z + b.z);
-    }
-    
-    @:op(A - B)
-    public static inline function subtract(a:Vector3, b:Vector3):Vector3
-    {
-        return new Vector3(
-            a.x - b.x,
-            a.y - b.y,
-            a.z - b.z);
-    }
-    
     @:op(A * B)
     public static inline function dot(a:Vector3, b:Vector3):Float
     {
@@ -58,6 +40,48 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             s * a.x,
             s * a.y,
             s * a.z);
+    }
+    
+    @:op(A + B)
+    public static inline function add(a:Vector3, b:Vector3):Vector3
+    {
+        return new Vector3(
+            a.x + b.x,
+            a.y + b.y,
+            a.z + b.z);
+    }
+    
+    @:op(A += B)
+    public static inline function addWith(a:Vector3, b:Vector3):Vector3
+    {
+        a.x += b.x;
+        a.y += b.y;
+        a.z += b.z;
+        return a;
+    }
+    
+    @:op(A - B)
+    public static inline function subtract(a:Vector3, b:Vector3):Vector3
+    {
+        return new Vector3(
+            a.x - b.x,
+            a.y - b.y,
+            a.z - b.z);
+    }
+    
+    @:op(A -= B)
+    public static inline function subtractWith(a:Vector3, b:Vector3):Vector3
+    {
+        a.x -= b.x;
+        a.y -= b.y;
+        a.z -= b.z;
+        return a;
+    }
+    
+    @:op(A == B)
+    public static inline function equals(a:Vector3, b:Vector3):Bool
+    {
+        return a.x == b.x && a.y == b.y && a.z == b.z;
     }
     
     public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3

@@ -52,17 +52,6 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
             resultAffine.x, resultAffine.y);
     }
     
-    @:op(A == B)
-    public static inline function equals(m:Matrix3x2, n:Matrix3x2):Bool
-    {
-        return m.a == n.a &&
-            m.b == n.b &&
-            m.c == n.c &&
-            m.d == n.d &&
-            m.tx == n.tx &&
-            m.ty == n.ty;
-    }
-    
     @:op(A + B)
     public static inline function add(m:Matrix3x2, n:Matrix3x2):Matrix3x2
     {
@@ -104,7 +93,28 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
         m.ty -= n.ty;
         return m;
     }
-   
+       
+    @:op(A == B)
+    public static inline function equals(m:Matrix3x2, n:Matrix3x2):Bool
+    {
+        return
+            m.a == n.a &&
+            m.b == n.b &&
+            m.c == n.c &&
+            m.d == n.d &&
+            m.tx == n.tx &&
+            m.ty == n.ty;
+    }
+    
+    public inline function clone():Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        return new Matrix3x2(
+            self.a, self.b, self.tx,
+            self.c, self.d, self.ty
+        );
+    }
+    
     public inline function element(column:Int, row:Int):Float
     {
         var self:Matrix3x2 = this;

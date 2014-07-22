@@ -1,11 +1,10 @@
 package test;
 
-import nanotest.NanoTestCase;
 import vtgmath.Matrix2x2;
 import vtgmath.Matrix3x2;
 import vtgmath.Vector2;
 
-class Test2D extends NanoTestCase
+class Test2D extends MathTestCase
 {
     public function testVector2BasicOps()
     {

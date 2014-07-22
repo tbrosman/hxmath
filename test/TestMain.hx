@@ -11,6 +11,7 @@ class TestMain
     {
         var runner = new NanoTestRunner();
         runner.add(new Test2D());
+        runner.add(new Test3D());
         runner.run();
     }
 }

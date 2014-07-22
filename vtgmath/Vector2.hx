@@ -75,7 +75,7 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     {
         return a.x == b.x && a.y == b.y;
     }
-    
+
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
     {
         return t*a + (1.0 - t)*b;
