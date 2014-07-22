@@ -1,4 +1,4 @@
-package vtgmath;
+package hxmath;
 
 @:forward(a, b, c, d, tx, ty)
 abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape

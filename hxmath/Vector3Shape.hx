@@ -1,9 +1,8 @@
-package vtgmath;
+package hxmath;
 
-typedef Vector4Shape =
+typedef Vector3Shape =
 {
     public var x:Float;
     public var y:Float;
     public var z:Float;
-    public var w:Float;
 }

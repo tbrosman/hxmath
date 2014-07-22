@@ -1,8 +1,8 @@
 {
-  "name": "vtg-math",
+  "name": "hxmath",
   "url": "",
   "license": "MIT",
-  "tags": ["math"],
+  "tags": ["math", "cross"],
   "description": "A math library for Haxe.",
   "version": "0.1.0",
   "releasenote": "",

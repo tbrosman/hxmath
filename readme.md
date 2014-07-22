@@ -1,4 +1,4 @@
-# VTG Math
+# HxMath
 
 ## What it is
 
@@ -11,6 +11,22 @@ This project is in very early concept stages. That said, most of the structures 
 ## Features
 
 * Lightweight and unencumbered: just math, nothing else. Use with your libraries of choice without including ten tons of redundant infrastructure (memory management, etc).
+
+* Operator overloads!
+
+Why write this:
+
+```
+    a.subtract(b).dot(c.cross(d))
+```
+
+when you can write this:
+
+```
+    (a - b) * (c ^ d)
+```
+
+('^' chosen due to the correspondence between the Hodge dual for 2-blades in 3-space and the cross product)
 
 * Shape-compatible with (most of) the existing OpenFL math structures. This means no more copying/constructing new types to perform math operations.
 
@@ -35,4 +51,4 @@ In the case of the OpenFL Point, an intermediate variable isn't even required du
  * Useful for tilemaps, voxel intersection, etc.
 * Geometry
  * Polygon intersection (no collision processing, just the intersection portion), volume calculations, etc
-* Test case coverage
+* More test coverage

@@ -1,5 +1,5 @@
-package vtgmath;
-import vtgmath.Vector3Shape;
+package hxmath;
+import hxmath.Vector3Shape;
 
 @:forward(s, v)
 abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape

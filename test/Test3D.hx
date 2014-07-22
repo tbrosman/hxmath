@@ -1,6 +1,6 @@
 package test;
 
-import vtgmath.Matrix3x3;
+import hxmath.Matrix3x3;
 
 class Test3D extends MathTestCase
 {

@@ -1,8 +1,8 @@
 package test;
 
-import vtgmath.Matrix2x2;
-import vtgmath.Matrix3x2;
-import vtgmath.Vector2;
+import hxmath.Matrix2x2;
+import hxmath.Matrix3x2;
+import hxmath.Vector2;
 
 class Test2D extends MathTestCase
 {

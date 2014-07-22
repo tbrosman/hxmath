@@ -1,8 +1,8 @@
 import test.TestMain;
-import vtgmath.Matrix3x2;
-import vtgmath.Quaternion;
-import vtgmath.Vector2;
-import vtgmath.Vector3;
+import hxmath.Matrix3x2;
+import hxmath.Quaternion;
+import hxmath.Vector2;
+import hxmath.Vector3;
 
 class MyVector2
 {

@@ -1,4 +1,4 @@
-package vtgmath;
+package hxmath;
 
 @:forward(
     m00, m01, m02, m03,

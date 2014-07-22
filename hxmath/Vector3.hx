@@ -1,4 +1,4 @@
-package vtgmath;
+package hxmath;
 
 @:forward(x, y, z)
 abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape

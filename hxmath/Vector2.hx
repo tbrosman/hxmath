@@ -1,5 +1,5 @@
-package vtgmath;
-import vtgmath.Vector2.PolarVectorShape;
+package hxmath;
+import hxmath.Vector2.PolarVectorShape;
 
 typedef PolarVectorShape =
 {
