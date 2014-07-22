@@ -1,17 +1,17 @@
 package vtgmath;
 
-// Note: All notation is column-major, e.g. m21 is the top element of the 2nd column
+// Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix2x2Shape = 
 {
-    // m11
+    // m00
     public var a:Float;
     
-    // m21
+    // m10
     public var b:Float;
     
-    // m12
+    // m01
     public var c:Float;
     
-    // m22
+    // m11
     public var d:Float;
 }

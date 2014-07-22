@@ -2,21 +2,21 @@ package vtgmath;
 
 typedef Matrix3x2Shape = 
 {
-    // m11
+    // m00
     public var a:Float;
     
-    // m21
+    // m10
     public var b:Float;
     
-    // m12
+    // m01
     public var c:Float;
     
-    // m22
+    // m11
     public var d:Float;
     
-    // m31
+    // m20
     public var tx:Float;
     
-    // m32
+    // m21
     public var ty:Float;
 }
