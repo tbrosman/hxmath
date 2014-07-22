@@ -4,6 +4,17 @@ import hxmath.Matrix2x2;
 import hxmath.Matrix3x2;
 import hxmath.Vector2;
 
+class MyVector2
+{
+    public var x:Float;
+    public var y:Float;
+    
+    public function new()
+    {
+        
+    }
+}
+
 class Test2D extends MathTestCase
 {
     public function testVector2BasicOps()
