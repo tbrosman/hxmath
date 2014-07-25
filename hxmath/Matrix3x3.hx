@@ -136,6 +136,12 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             a.m22 == b.m22;
     }
     
+    @:op(A != B)
+    public static inline function notEquals(a:Matrix3x3, b:Matrix3x3):Bool
+    {
+        return !(a == b);
+    }
+    
     public inline function clone():Matrix3x3
     {
         var self:Matrix3x3 = this;
@@ -146,7 +152,7 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         ]);
     }
     
-    private static inline function get_zero()
+    private static inline function get_zero():Matrix3x3
     {
         return new Matrix3x3([
             0.0, 0.0, 0.0,
@@ -154,7 +160,7 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             0.0, 0.0, 0.0]);
     }
     
-    private static inline function get_identity()
+    private static inline function get_identity():Matrix3x3
     {
         return new Matrix3x3([
             1.0, 0.0, 0.0,
@@ -162,7 +168,7 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             0.0, 0.0, 1.0]);
     }
     
-    private inline function get_det()
+    private inline function get_det():Float
     {
         var self:Matrix3x3 = this;
         return
@@ -171,7 +177,7 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             self.m20 * (self.m01 * self.m12 - self.m11 * self.m02);
     }
     
-    private inline function get_transpose()
+    private inline function get_transpose():Matrix3x3
     {
         var self:Matrix3x3 = this;
         return new Matrix3x3([

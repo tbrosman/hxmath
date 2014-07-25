@@ -60,4 +60,15 @@ class Test2D extends MathTestCase
         
         assertTrue(m.element(0, 0) == m.element(1, 1));
     }
+    
+    public function testEquals()
+    {
+        assertTrue(Matrix2x2.identity == Matrix2x2.identity);
+        assertTrue(Matrix2x2.identity != Matrix2x2.zero);
+        assertTrue(Matrix3x2.identity == Matrix3x2.identity);
+        assertTrue(Matrix3x2.identity != Matrix3x2.zero);
+        
+        assertTrue(Vector2.yAxis == Vector2.yAxis);
+        assertTrue(Vector2.yAxis != Vector2.xAxis);
+    }
 }

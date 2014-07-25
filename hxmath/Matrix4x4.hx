@@ -5,18 +5,21 @@ package hxmath;
     m10, m11, m12, m13,
     m20, m21, m22, m23,
     m30, m31, m32, m33)
-abstract Matrix4x4
+abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
 {
+    public static var zero(get, never):Matrix4x4;
+    public static var identity(get, never):Matrix4x4;
+    
     // Row-major rawData
     public function new(rawData:Array<Float> = null) 
     {
         if (rawData == null)
         {
-            this = identity();
+            this = Matrix4x4.identity;
         }
         else
         {
-            if (rawData.length != 9)
+            if (rawData.length != 16)
             {
                 throw "Invalid rawData.";
             }
@@ -29,21 +32,11 @@ abstract Matrix4x4
             };
         }
     }
-    
-    public static inline function identity():Matrix3x3
+
+    @:op(A * B)
+    public static inline function multiply(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
         return new Matrix4x4([
-            1.0, 0.0, 0.0, 0.0,
-            0.0, 1.0, 0.0, 0.0,
-            0.0, 0.0, 1.0, 0.0,
-            0.0, 0.0, 0.0, 1.0
-        ]);
-    }
-    
-    @:op(A * B)
-    public static inline function multiply(p:Matrix3x3, q:Matrix3x3):Matrix3x3
-    {
-        return new Matrix3x3([
             a.m00 * b.m00 + a.m10 * b.m01 + a.m20 * b.m02 + a.m30 * b.m03, // p_00 = a_i0 * b_0i
             a.m00 * b.m10 + a.m10 * b.m11 + a.m20 * b.m12 + a.m30 * b.m13, // p_10 = a_i0 * b_1i
             a.m00 * b.m20 + a.m10 * b.m21 + a.m20 * b.m22 + a.m30 * b.m23, // p_20 = a_i0 * b_2i
@@ -74,5 +67,51 @@ abstract Matrix4x4
             a.m01 * v.x + a.m11 * v.y + a.m21 * v.z + a.m31 * v.w,
             a.m02 * v.x + a.m12 * v.y + a.m22 * v.z + a.m32 * v.w,
             a.m03 * v.x + a.m13 * v.y + a.m23 * v.z + a.m33 * v.w);
+    }
+    
+    @:op(A == B)
+    public static inline function equals(a:Matrix4x4, b:Matrix4x4):Bool
+    {
+        return
+            a.m00 == b.m00 &&
+            a.m10 == b.m10 &&
+            a.m20 == b.m20 &&
+            a.m30 == b.m30 &&
+            a.m01 == b.m01 &&
+            a.m11 == b.m11 &&
+            a.m21 == b.m21 &&
+            a.m31 == b.m31 &&
+            a.m02 == b.m02 &&
+            a.m12 == b.m12 &&
+            a.m22 == b.m22 &&
+            a.m32 == b.m32 &&
+            a.m03 == b.m03 &&
+            a.m13 == b.m13 &&
+            a.m23 == b.m23 &&
+            a.m33 == b.m33;
+    }
+    
+    @:op(A != B)
+    public static inline function notEquals(a:Matrix4x4, b:Matrix4x4):Bool
+    {
+        return !(a == b);
+    }
+    
+    private static inline function get_zero():Matrix4x4
+    {
+        return new Matrix4x4([
+            0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 0.0]);
+    }
+    
+    private static inline function get_identity():Matrix4x4
+    {
+        return new Matrix4x4([
+            1.0, 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0]);
     }
 }

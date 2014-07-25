@@ -3,6 +3,7 @@ package hxmath;
 @:forward(x, y, z, w)
 abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
 {
+    public static var zero(get, never):Vector4;
     public static var xAxis(get, never):Vector4;
     public static var yAxis(get, never):Vector4;
     public static var zAxis(get, never):Vector4;
@@ -49,11 +50,27 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     @:op(A * B)
     public static inline function scalarMultiply(s:Float, a:Vector4):Vector4
     {
-        return new Vector3(
+        return new Vector4(
             s * a.x,
             s * a.y,
             s * a.z,
             s * a.w);
+    }
+    
+    @:op(A == B)
+    public static inline function equals(a:Vector4, b:Vector4):Bool
+    {
+        return
+            a.x == b.x &&
+            a.y == b.y &&
+            a.z == b.z &&
+            a.w == b.w;
+    }
+    
+    @:op(A != B)
+    public static inline function notEquals(a:Vector4, b:Vector4):Bool
+    {
+        return !(a == b);
     }
     
     public static inline function lerp(a:Vector4, b:Vector4, t:Float):Vector4
@@ -85,6 +102,11 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
             self.y * self.y +
             self.z * self.z +
             self.w * self.w;
+    }
+    
+    private static inline function get_zero():Vector4
+    {
+        return new Vector4(0.0, 0.0, 0.0, 0.0);
     }
     
     private static inline function get_xAxis():Vector4

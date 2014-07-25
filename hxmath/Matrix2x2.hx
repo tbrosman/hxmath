@@ -89,6 +89,12 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             m.d == n.d;
     }
     
+    @:op(A != B)
+    public static inline function notEquals(m:Matrix2x2, n:Matrix2x2):Bool
+    {
+        return !(m == n);
+    }
+    
     public static inline function rotation(angle:Float):Matrix2x2
     {
         var s = Math.sin(angle);

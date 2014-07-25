@@ -10,9 +10,9 @@ typedef PolarVectorShape =
 @:forward(x, y)
 abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
 {
+    public static var zero(get, never):Vector2;
     public static var xAxis(get, never):Vector2;
     public static var yAxis(get, never):Vector2;
-    public static var zero(get, never):Vector2;
     
     public var length(get, never):Float;
     public var lengthSq(get, never):Float;
@@ -114,6 +114,11 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             self.y * self.y;
     }
     
+    private static inline function get_zero():Vector2
+    {
+        return new Vector2(0.0, 0.0);
+    }
+    
     private static inline function get_xAxis():Vector2
     {
         return new Vector2(1.0, 0.0);
@@ -122,11 +127,6 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     private static inline function get_yAxis():Vector2
     {
         return new Vector2(0.0, 1.0);
-    }
-    
-    private static inline function get_zero():Vector2
-    {
-        return new Vector2(0.0, 0.0);
     }
 }
 

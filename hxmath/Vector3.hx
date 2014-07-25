@@ -3,6 +3,7 @@ package hxmath;
 @:forward(x, y, z)
 abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
 {
+    public static var zero(get, never):Vector3;
     public static var xAxis(get, never):Vector3;
     public static var yAxis(get, never):Vector3;
     public static var zAxis(get, never):Vector3;
@@ -105,6 +106,11 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     {
         var self:Vector3 = this;
         return self.x * self.x + self.y * self.y + self.z * self.z;
+    }
+    
+    private static inline function get_zero():Vector3
+    {
+        return new Vector3(0.0, 0.0, 0.0);
     }
     
     private static inline function get_xAxis():Vector3

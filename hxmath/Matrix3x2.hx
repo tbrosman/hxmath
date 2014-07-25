@@ -106,6 +106,12 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
             m.ty == n.ty;
     }
     
+    @:op(A != B)
+    public static inline function notEquals(m:Matrix3x2, n:Matrix3x2):Bool
+    {
+        return !(m == n);
+    }
+    
     public inline function clone():Matrix3x2
     {
         var self:Matrix3x2 = this;
