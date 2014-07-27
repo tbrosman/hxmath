@@ -50,18 +50,6 @@ class Test2D extends MathTestCase
         assertTrue(normSq < 1e-6);
     }
     
-    public function testMatrixAccessors()
-    {
-        var m = new Matrix2x2();
-        
-        assertTrue(m.col(0) == Vector2.xAxis);
-        assertTrue(m.col(1) == Vector2.yAxis);
-        assertTrue(m.row(0) == Vector2.xAxis);
-        assertTrue(m.row(1) == Vector2.yAxis);
-        
-        assertTrue(m.element(0, 0) == m.element(1, 1));
-    }
-    
     public function testRowColAccessors()
     {
         var basis2 = [Vector2.xAxis, Vector2.yAxis];

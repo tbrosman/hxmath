@@ -62,4 +62,71 @@ class TestStructures extends MathTestCase
         
         assertTrue(Quaternion.identity.clone() == Quaternion.identity);
     }
+    
+    public function testAddSub()
+    {
+        var mat22 = Matrix2x2.zero;
+        assertTrue(mat22 + Matrix2x2.identity == Matrix2x2.identity);
+        mat22 += Matrix2x2.identity;
+        assertTrue(mat22 == Matrix2x2.identity);
+        assertTrue(mat22 - Matrix2x2.identity == Matrix2x2.zero);
+        mat22 -= Matrix2x2.identity;
+        assertTrue(mat22 == Matrix2x2.zero);
+        
+        var mat32 = Matrix3x2.zero;
+        assertTrue(mat32 + Matrix3x2.identity == Matrix3x2.identity);
+        mat32 += Matrix3x2.identity;
+        assertTrue(mat32 == Matrix3x2.identity);
+        assertTrue(mat32 - Matrix3x2.identity == Matrix3x2.zero);
+        mat32 -= Matrix3x2.identity;
+        assertTrue(mat32 == Matrix3x2.zero);
+        
+        var mat33 = Matrix3x3.zero;
+        assertTrue(mat33 + Matrix3x3.identity == Matrix3x3.identity);
+        mat33 += Matrix3x3.identity;
+        assertTrue(mat33 == Matrix3x3.identity);
+        assertTrue(mat33 - Matrix3x3.identity == Matrix3x3.zero);
+        mat33 -= Matrix3x3.identity;
+        assertTrue(mat33 == Matrix3x3.zero);
+        
+        var mat44 = Matrix4x4.zero;
+        assertTrue(mat44 + Matrix4x4.identity == Matrix4x4.identity);
+        mat44 += Matrix4x4.identity;
+        assertTrue(mat44 == Matrix4x4.identity);
+        assertTrue(mat44 - Matrix4x4.identity == Matrix4x4.zero);
+        mat44 -= Matrix4x4.identity;
+        assertTrue(mat44 == Matrix4x4.zero);
+        
+        var vec2 = Vector2.zero;
+        assertTrue(vec2 + Vector2.xAxis == Vector2.xAxis);
+        vec2 += Vector2.xAxis;
+        assertTrue(vec2 == Vector2.xAxis);
+        assertTrue(vec2 - Vector2.xAxis == Vector2.zero);
+        vec2 -= Vector2.xAxis;
+        assertTrue(vec2 == Vector2.zero);
+        
+        var vec3 = Vector3.zero;
+        assertTrue(vec3 + Vector3.xAxis == Vector3.xAxis);
+        vec3 += Vector3.xAxis;
+        assertTrue(vec3 == Vector3.xAxis);
+        assertTrue(vec3 - Vector3.xAxis == Vector3.zero);
+        vec3 -= Vector3.xAxis;
+        assertTrue(vec3 == Vector3.zero);
+        
+        var vec4 = Vector4.zero;
+        assertTrue(vec4 + Vector4.xAxis == Vector4.xAxis);
+        vec4 += Vector4.xAxis;
+        assertTrue(vec4 == Vector4.xAxis);
+        assertTrue(vec4 - Vector4.xAxis == Vector4.zero);
+        vec4 -= Vector4.xAxis;
+        assertTrue(vec4 == Vector4.zero);
+        
+        var q = Quaternion.zero;
+        assertTrue(q + Quaternion.identity == Quaternion.identity);
+        q += Quaternion.identity;
+        assertTrue(q == Quaternion.identity);
+        assertTrue(q - Quaternion.identity == Quaternion.zero);
+        q -= Quaternion.identity;
+        assertTrue(q == Quaternion.zero);
+    }
 }

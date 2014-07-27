@@ -54,10 +54,44 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         return new Quaternion(a.s * b.s - a.v * b.v, a.s * b.v + b.s * a.v + a.v ^ b.v);
     }
     
+    @:op(A + B)
+    public static inline function add(a:Quaternion, b:Quaternion):Quaternion
+    {
+        return new Quaternion(a.s + b.s, a.v + b.v);
+    }
+    
+    @:op(A += B)
+    public static inline function addWith(a:Quaternion, b:Quaternion):Quaternion
+    {
+        a.s += b.s;
+        a.v += b.v;
+        return a;
+    }
+    
+    @:op(A - B)
+    public static inline function subtract(a:Quaternion, b:Quaternion):Quaternion
+    {
+        return new Quaternion(a.s - b.s, a.v - b.v);
+    }
+    
+    @:op(A -= B)
+    public static inline function subtractWith(a:Quaternion, b:Quaternion):Quaternion
+    {
+        a.s -= b.s;
+        a.v -= b.v;
+        return a;
+    }
+    
     @:op(~A)
     public static inline function conjugate(a:Quaternion):Quaternion
     {
-        return new Quaternion(a.s, -1.0 * a.v);
+        return new Quaternion(a.s, -a.v);
+    }
+    
+    @:op(-A)
+    public static inline function negate(a:Quaternion):Quaternion
+    {
+        return new Quaternion(-a.s, -a.v);
     }
     
     @:op(A == B)

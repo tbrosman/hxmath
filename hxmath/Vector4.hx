@@ -35,6 +35,16 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
             a.w + b.w);
     }
     
+    @:op(A += B)
+    public static inline function addWith(a:Vector4, b:Vector4):Vector4
+    {
+        a.x += b.x;
+        a.y += b.y;
+        a.z += b.z;
+        a.w += b.w;
+        return a;
+    }
+    
     @:op(A - B)
     public static inline function subtract(a:Vector4, b:Vector4):Vector4
     {
@@ -43,6 +53,16 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
             a.y - b.y,
             a.z - b.z,
             a.w - b.w);
+    }
+    
+    @:op(A -= B)
+    public static inline function subtractWith(a:Vector4, b:Vector4):Vector4
+    {
+        a.x -= b.x;
+        a.y -= b.y;
+        a.z -= b.z;
+        a.w -= b.w;
+        return a;
     }
     
     @:op(A * B)
