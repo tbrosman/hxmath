@@ -29,13 +29,6 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         return new Quaternion(a.s * b.s - a.v * b.v, a.s * b.v + b.s * a.v + a.v ^ b.v);
     }
     
-    public static inline function normalize(a:Quaternion):Quaternion
-    {
-        var r2 = a.s * a.s + a.v * a.v;
-        var r = Math.sqrt(r2);
-        return (1.0 / r) * a;
-    }
-    
     @:op(~A)
     public static inline function conjugate(a:Quaternion):Quaternion
     {
@@ -52,6 +45,19 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
     public static inline function notEquals(a:Quaternion, b:Quaternion):Bool
     {
         return !(a == b);
+    }
+    
+    public static inline function normalize(a:Quaternion):Quaternion
+    {
+        var r2 = a.s * a.s + a.v * a.v;
+        var r = Math.sqrt(r2);
+        return (1.0 / r) * a;
+    }
+    
+    public inline function clone():Quaternion
+    {
+        var self:Quaternion = this;
+        return new Quaternion(self.s, self.v);
     }
     
     private static inline function get_zero():Quaternion

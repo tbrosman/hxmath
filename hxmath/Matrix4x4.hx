@@ -97,6 +97,17 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         return !(a == b);
     }
     
+    public inline function clone():Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        return new Matrix4x4([
+            self.m00, self.m10, self.m20, self.m30,
+            self.m01, self.m11, self.m21, self.m31,
+            self.m02, self.m12, self.m22, self.m32,
+            self.m03, self.m13, self.m23, self.m33
+        ]);
+    }
+    
     public inline function col(index:Int):Vector4
     {
         var self:Matrix4x4 = this;
