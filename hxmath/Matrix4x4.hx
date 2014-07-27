@@ -97,6 +97,44 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         return !(a == b);
     }
     
+    public inline function col(index:Int):Vector4
+    {
+        var self:Matrix4x4 = this;
+        
+        switch (index)
+        {
+            case 0:
+                return new Vector4(self.m00, self.m01, self.m02, self.m03);
+            case 1:
+                return new Vector4(self.m10, self.m11, self.m12, self.m13);
+            case 2:
+                return new Vector4(self.m20, self.m21, self.m22, self.m23);
+            case 3:
+                return new Vector4(self.m30, self.m31, self.m32, self.m33);
+            default:
+                throw "Invalid column";
+        }
+    }
+        
+    public inline function row(index:Int):Vector4
+    {
+        var self:Matrix4x4 = this;
+        
+        switch (index)
+        {
+            case 0:
+                return new Vector4(self.m00, self.m10, self.m20, self.m30);
+            case 1:
+                return new Vector4(self.m01, self.m11, self.m21, self.m31);
+            case 2:
+                return new Vector4(self.m02, self.m12, self.m22, self.m32);
+            case 3:
+                return new Vector4(self.m03, self.m13, self.m23, self.m33);
+            default:
+                throw "Invalid row";
+        }
+    }
+    
     private static inline function get_zero():Matrix4x4
     {
         return new Matrix4x4([

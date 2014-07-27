@@ -65,6 +65,25 @@ class Test3D extends MathTestCase
         assertTrue(Quaternion.identity != Quaternion.zero);
     }
     
+    public function testRowColAccessors()
+    {
+        var basis3 = [Vector3.xAxis, Vector3.yAxis, Vector3.zAxis];
+        
+        for (i in 0...3)
+        {
+            assertTrue(Matrix3x3.identity.col(i) == basis3[i]);
+            assertTrue(Matrix3x3.identity.row(i) == basis3[i]);
+        }
+        
+        var basis4 = [Vector4.xAxis, Vector4.yAxis, Vector4.zAxis, Vector4.wAxis];
+        
+        for (i in 0...4)
+        {
+            assertTrue(Matrix4x4.identity.col(i) == basis4[i]);
+            assertTrue(Matrix4x4.identity.row(i) == basis4[i]);
+        }
+    }
+    
     private function randomMatrix3x3()
     {
         return new Matrix3x3(randomArray(9));

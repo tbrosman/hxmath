@@ -152,6 +152,40 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         ]);
     }
     
+    public inline function col(index:Int):Vector3
+    {
+        var self:Matrix3x3 = this;
+        
+        switch (index)
+        {
+            case 0:
+                return new Vector3(self.m00, self.m01, self.m02);
+            case 1:
+                return new Vector3(self.m10, self.m11, self.m12);
+            case 2:
+                return new Vector3(self.m20, self.m21, self.m22);
+            default:
+                throw "Invalid column";
+        }
+    }
+        
+    public inline function row(index:Int):Vector3
+    {
+        var self:Matrix3x3 = this;
+        
+        switch (index)
+        {
+            case 0:
+                return new Vector3(self.m00, self.m10, self.m20);
+            case 1:
+                return new Vector3(self.m01, self.m11, self.m21);
+            case 2:
+                return new Vector3(self.m02, self.m12, self.m22);
+            default:
+                throw "Invalid row";
+        }
+    }
+    
     private static inline function get_zero():Matrix3x3
     {
         return new Matrix3x3([

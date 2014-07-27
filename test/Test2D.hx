@@ -3,6 +3,7 @@ package test;
 import hxmath.Matrix2x2;
 import hxmath.Matrix3x2;
 import hxmath.Vector2;
+import hxmath.Vector3;
 
 class MyVector2
 {
@@ -70,5 +71,29 @@ class Test2D extends MathTestCase
         
         assertTrue(Vector2.yAxis == Vector2.yAxis);
         assertTrue(Vector2.yAxis != Vector2.xAxis);
+    }
+    
+    public function testRowColAccessors()
+    {
+        var basis2 = [Vector2.xAxis, Vector2.yAxis];
+        
+        for (i in 0...2)
+        {
+            assertTrue(Matrix2x2.identity.col(i) == basis2[i]);
+            assertTrue(Matrix2x2.identity.row(i) == basis2[i]);
+        }
+        
+        var basis32Rows = [Vector3.xAxis, Vector3.yAxis];
+        var basis32Cols = [Vector2.xAxis, Vector2.yAxis, Vector2.zero];
+        
+        for (i in 0...2)
+        {
+            assertTrue(Matrix3x2.identity.row(i) == basis32Rows[i]);
+        }
+        
+        for (i in 0...3)
+        {
+            assertTrue(Matrix3x2.identity.col(i) == basis32Cols[i]);
+        }
     }
 }
