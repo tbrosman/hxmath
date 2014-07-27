@@ -1,5 +1,13 @@
 package hxmath;
 
+typedef Vector4Shape =
+{
+    public var x:Float;
+    public var y:Float;
+    public var z:Float;
+    public var w:Float;
+}
+
 @:forward(x, y, z, w)
 abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
 {

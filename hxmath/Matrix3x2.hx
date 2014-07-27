@@ -1,5 +1,26 @@
 package hxmath;
 
+typedef Matrix3x2Shape = 
+{
+    // m00
+    public var a:Float;
+    
+    // m10
+    public var b:Float;
+    
+    // m01
+    public var c:Float;
+    
+    // m11
+    public var d:Float;
+    
+    // m20
+    public var tx:Float;
+    
+    // m21
+    public var ty:Float;
+}
+
 @:forward(a, b, c, d, tx, ty)
 abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
 {
@@ -212,7 +233,7 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     
     private inline function get_linearSubMatrix():Matrix2x2
     {
-        var self2x2:Matrix2x2Shape = this;
+        var self2x2:Matrix2x2 = this;
         var selfLinear:Matrix2x2 = self2x2;
         return selfLinear;
     }

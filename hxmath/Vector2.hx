@@ -7,6 +7,12 @@ typedef PolarVectorShape =
     public var radius:Float;
 };
 
+typedef Vector2Shape =
+{
+    public var x:Float;
+    public var y:Float;
+}
+
 @:forward(x, y)
 abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
 {

@@ -1,5 +1,10 @@
 package hxmath;
-import hxmath.Vector3Shape;
+
+typedef QuaternionShape =
+{
+    public var s:Float;
+    public var v:Vector3;
+}
 
 @:forward(s, v)
 abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
@@ -15,13 +20,13 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
     public var length(get, never):Float;
     public var lengthSq(get, never):Float;
     
-    public function new(s:Float=1.0, v:Vector3Shape=null) 
+    public function new(s:Float=1.0, v:Vector3=null) 
     {
         this = {
             s: s,
             v: v != null
                 ? v
-                : { x: 0.0, y: 0.0, z: 0.0 }
+                : Vector3.zero
         };
     }
     
