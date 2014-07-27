@@ -2,7 +2,6 @@ package test;
 import hxmath.MathUtil;
 import hxmath.Vector2;
 
-
 class TestMathUtil extends MathTestCase
 {
     public function testOrient2D()
@@ -24,6 +23,4 @@ class TestMathUtil extends MathTestCase
         assertEquals(MathUtil.orient2d(a, b, d), Orient2DResult.Right);
         assertEquals(MathUtil.orient2d(a, b, e), Orient2DResult.Colinear);
     }
-    
-    
 }

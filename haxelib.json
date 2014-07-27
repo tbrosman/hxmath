@@ -1,11 +1,11 @@
 {
   "name": "hxmath",
-  "url": "",
+  "url": "https://github.com/tbrosman/hxmath",
   "license": "MIT",
   "tags": ["math", "cross"],
-  "description": "A math library for Haxe.",
+  "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
   "version": "0.1.0",
-  "releasenote": "",
+  "releasenote": "Initial version. Basic functionality for vectors, matrices, and quaternions working.",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
