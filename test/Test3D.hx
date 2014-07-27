@@ -84,6 +84,27 @@ class Test3D extends MathTestCase
         }
     }
     
+    public function testAxialRotation()
+    {
+        // After 90 degree ccw rotation around X:
+        // y -> +z
+        // z -> -y
+        assertApproxEquals(((Matrix3x3.rotationX(Math.PI / 2.0) * Vector3.yAxis) - Vector3.zAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationX(Math.PI / 2.0) * Vector3.zAxis) + Vector3.yAxis).length, 0.0);
+        
+        // After 90 degree ccw rotation around Y:
+        // z -> +x
+        // x -> -z
+        assertApproxEquals(((Matrix3x3.rotationY(Math.PI / 2.0) * Vector3.zAxis) - Vector3.xAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationY(Math.PI / 2.0) * Vector3.xAxis) + Vector3.zAxis).length, 0.0);
+        
+        // After 90 degree ccw rotation around Z:
+        // x -> +y
+        // y -> -x
+        assertApproxEquals(((Matrix3x3.rotationZ(Math.PI / 2.0) * Vector3.xAxis) - Vector3.yAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationZ(Math.PI / 2.0) * Vector3.yAxis) + Vector3.xAxis).length, 0.0);
+    }
+    
     private function randomMatrix3x3()
     {
         return new Matrix3x3(randomArray(9));

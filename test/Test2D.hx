@@ -96,4 +96,13 @@ class Test2D extends MathTestCase
             assertTrue(Matrix3x2.identity.col(i) == basis32Cols[i]);
         }
     }
+    
+    public function testRotation()
+    {
+        // After 90 degree ccw rotation:
+        // x -> +y
+        // y -> -x
+        assertApproxEquals(((Matrix2x2.rotation(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length, 0.0);
+        assertApproxEquals(((Matrix2x2.rotation(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length, 0.0);
+    }
 }

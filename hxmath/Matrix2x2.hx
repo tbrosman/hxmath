@@ -95,6 +95,12 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return !(m == n);
     }
     
+    /**
+     * Counter-clockwise rotation.
+     * 
+     * @param angle     The angle to rotate (in radians).
+     * @return          The rotation matrix.
+     */
     public static inline function rotation(angle:Float):Matrix2x2
     {
         var s = Math.sin(angle);
@@ -104,6 +110,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
              s,  c);
     }
     
+    /**
+     * Non-uniform scale matrix.
+     * 
+     * @param sx    The amount to scale along the X axis.
+     * @param sy    The amount to scale along the Y axis.
+     * @return      The scale matrix.
+     */
     public static inline function scale(sx:Float, sy:Float):Matrix2x2
     {
         return new Matrix2x2(

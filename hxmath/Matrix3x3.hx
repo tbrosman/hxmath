@@ -142,6 +142,70 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return !(a == b);
     }
     
+    /**
+     * Counter-clockwise rotation around the X axis.
+     * 
+     * @param angle     The angle to rotate (in radians).
+     * @return          The rotation matrix.
+     */
+    public static inline function rotationX(angle:Float):Matrix3x3
+    {
+        var s = Math.sin(angle);
+        var c = Math.cos(angle);
+        return new Matrix3x3([
+            1, 0,  0,
+            0, c, -s,
+            0, s,  c]);
+    }
+    
+    /**
+     * Counter-clockwise rotation around the Y axis.
+     * 
+     * @param angle     The angle to rotate (in radians).
+     * @return          The rotation matrix.
+     */
+    public static inline function rotationY(angle:Float):Matrix3x3
+    {
+        var s = Math.sin(angle);
+        var c = Math.cos(angle);
+        return new Matrix3x3([
+             c,  0, s,
+             0,  1, 0,
+            -s,  0, c]);
+    }
+    
+    /**
+     * Counter-clockwise rotation around the Z axis.
+     * 
+     * @param angle     The angle to rotate (in radians).
+     * @return          The rotation matrix.
+     */
+    public static inline function rotationZ(angle:Float):Matrix3x3
+    {
+        var s = Math.sin(angle);
+        var c = Math.cos(angle);
+        return new Matrix3x3([
+            c, -s, 0,
+            s,  c, 0,
+            0,  0, 1]);
+    }
+
+    /**
+     * Non-uniform scale matrix.
+     * 
+     * @param sx    The amount to scale along the X axis.
+     * @param sy    The amount to scale along the Y axis.
+     * @param sz    The amount to scale along the Z axis.
+     * @return      The scale matrix.
+     */
+    public static inline function scale(sx:Float, sy:Float, sz:Float):Matrix3x3
+    {
+        return new Matrix3x3([
+            sx, 0.0, 0.0,
+            0.0, sy, 0.0,
+            0.0, 0.0, sz]);
+    }
+    
     public inline function clone():Matrix3x3
     {
         var self:Matrix3x3 = this;
