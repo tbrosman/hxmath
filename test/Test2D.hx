@@ -105,4 +105,10 @@ class Test2D extends MathTestCase
         assertApproxEquals(((Matrix2x2.rotation(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length, 0.0);
         assertApproxEquals(((Matrix2x2.rotation(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length, 0.0);
     }
+    
+    public function testPolarConversion()
+    {
+        assertApproxEquals(0.0, (Vector2.fromPolar(Math.PI, 1.0) + Vector2.xAxis).length);
+        assertApproxEquals(Math.PI, (Vector2.zero - Vector2.xAxis).angle);
+    }
 }

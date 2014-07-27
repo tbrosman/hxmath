@@ -1,11 +1,4 @@
 package hxmath;
-import hxmath.Vector2.PolarVectorShape;
-
-typedef PolarVectorShape =
-{
-    public var angle:Float;
-    public var radius:Float;
-};
 
 typedef Vector2Shape =
 {
@@ -22,10 +15,28 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     
     public var length(get, never):Float;
     public var lengthSq(get, never):Float;
+    public var angle(get, never):Float;
     
     public function new(x:Float, y:Float)
     {
         this = {x: x, y: y};
+    }
+    
+    /**
+     * Create a new Vector2 from polar coordinates.
+     * Example angle-to-vector direction conversions:
+     *   0       radians -> +X axis
+     *   (1/2)pi radians -> +Y axis
+     *   pi      radians -> -X axis
+     *   (3/2)pi radians -> -Y axis
+     * 
+     * @param angle     The angle of the vector (counter-clockwise from the +X axis) in radians.
+     * @param radius    The length of the vector.
+     * @return          The vector.
+     */
+    public static inline function fromPolar(angle:Float, radius:Float):Vector2
+    {
+        return new Vector2(radius * Math.cos(angle), radius * Math.sin(angle));
     }
     
     @:op(A + B)
@@ -87,17 +98,6 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         return t*a + (1.0 - t)*b;
     }
     
-    public inline function toPolarVector():PolarVectorShape
-    {
-        var self:Vector2 = this;
-        return { angle: Math.atan2(self.y, self.x), radius: self.length };
-    }
-    
-    public static inline function fromPolarVector(v:PolarVectorShape):Vector2
-    {
-        return new Vector2(v.radius * Math.cos(v.angle), v.radius * Math.sin(v.angle));
-    }
-    
     public inline function clone():Vector2
     {
         var self:Vector2 = this;
@@ -118,6 +118,12 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         return
             self.x * self.x +
             self.y * self.y;
+    }
+    
+    private inline function get_angle():Float
+    {
+        var self:Vector2 = this;
+        return Math.atan2(self.y, self.x);
     }
     
     private static inline function get_zero():Vector2
