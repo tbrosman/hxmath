@@ -39,7 +39,8 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
     {
         if (rawData == null)
         {
-            this = Matrix4x4.identity;
+            // Getting a compile error with just Matrix4x4.identity. Compiler bug?
+            this = Matrix4x4.get_identity();
         }
         else
         {
@@ -91,6 +92,16 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             a.m01 * v.x + a.m11 * v.y + a.m21 * v.z + a.m31 * v.w,
             a.m02 * v.x + a.m12 * v.y + a.m22 * v.z + a.m32 * v.w,
             a.m03 * v.x + a.m13 * v.y + a.m23 * v.z + a.m33 * v.w);
+    }
+    
+    @:op(-A)
+    public static inline function negate(a:Matrix4x4):Matrix4x4
+    {
+        return new Matrix4x4([
+            -a.m00, -a.m10, -a.m20, -a.m30,
+            -a.m01, -a.m11, -a.m21, -a.m31,
+            -a.m02, -a.m12, -a.m22, -a.m32,
+            -a.m03, -a.m13, -a.m23, -a.m33]);
     }
     
     @:op(A == B)

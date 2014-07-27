@@ -95,6 +95,14 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return m;
     }
     
+    @:op(-A)
+    public static inline function negate(m:Matrix2x2):Matrix2x2
+    {
+        return new Matrix2x2(
+            -m.a, -m.b,
+            -m.c, -m.d);
+    }
+    
     @:op(A == B)
     public static inline function equals(m:Matrix2x2, n:Matrix2x2):Bool
     {

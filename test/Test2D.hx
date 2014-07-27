@@ -62,17 +62,6 @@ class Test2D extends MathTestCase
         assertTrue(m.element(0, 0) == m.element(1, 1));
     }
     
-    public function testEquals()
-    {
-        assertTrue(Matrix2x2.identity == Matrix2x2.identity);
-        assertTrue(Matrix2x2.identity != Matrix2x2.zero);
-        assertTrue(Matrix3x2.identity == Matrix3x2.identity);
-        assertTrue(Matrix3x2.identity != Matrix3x2.zero);
-        
-        assertTrue(Vector2.yAxis == Vector2.yAxis);
-        assertTrue(Vector2.yAxis != Vector2.xAxis);
-    }
-    
     public function testRowColAccessors()
     {
         var basis2 = [Vector2.xAxis, Vector2.yAxis];
@@ -109,6 +98,6 @@ class Test2D extends MathTestCase
     public function testPolarConversion()
     {
         assertApproxEquals(0.0, (Vector2.fromPolar(Math.PI, 1.0) + Vector2.xAxis).length);
-        assertApproxEquals(Math.PI, (Vector2.zero - Vector2.xAxis).angle);
+        assertApproxEquals(Math.PI, (-Vector2.xAxis).angle);
     }
 }

@@ -18,7 +18,7 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     public var length(get, never):Float;
     public var lengthSq(get, never):Float;
     
-    public function new(x:Float, y:Float, z:Float)
+    public function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0)
     {
         this = {x: x, y: y, z: z};
     }
@@ -84,6 +84,15 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         a.y -= b.y;
         a.z -= b.z;
         return a;
+    }
+    
+    @:op(-A)
+    public static inline function negate(a:Vector3):Vector3
+    {
+        return new Vector3(
+            -a.x,
+            -a.y,
+            -a.z);
     }
     
     @:op(A == B)

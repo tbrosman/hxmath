@@ -136,6 +136,15 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         a.m22 -= b.m22;
         return b;
     }
+
+    @:op(-A)
+    public static inline function negate(a:Matrix3x3):Matrix3x3
+    {
+        return new Matrix3x3([
+            -a.m00, -a.m10, -a.m20,
+            -a.m01, -a.m11, -a.m21,
+            -a.m02, -a.m12, -a.m22]);
+    }
     
     @:op(A == B)
     public static inline function equals(a:Matrix3x3, b:Matrix3x3):Bool

@@ -20,7 +20,7 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     public var length(get, never):Float;
     public var lengthSq(get, never):Float;
     
-    public function new(x:Float, y:Float, z:Float, w:Float = 1.0)
+    public function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0, w:Float = 0.0)
     {
         this = {x: x, y: y, z: z, w: w};
     }
@@ -63,6 +63,16 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
             s * a.y,
             s * a.z,
             s * a.w);
+    }
+    
+    @:op(-A)
+    public static inline function negate(a:Vector4):Vector4
+    {
+        return new Vector4(
+            -a.x,
+            -a.y,
+            -a.z,
+            -a.w);
     }
     
     @:op(A == B)

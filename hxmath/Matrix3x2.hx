@@ -114,6 +114,15 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
         m.ty -= n.ty;
         return m;
     }
+        
+    @:op(-A)
+    public static inline function negate(m:Matrix3x2):Matrix3x2
+    {
+        return new Matrix3x2(
+            -m.a,  -m.b,
+            -m.c,  -m.d,
+            -m.tx, -m.ty);
+    }
        
     @:op(A == B)
     public static inline function equals(m:Matrix3x2, n:Matrix3x2):Bool
@@ -137,9 +146,9 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     {
         var self:Matrix3x2 = this;
         return new Matrix3x2(
-            self.a, self.b, self.tx,
-            self.c, self.d, self.ty
-        );
+            self.a,  self.b,
+            self.c,  self.d,
+            self.tx, self.ty);
     }
     
     public inline function element(column:Int, row:Int):Float

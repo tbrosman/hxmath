@@ -1,5 +1,8 @@
 package test;
 import haxe.PosInfos;
+import hxmath.Matrix2x2;
+import hxmath.Matrix3x3;
+import hxmath.Matrix4x4;
 import nanotest.NanoTestCase;
 
 /**
@@ -30,5 +33,15 @@ class MathTestCase extends NanoTestCase
         {
             fail('expected $expected +-$tolerance but was $actual');
         }
+    }
+
+    private function randomMatrix3x3()
+    {
+        return new Matrix3x3(randomArray(9));
+    }
+    
+    private function randomMatrix4x4()
+    {
+        return new Matrix4x4(randomArray(16));
     }
 }

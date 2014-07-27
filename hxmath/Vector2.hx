@@ -17,7 +17,7 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     public var lengthSq(get, never):Float;
     public var angle(get, never):Float;
     
-    public function new(x:Float, y:Float)
+    public function new(x:Float = 0.0, y:Float = 0.0)
     {
         this = {x: x, y: y};
     }
@@ -37,6 +37,22 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     public static inline function fromPolar(angle:Float, radius:Float):Vector2
     {
         return new Vector2(radius * Math.cos(angle), radius * Math.sin(angle));
+    }
+       
+    @:op(A * B)
+    public static inline function dot(a:Vector2, b:Vector2):Float
+    {
+        return
+            a.x * b.x +
+            a.y * b.y;
+    }
+    
+    @:op(A * B)
+    public static inline function multiplyScalar(s:Float, a:Vector2):Vector2
+    {
+        return new Vector2(
+            s * a.x,
+            s * a.y);
     }
     
     @:op(A + B)
@@ -71,26 +87,24 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         return a;
     }
     
-    @:op(A * B)
-    public static inline function dot(a:Vector2, b:Vector2):Float
-    {
-        return
-            a.x * b.x +
-            a.y * b.y;
-    }
-    
-    @:op(A * B)
-    public static inline function multiplyScalar(s:Float, a:Vector2):Vector2
+    @:op(-A)
+    public static inline function negate(a:Vector2):Vector2
     {
         return new Vector2(
-            s * a.x,
-            s * a.y);
+            -a.x,
+            -a.y);
     }
     
     @:op(A == B)
     public static inline function equals(a:Vector2, b:Vector2):Bool
     {
         return a.x == b.x && a.y == b.y;
+    }
+    
+    @:op(A != B)
+    public static inline function notEquals(a:Vector2, b:Vector2):Bool
+    {
+        return !(a == b);
     }
 
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
@@ -102,6 +116,21 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     {
         var self:Vector2 = this;
         return new Vector2(self.x, self.y);
+    }
+    
+    private static inline function get_zero():Vector2
+    {
+        return new Vector2(0.0, 0.0);
+    }
+    
+    private static inline function get_xAxis():Vector2
+    {
+        return new Vector2(1.0, 0.0);
+    }
+    
+    private static inline function get_yAxis():Vector2
+    {
+        return new Vector2(0.0, 1.0);
     }
     
     private inline function get_length():Float
@@ -124,21 +153,6 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     {
         var self:Vector2 = this;
         return Math.atan2(self.y, self.x);
-    }
-    
-    private static inline function get_zero():Vector2
-    {
-        return new Vector2(0.0, 0.0);
-    }
-    
-    private static inline function get_xAxis():Vector2
-    {
-        return new Vector2(1.0, 0.0);
-    }
-    
-    private static inline function get_yAxis():Vector2
-    {
-        return new Vector2(0.0, 1.0);
     }
 }
 
