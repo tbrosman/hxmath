@@ -105,6 +105,36 @@ class Test3D extends MathTestCase
         assertApproxEquals(((Matrix3x3.rotationZ(Math.PI / 2.0) * Vector3.yAxis) + Vector3.xAxis).length, 0.0);
     }
     
+    public function testQuaternionToMatrix()
+    {
+        function createMatrixPair(unitAngle:Float, axis:Int)
+        {
+            var axes = [Vector3.xAxis, Vector3.yAxis, Vector3.zAxis];
+            var const = [Matrix3x3.rotationX, Matrix3x3.rotationY, Matrix3x3.rotationZ];
+            var angle = unitAngle * Math.PI * 2.0;
+            var q = Quaternion.fromAxisAngle(angle, axes[axis]);
+            var n = q.matrix;
+            var m = const[axis](angle);
+            
+            return { m: m, n: n }
+        }
+        
+        for (axis in 0...3)
+        {
+            var unitAngle:Float = 0.0;
+            
+            for (i in 0...10)
+            {
+                unitAngle += 0.01;
+                for (c in 0...3)
+                {
+                    var pair = createMatrixPair(unitAngle, axis);
+                    assertApproxEquals((pair.n.col(c) - pair.m.col(c)).length, 0.0);
+                }
+            }
+        }
+    }
+    
     private function randomMatrix3x3()
     {
         return new Matrix3x3(randomArray(9));
