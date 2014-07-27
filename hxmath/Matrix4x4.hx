@@ -34,6 +34,9 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
     public static var zero(get, never):Matrix4x4;
     public static var identity(get, never):Matrix4x4;
     
+    public var det(get, never):Float;
+    public var transpose(get, never):Matrix4x4;
+    
     // Row-major rawData
     public function new(rawData:Array<Float> = null) 
     {
@@ -167,7 +170,8 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             -a.m00, -a.m10, -a.m20, -a.m30,
             -a.m01, -a.m11, -a.m21, -a.m31,
             -a.m02, -a.m12, -a.m22, -a.m32,
-            -a.m03, -a.m13, -a.m23, -a.m33]);
+            -a.m03, -a.m13, -a.m23, -a.m33
+        ]);
     }
     
     @:op(A == B)
@@ -253,7 +257,8 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             0.0, 0.0, 0.0, 0.0,
             0.0, 0.0, 0.0, 0.0,
             0.0, 0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0, 0.0]);
+            0.0, 0.0, 0.0, 0.0
+        ]);
     }
     
     private static inline function get_identity():Matrix4x4
@@ -262,6 +267,28 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             1.0, 0.0, 0.0, 0.0,
             0.0, 1.0, 0.0, 0.0,
             0.0, 0.0, 1.0, 0.0,
-            0.0, 0.0, 0.0, 1.0]);
+            0.0, 0.0, 0.0, 1.0
+        ]);
+    }
+    
+    private inline function get_transpose():Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        return new Matrix4x4([
+            self.m00, self.m01, self.m02, self.m03,
+            self.m10, self.m11, self.m12, self.m13,
+            self.m20, self.m21, self.m22, self.m23,
+            self.m30, self.m31, self.m32, self.m33
+        ]);
+    }
+    
+    private inline function get_det():Float
+    {
+        var self:Matrix4x4 = this;
+        return MathUtil.det4x4(
+            self.m00, self.m10, self.m20, self.m30,
+            self.m01, self.m11, self.m21, self.m31,
+            self.m02, self.m12, self.m22, self.m32,
+            self.m03, self.m13, self.m23, self.m33);
     }
 }

@@ -129,4 +129,37 @@ class TestStructures extends MathTestCase
         q -= Quaternion.identity;
         assertTrue(q == Quaternion.zero);
     }
+    
+    public function testDeterminant()
+    {
+        assertEquals(Matrix2x2.zero.det, 0.0);
+        assertEquals(Matrix2x2.identity.det, 1.0);
+        
+        for (i in 0...10)
+        {
+            var a = randomMatrix2x2();
+            var b = randomMatrix2x2();
+            assertApproxEquals((a * b).det, a.det * b.det);
+        }
+        
+        assertEquals(Matrix3x3.zero.det, 0.0);
+        assertEquals(Matrix3x3.identity.det, 1.0);
+        
+        for (i in 0...10)
+        {
+            var a = randomMatrix3x3();
+            var b = randomMatrix3x3();
+            assertApproxEquals((a * b).det, a.det * b.det);
+        }
+        
+        assertEquals(Matrix4x4.zero.det, 0.0);
+        assertEquals(Matrix4x4.identity.det, 1.0);
+        
+        for (i in 0...1)
+        {
+            var a = randomMatrix4x4();
+            var b = randomMatrix4x4();
+            assertApproxEquals((a * b).det, a.det * b.det);
+        }
+    }
 }

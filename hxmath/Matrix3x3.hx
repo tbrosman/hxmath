@@ -143,7 +143,8 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return new Matrix3x3([
             -a.m00, -a.m10, -a.m20,
             -a.m01, -a.m11, -a.m21,
-            -a.m02, -a.m12, -a.m22]);
+            -a.m02, -a.m12, -a.m22
+        ]);
     }
     
     @:op(A == B)
@@ -180,7 +181,8 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return new Matrix3x3([
             1, 0,  0,
             0, c, -s,
-            0, s,  c]);
+            0, s,  c
+        ]);
     }
     
     /**
@@ -196,7 +198,8 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return new Matrix3x3([
              c,  0, s,
              0,  1, 0,
-            -s,  0, c]);
+            -s,  0, c
+        ]);
     }
     
     /**
@@ -212,7 +215,8 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return new Matrix3x3([
             c, -s, 0,
             s,  c, 0,
-            0,  0, 1]);
+            0,  0, 1
+        ]);
     }
 
     /**
@@ -228,7 +232,8 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return new Matrix3x3([
             sx, 0.0, 0.0,
             0.0, sy, 0.0,
-            0.0, 0.0, sz]);
+            0.0, 0.0, sz
+        ]);
     }
     
     public inline function clone():Matrix3x3
@@ -280,7 +285,8 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return new Matrix3x3([
             0.0, 0.0, 0.0,
             0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0]);
+            0.0, 0.0, 0.0
+        ]);
     }
     
     private static inline function get_identity():Matrix3x3
@@ -288,16 +294,17 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return new Matrix3x3([
             1.0, 0.0, 0.0,
             0.0, 1.0, 0.0,
-            0.0, 0.0, 1.0]);
+            0.0, 0.0, 1.0
+        ]);
     }
     
     private inline function get_det():Float
     {
         var self:Matrix3x3 = this;
-        return
-            self.m00 * (self.m11 * self.m22 - self.m21 * self.m12) -
-            self.m10 * (self.m01 * self.m22 - self.m21 * self.m02) +
-            self.m20 * (self.m01 * self.m12 - self.m11 * self.m02);
+        return MathUtil.det3x3(
+            self.m00, self.m10, self.m20,
+            self.m01, self.m11, self.m21,
+            self.m02, self.m12, self.m22);
     }
     
     private inline function get_transpose():Matrix3x3

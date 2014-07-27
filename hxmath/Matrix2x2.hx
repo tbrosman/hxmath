@@ -226,7 +226,9 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     private inline function get_det():Float
     {
         var self:Matrix2x2 = this;
-        return self.a * self.d - self.b * self.c;
+        return MathUtil.det2x2(
+            self.a, self.b,
+            self.c, self.d);
     }
     
     private inline function get_transpose():Matrix2x2

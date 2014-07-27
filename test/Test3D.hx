@@ -8,19 +8,6 @@ import hxmath.Vector4;
 
 class Test3D extends MathTestCase
 {
-    public function testDeterminant()
-    {
-        assertEquals(Matrix3x3.zero.det, 0.0);
-        assertEquals(Matrix3x3.identity.det, 1.0);
-        
-        for (i in 0...10)
-        {
-            var a = randomMatrix3x3();
-            var b = randomMatrix3x3();
-            assertApproxEquals((a * b).det, a.det * b.det);
-        }
-    }
-    
     public function testMatrixMult()
     {
         for (i in 0...10)

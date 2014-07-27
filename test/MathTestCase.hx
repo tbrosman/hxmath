@@ -11,13 +11,23 @@ import nanotest.NanoTestCase;
  */
 class MathTestCase extends NanoTestCase
 {
-    private function randomArray(size:Int, center:Float=0.0, width:Float=1.0):Array<Float>
+    private function randomFloat(center:Float=0.0, width:Float = 1.0, precision:Float=1e-4)
+    {
+        // Generate a float in the range [center - width/2, center + width/2)
+        var x = (Math.random() - 0.5) * width + center;
+        
+        // Round the the specified precision
+        return Math.floor(x / precision) * precision;
+    }
+    
+    private function randomArray(size:Int, distribution:Distribution=null):Array<Float>
     {
         var data = new Array<Float>();
+        var distribution = distribution == null ? new Distribution() : distribution;
         
         for (i in 0...size)
         {
-            data.push((Math.random() - 0.5) * width + center);
+            data.push(randomFloat(distribution.center, distribution.width, distribution.precision));
         }
         
         return data;
@@ -34,14 +44,26 @@ class MathTestCase extends NanoTestCase
             fail('expected $expected +-$tolerance but was $actual');
         }
     }
-
-    private function randomMatrix3x3()
+    
+    private function randomMatrix2x2(precision:Float=1e-4):Matrix2x2
     {
-        return new Matrix3x3(randomArray(9));
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        var data = randomArray(4, distribution);
+        return new Matrix2x2(data[0], data[1], data[2], data[3]);
+    }
+
+    private function randomMatrix3x3(precision:Float=1e-4):Matrix3x3
+    {
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        return new Matrix3x3(randomArray(9, distribution));
     }
     
-    private function randomMatrix4x4()
+    private function randomMatrix4x4(precision:Float=1e-4):Matrix4x4
     {
-        return new Matrix4x4(randomArray(16));
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        return new Matrix4x4(randomArray(16, distribution));
     }
 }
