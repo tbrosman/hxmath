@@ -5,7 +5,7 @@
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
   "version": "0.2.0",
-  "releasenote": "Initial version. Basic functionality for vectors, matrices, and quaternions working.",
+  "releasenote": "Minor bugfixes, more test coverage.",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
