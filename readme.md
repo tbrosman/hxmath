@@ -53,6 +53,8 @@ In the case of the OpenFL Point, an intermediate variable isn't even required du
 
 * All (linear) structures have the following operators: `==`, `!=`, `+`, `+=`, `-`, `-=`, and unary `-`.
 
+* Additionally, `.addWith` and `.subtractWith` are available as functions for direct modification of the object. This is due to the fact you cannot overwrite `+=`, `-=`, etc directly and the generated implementations create new objects. For the `*with` operations, no new object is created and the additional structure of the underlying object is preserved.
+
 * All structures have clone() functions.
 
 ### Products

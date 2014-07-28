@@ -62,37 +62,15 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     @:op(A + B)
     public static inline function add(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
-        return new Matrix2x2(
-            m.a + n.a, m.b + n.b,
-            m.c + n.c, m.d + n.d);
-    }
-    
-    @:op(A += B)
-    public static inline function addWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
-    {
-        m.a += n.a;
-        m.b += n.b;
-        m.c += n.c;
-        m.d += n.d;
-        return m;
+        return m.clone()
+            .addWith(n);
     }
     
     @:op(A - B)
     public static inline function subtract(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
-        return new Matrix2x2(
-            m.a - n.a, m.b - n.b,
-            m.c - n.c, m.d - n.d);
-    }
-    
-    @:op(A -= B)
-    public static inline function subtractWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
-    {
-        m.a -= n.a;
-        m.b -= n.b;
-        m.c -= n.c;
-        m.d -= n.d;
-        return m;
+        return m.clone()
+            .subtractWith(n);
     }
     
     @:op(-A)
@@ -117,6 +95,24 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     public static inline function notEquals(m:Matrix2x2, n:Matrix2x2):Bool
     {
         return !(m == n);
+    }
+    
+    public static inline function addWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
+    {
+        m.a += n.a;
+        m.b += n.b;
+        m.c += n.c;
+        m.d += n.d;
+        return m;
+    }
+    
+    public static inline function subtractWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
+    {
+        m.a -= n.a;
+        m.b -= n.b;
+        m.c -= n.c;
+        m.d -= n.d;
+        return m;
     }
     
     /**

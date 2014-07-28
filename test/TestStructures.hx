@@ -162,4 +162,22 @@ class TestStructures extends MathTestCase
             assertApproxEquals((a * b).det, a.det * b.det);
         }
     }
+    
+    public function testAddSubInPlace()
+    {
+        assertObjectIsSameAfter(
+            Vector2.xAxis,
+            function(original)
+            {
+                var vec2:Vector2 = original;
+                return vec2.addWith(Vector2.xAxis);
+            });
+    }
+    
+    private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
+    {
+        original.tag = "original";
+        var after:Dynamic = transform(original);
+        assertEquals(original, after);
+    }
 }

@@ -90,51 +90,15 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
     @:op(A + B)
     public static inline function add(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
-        return new Matrix3x3([
-            a.m00 + b.m00, a.m10 + b.m10, a.m20 + b.m20,
-            a.m01 + b.m01, a.m11 + b.m11, a.m21 + b.m21,
-            a.m02 + b.m02, a.m12 + b.m12, a.m22 + b.m22
-        ]);
-    }
-    
-    @:op(A += B)
-    public static inline function addWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
-    {
-        a.m00 += b.m00;
-        a.m10 += b.m10;
-        a.m20 += b.m20;
-        a.m01 += b.m01;
-        a.m11 += b.m11;
-        a.m21 += b.m21;
-        a.m02 += b.m02;
-        a.m12 += b.m12;
-        a.m22 += b.m22;
-        return a;
+        return a.clone()
+            .addWith(b);
     }
     
     @:op(A - B)
     public static inline function subtract(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
-        return new Matrix3x3([
-            a.m00 - b.m00, a.m10 - b.m10, a.m20 - b.m20,
-            a.m01 - b.m01, a.m11 - b.m11, a.m21 - b.m21,
-            a.m02 - b.m02, a.m12 - b.m12, a.m22 - b.m22
-        ]);
-    }
-    
-    @:op(A -= B)
-    public static inline function subtractWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
-    {
-        a.m00 -= b.m00;
-        a.m10 -= b.m10;
-        a.m20 -= b.m20;
-        a.m01 -= b.m01;
-        a.m11 -= b.m11;
-        a.m21 -= b.m21;
-        a.m02 -= b.m02;
-        a.m12 -= b.m12;
-        a.m22 -= b.m22;
-        return b;
+        return a.clone()
+            .subtractWith(b);
     }
 
     @:op(-A)
@@ -166,6 +130,34 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
     public static inline function notEquals(a:Matrix3x3, b:Matrix3x3):Bool
     {
         return !(a == b);
+    }
+    
+    public static inline function addWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
+    {
+        a.m00 += b.m00;
+        a.m10 += b.m10;
+        a.m20 += b.m20;
+        a.m01 += b.m01;
+        a.m11 += b.m11;
+        a.m21 += b.m21;
+        a.m02 += b.m02;
+        a.m12 += b.m12;
+        a.m22 += b.m22;
+        return a;
+    }
+    
+    public static inline function subtractWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
+    {
+        a.m00 -= b.m00;
+        a.m10 -= b.m10;
+        a.m20 -= b.m20;
+        a.m01 -= b.m01;
+        a.m11 -= b.m11;
+        a.m21 -= b.m21;
+        a.m02 -= b.m02;
+        a.m12 -= b.m12;
+        a.m22 -= b.m22;
+        return a;
     }
     
     /**

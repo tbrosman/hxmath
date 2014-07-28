@@ -57,31 +57,17 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
     @:op(A + B)
     public static inline function add(a:Quaternion, b:Quaternion):Quaternion
     {
-        return new Quaternion(a.s + b.s, a.v + b.v);
-    }
-    
-    @:op(A += B)
-    public static inline function addWith(a:Quaternion, b:Quaternion):Quaternion
-    {
-        a.s += b.s;
-        a.v += b.v;
-        return a;
+        return a.clone()
+            .addWith(b);
     }
     
     @:op(A - B)
     public static inline function subtract(a:Quaternion, b:Quaternion):Quaternion
     {
-        return new Quaternion(a.s - b.s, a.v - b.v);
+        return a.clone()
+            .subtractWith(b);
     }
-    
-    @:op(A -= B)
-    public static inline function subtractWith(a:Quaternion, b:Quaternion):Quaternion
-    {
-        a.s -= b.s;
-        a.v -= b.v;
-        return a;
-    }
-    
+
     @:op(~A)
     public static inline function conjugate(a:Quaternion):Quaternion
     {
@@ -104,6 +90,20 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
     public static inline function notEquals(a:Quaternion, b:Quaternion):Bool
     {
         return !(a == b);
+    }
+    
+    public static inline function addWith(a:Quaternion, b:Quaternion):Quaternion
+    {
+        a.s += b.s;
+        a.v += b.v;
+        return a;
+    }
+    
+    public static inline function subtractWith(a:Quaternion, b:Quaternion):Quaternion
+    {
+        a.s -= b.s;
+        a.v -= b.v;
+        return a;
     }
     
     public static inline function normalize(a:Quaternion):Quaternion

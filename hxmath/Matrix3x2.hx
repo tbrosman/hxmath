@@ -76,43 +76,15 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     @:op(A + B)
     public static inline function add(m:Matrix3x2, n:Matrix3x2):Matrix3x2
     {
-        return new Matrix3x2(
-            m.a  + n.a,  m.b  + n.b,
-            m.c  + n.c,  m.d  + n.d,
-            m.tx + n.tx, m.ty + n.ty);
-    }
-    
-    @:op(A += B)
-    public static inline function addWith(m:Matrix3x2, n:Matrix3x2):Matrix3x2
-    {
-        m.a  += n.a;
-        m.b  += n.b;
-        m.c  += n.c;
-        m.d  += n.d;
-        m.tx += n.tx;
-        m.ty += n.ty;
-        return m;
+        return m.clone()
+            .addWith(n);
     }
     
     @:op(A - B)
     public static inline function subtract(m:Matrix3x2, n:Matrix3x2):Matrix3x2
     {
-        return new Matrix3x2(
-            m.a  - n.a,  m.b  - n.b,
-            m.c  - n.c,  m.d  - n.d,
-            m.tx - n.tx, m.ty - n.ty);
-    }
-    
-    @:op(A -= B)
-    public static inline function subtractWith(m:Matrix3x2, n:Matrix3x2):Matrix3x2
-    {
-        m.a  -= n.a;
-        m.b  -= n.b;
-        m.c  -= n.c;
-        m.d  -= n.d;
-        m.tx -= n.tx;
-        m.ty -= n.ty;
-        return m;
+        return m.clone()
+            .subtractWith(n);
     }
         
     @:op(-A)
@@ -140,6 +112,28 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     public static inline function notEquals(m:Matrix3x2, n:Matrix3x2):Bool
     {
         return !(m == n);
+    }
+    
+    public static inline function addWith(m:Matrix3x2, n:Matrix3x2):Matrix3x2
+    {
+        m.a  += n.a;
+        m.b  += n.b;
+        m.c  += n.c;
+        m.d  += n.d;
+        m.tx += n.tx;
+        m.ty += n.ty;
+        return m;
+    }
+    
+    public static inline function subtractWith(m:Matrix3x2, n:Matrix3x2):Matrix3x2
+    {
+        m.a  -= n.a;
+        m.b  -= n.b;
+        m.c  -= n.c;
+        m.d  -= n.d;
+        m.tx -= n.tx;
+        m.ty -= n.ty;
+        return m;
     }
     
     public inline function clone():Matrix3x2

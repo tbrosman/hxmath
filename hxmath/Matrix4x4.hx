@@ -100,69 +100,17 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
     @:op(A + B)
     public static inline function add(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
-        return new Matrix4x4([
-            a.m00 + b.m00, a.m10 + b.m10, a.m20 + b.m20, a.m30 + b.m30,
-            a.m01 + b.m01, a.m11 + b.m11, a.m21 + b.m21, a.m31 + b.m31,
-            a.m02 + b.m02, a.m12 + b.m12, a.m22 + b.m22, a.m32 + b.m32,
-            a.m03 + b.m03, a.m13 + b.m13, a.m23 + b.m23, a.m33 + b.m33
-        ]);
-    }
-    
-    @:op(A += B)
-    public static inline function addWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
-    {
-        a.m00 += b.m00;
-        a.m10 += b.m10;
-        a.m20 += b.m20;
-        a.m30 += b.m30;
-        a.m01 += b.m01;
-        a.m11 += b.m11;
-        a.m21 += b.m21;
-        a.m31 += b.m31;
-        a.m02 += b.m02;
-        a.m12 += b.m12;
-        a.m22 += b.m22;
-        a.m32 += b.m32;
-        a.m03 += b.m03;
-        a.m13 += b.m13;
-        a.m23 += b.m23;
-        a.m33 += b.m33;
-        return a;
+        return a.clone()
+            .addWith(b);
     }
     
     @:op(A - B)
     public static inline function subtract(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
-        return new Matrix4x4([
-            a.m00 - b.m00, a.m10 - b.m10, a.m20 - b.m20, a.m30 - b.m30,
-            a.m01 - b.m01, a.m11 - b.m11, a.m21 - b.m21, a.m31 - b.m31,
-            a.m02 - b.m02, a.m12 - b.m12, a.m22 - b.m22, a.m32 - b.m32,
-            a.m03 - b.m03, a.m13 - b.m13, a.m23 - b.m23, a.m33 - b.m33
-        ]);
+        return a.clone()
+            .subtractWith(b);
     }
     
-    @:op(A -= B)
-    public static inline function subtractWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
-    {
-        a.m00 -= b.m00;
-        a.m10 -= b.m10;
-        a.m20 -= b.m20;
-        a.m30 -= b.m30;
-        a.m01 -= b.m01;
-        a.m11 -= b.m11;
-        a.m21 -= b.m21;
-        a.m31 -= b.m31;
-        a.m02 -= b.m02;
-        a.m12 -= b.m12;
-        a.m22 -= b.m22;
-        a.m32 -= b.m32;
-        a.m03 -= b.m03;
-        a.m13 -= b.m13;
-        a.m23 -= b.m23;
-        a.m33 -= b.m33;
-        return b;
-    }
-
     @:op(-A)
     public static inline function negate(a:Matrix4x4):Matrix4x4
     {
@@ -200,6 +148,48 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
     public static inline function notEquals(a:Matrix4x4, b:Matrix4x4):Bool
     {
         return !(a == b);
+    }
+    
+    public static inline function addWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
+    {
+        a.m00 += b.m00;
+        a.m10 += b.m10;
+        a.m20 += b.m20;
+        a.m30 += b.m30;
+        a.m01 += b.m01;
+        a.m11 += b.m11;
+        a.m21 += b.m21;
+        a.m31 += b.m31;
+        a.m02 += b.m02;
+        a.m12 += b.m12;
+        a.m22 += b.m22;
+        a.m32 += b.m32;
+        a.m03 += b.m03;
+        a.m13 += b.m13;
+        a.m23 += b.m23;
+        a.m33 += b.m33;
+        return a;
+    }
+    
+    public static inline function subtractWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
+    {
+        a.m00 -= b.m00;
+        a.m10 -= b.m10;
+        a.m20 -= b.m20;
+        a.m30 -= b.m30;
+        a.m01 -= b.m01;
+        a.m11 -= b.m11;
+        a.m21 -= b.m21;
+        a.m31 -= b.m31;
+        a.m02 -= b.m02;
+        a.m12 -= b.m12;
+        a.m22 -= b.m22;
+        a.m32 -= b.m32;
+        a.m03 -= b.m03;
+        a.m13 -= b.m13;
+        a.m23 -= b.m23;
+        a.m33 -= b.m33;
+        return a;
     }
     
     public inline function clone():Matrix4x4

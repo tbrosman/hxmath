@@ -58,33 +58,15 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     @:op(A + B)
     public static inline function add(a:Vector2, b:Vector2):Vector2
     {
-        return new Vector2(
-            a.x + b.x,
-            a.y + b.y);
-    }
-    
-    @:op(A += B)
-    public static inline function addWith(a:Vector2, b:Vector2):Vector2
-    {
-        a.x += b.x;
-        a.y += b.y;
-        return a;
+        return a.clone()
+            .addWith(b);
     }
     
     @:op(A - B)
     public static inline function subtract(a:Vector2, b:Vector2):Vector2
     {
-        return new Vector2(
-            a.x - b.x,
-            a.y - b.y);
-    }
-    
-    @:op(A - B)
-    public static inline function subtractWith(a:Vector2, b:Vector2):Vector2
-    {
-        a.x -= b.x;
-        a.y -= b.y;
-        return a;
+        return a.clone()
+            .subtractWith(b);
     }
     
     @:op(-A)
@@ -105,6 +87,20 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     public static inline function notEquals(a:Vector2, b:Vector2):Bool
     {
         return !(a == b);
+    }
+    
+    public static inline function addWith(a:Vector2, b:Vector2):Vector2
+    {
+        a.x += b.x;
+        a.y += b.y;
+        return a;
+    }
+    
+    public static inline function subtractWith(a:Vector2, b:Vector2):Vector2
+    {
+        a.x -= b.x;
+        a.y -= b.y;
+        return a;
     }
 
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2

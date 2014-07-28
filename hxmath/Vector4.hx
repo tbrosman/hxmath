@@ -28,41 +28,15 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     @:op(A + B)
     public static inline function add(a:Vector4, b:Vector4):Vector4
     {
-        return new Vector4(
-            a.x + b.x,
-            a.y + b.y,
-            a.z + b.z,
-            a.w + b.w);
-    }
-    
-    @:op(A += B)
-    public static inline function addWith(a:Vector4, b:Vector4):Vector4
-    {
-        a.x += b.x;
-        a.y += b.y;
-        a.z += b.z;
-        a.w += b.w;
-        return a;
+        return a.clone()
+            .addWith(b);
     }
     
     @:op(A - B)
     public static inline function subtract(a:Vector4, b:Vector4):Vector4
     {
-        return new Vector4(
-            a.x - b.x,
-            a.y - b.y,
-            a.z - b.z,
-            a.w - b.w);
-    }
-    
-    @:op(A -= B)
-    public static inline function subtractWith(a:Vector4, b:Vector4):Vector4
-    {
-        a.x -= b.x;
-        a.y -= b.y;
-        a.z -= b.z;
-        a.w -= b.w;
-        return a;
+        return a.clone()
+            .subtractWith(b);
     }
     
     @:op(A * B)
@@ -109,6 +83,24 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     public static inline function notEquals(a:Vector4, b:Vector4):Bool
     {
         return !(a == b);
+    }
+    
+    public static inline function addWith(a:Vector4, b:Vector4):Vector4
+    {
+        a.x += b.x;
+        a.y += b.y;
+        a.z += b.z;
+        a.w += b.w;
+        return a;
+    }
+    
+    public static inline function subtractWith(a:Vector4, b:Vector4):Vector4
+    {
+        a.x -= b.x;
+        a.y -= b.y;
+        a.z -= b.z;
+        a.w -= b.w;
+        return a;
     }
     
     public static inline function lerp(a:Vector4, b:Vector4, t:Float):Vector4
