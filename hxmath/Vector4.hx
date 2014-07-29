@@ -11,6 +11,8 @@ typedef Vector4Shape =
 @:forward(x, y, z, w)
 abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
 {
+    public static inline var elementCount:Int = 4;
+    
     public static var zero(get, never):Vector4;
     public static var xAxis(get, never):Vector4;
     public static var yAxis(get, never):Vector4;
@@ -150,6 +152,24 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
             default:
                 throw "Invalid element";
         }
+    }
+    
+    /**
+     * Apply a scalar function to each element.
+     * 
+     * @param func  The function to apply.
+     * @return      The modified object.
+     */
+    public inline function applyScalarFunc(func:Float->Float):Vector4
+    {
+        var self:Vector4 = this;
+        
+        for (i in 0...4)
+        {
+            self[i] = func(self[i]);
+        }
+        
+        return self;
     }
     
     private inline function get_length():Float

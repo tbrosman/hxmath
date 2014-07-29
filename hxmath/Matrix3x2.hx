@@ -24,6 +24,8 @@ typedef Matrix3x2Shape =
 @:forward(a, b, c, d, tx, ty)
 abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
 {
+    public static inline var elementCount:Int = 6;
+    
     public static var zero(get, never):Matrix3x2;
     public static var identity(get, never):Matrix3x2;
     
@@ -242,6 +244,24 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
             default:
                 throw "Invalid row";
         }
+    }
+    
+    /**
+     * Apply a scalar function to each element.
+     * 
+     * @param func  The function to apply.
+     * @return      The modified object.
+     */
+    public inline function applyScalarFunc(func:Float->Float):Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        
+        for (i in 0...6)
+        {
+            self[i] = func(self[i]);
+        }
+        
+        return self;
     }
     
     private static inline function get_zero():Matrix3x2

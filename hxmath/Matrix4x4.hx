@@ -31,6 +31,8 @@ typedef Matrix4x4Shape =
     m30, m31, m32, m33)
 abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
 {
+    public static inline var elementCount:Int = 16;
+    
     public static var zero(get, never):Matrix4x4;
     public static var identity(get, never):Matrix4x4;
     
@@ -346,6 +348,24 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             default:
                 throw "Invalid row";
         }
+    }
+    
+    /**
+     * Apply a scalar function to each element.
+     * 
+     * @param func  The function to apply.
+     * @return      The modified object.
+     */
+    public inline function applyScalarFunc(func:Float->Float):Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        
+        for (i in 0...16)
+        {
+            self[i] = func(self[i]);
+        }
+        
+        return self;
     }
     
     private static inline function get_zero():Matrix4x4

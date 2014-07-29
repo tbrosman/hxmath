@@ -22,6 +22,8 @@ typedef Matrix3x3Shape =
     m20, m21, m22)
 abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
 {
+    public static inline var elementCount:Int = 9;
+    
     public static var zero(get, never):Matrix3x3;
     public static var identity(get, never):Matrix3x3;
     
@@ -349,6 +351,24 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             default:
                 throw "Invalid row";
         }
+    }
+    
+    /**
+     * Apply a scalar function to each element.
+     * 
+     * @param func  The function to apply.
+     * @return      The modified object.
+     */
+    public inline function applyScalarFunc(func:Float->Float):Matrix3x3
+    {
+        var self:Matrix3x3 = this;
+        
+        for (i in 0...9)
+        {
+            self[i] = func(self[i]);
+        }
+        
+        return self;
     }
     
     private static inline function get_zero():Matrix3x3

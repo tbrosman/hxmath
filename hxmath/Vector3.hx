@@ -10,6 +10,8 @@ typedef Vector3Shape =
 @:forward(x, y, z)
 abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
 {
+    public static inline var elementCount:Int = 3;
+    
     public static var zero(get, never):Vector3;
     public static var xAxis(get, never):Vector3;
     public static var yAxis(get, never):Vector3;
@@ -138,6 +140,24 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             default:
                 throw "Invalid element";
         }
+    }
+    
+    /**
+     * Apply a scalar function to each element.
+     * 
+     * @param func  The function to apply.
+     * @return      The modified object.
+     */
+    public inline function applyScalarFunc(func:Float->Float):Vector3
+    {
+        var self:Vector3 = this;
+        
+        for (i in 0...3)
+        {
+            self[i] = func(self[i]);
+        }
+        
+        return self;
     }
     
     private inline function get_length():Float

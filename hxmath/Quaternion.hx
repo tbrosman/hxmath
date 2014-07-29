@@ -9,6 +9,8 @@ typedef QuaternionShape =
 @:forward(s, v)
 abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
 {
+    public static inline var elementCount:Int = 4;
+    
     public static var zero(get, never):Quaternion;
     public static var identity(get, never):Quaternion;
     
@@ -155,6 +157,24 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
             default:
                 throw "Invalid element";
         }
+    }
+    
+    /**
+     * Apply a scalar function to each element.
+     * 
+     * @param func  The function to apply.
+     * @return      The modified object.
+     */
+    public inline function applyScalarFunc(func:Float->Float):Quaternion
+    {
+        var self:Quaternion = this;
+        
+        for (i in 0...4)
+        {
+            self[i] = func(self[i]);
+        }
+        
+        return self;
     }
 
     /**

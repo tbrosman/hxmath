@@ -9,6 +9,8 @@ typedef Vector2Shape =
 @:forward(x, y)
 abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
 {
+    public static inline var elementCount:Int = 2;
+    
     public static var zero(get, never):Vector2;
     public static var xAxis(get, never):Vector2;
     public static var yAxis(get, never):Vector2;
@@ -144,6 +146,24 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         }
     }
     
+    /**
+     * Apply a scalar function to each element.
+     * 
+     * @param func  The function to apply.
+     * @return      The modified object.
+     */
+    public inline function applyScalarFunc(func:Float->Float):Vector2
+    {
+        var self:Vector2 = this;
+        
+        for (i in 0...2)
+        {
+            self[i] = func(self[i]);
+        }
+        
+        return self;
+    }
+
     private static inline function get_zero():Vector2
     {
         return new Vector2(0.0, 0.0);

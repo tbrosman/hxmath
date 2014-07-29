@@ -221,6 +221,83 @@ class TestStructures extends MathTestCase
         assertEquals(1.0, quat[2]);
     }
     
+    public function testApplyScalarFunc()
+    {
+        var testData:Array<Dynamic> = [
+            {
+                f:     Vector2.applyScalarFunc,
+                zero:  Vector2.zero,
+                count: Vector2.elementCount,
+                get:   Vector2.getArrayElement,
+                set:   Vector2.setArrayElement
+            },
+            {
+                f:     Vector3.applyScalarFunc,
+                zero:  Vector3.zero,
+                count: Vector3.elementCount,
+                get:   Vector3.getArrayElement,
+                set:   Vector3.setArrayElement
+            },
+            {
+                f:     Vector4.applyScalarFunc,
+                zero:  Vector4.zero,
+                count: Vector4.elementCount,
+                get:   Vector4.getArrayElement,
+                set:   Vector4.setArrayElement
+            },
+            {
+                f:     Matrix2x2.applyScalarFunc,
+                zero:  Matrix2x2.zero,
+                count: Matrix2x2.elementCount,
+                get:   Matrix2x2.getArrayElement,
+                set:   Matrix2x2.setArrayElement
+            },
+            {
+                f:     Matrix3x2.applyScalarFunc,
+                zero:  Matrix3x2.zero,
+                count: Matrix3x2.elementCount,
+                get:   Matrix3x2.getArrayElement,
+                set:   Matrix3x2.setArrayElement
+            },
+            {
+                f:     Matrix3x3.applyScalarFunc,
+                zero:  Matrix3x3.zero,
+                count: Matrix3x3.elementCount,
+                get:   Matrix3x3.getArrayElement,
+                set:   Matrix3x3.setArrayElement
+            },
+            {
+                f:     Matrix4x4.applyScalarFunc,
+                zero:  Matrix4x4.zero,
+                count: Matrix4x4.elementCount,
+                get:   Matrix4x4.getArrayElement,
+                set:   Matrix4x4.setArrayElement
+            },
+            {
+                f:     Quaternion.applyScalarFunc,
+                zero:  Quaternion.zero,
+                count: Quaternion.elementCount,
+                get:   Quaternion.getArrayElement,
+                set:   Quaternion.setArrayElement
+            }];
+        
+        for (data in testData)
+        {
+            var v = data.zero;
+            data.set(v, 1, 0.1);
+            data.f(v, Math.ceil);
+            
+            var sum = 0.0;
+            for (i in 0...data.count)
+            {
+                sum += data.get(v, i);
+            }
+            
+            assertEquals(1.0, sum);
+        }
+        
+    }
+    
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
     {
         original.tag = "original";
