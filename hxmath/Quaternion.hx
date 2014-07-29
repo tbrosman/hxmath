@@ -112,6 +112,50 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         var r = Math.sqrt(r2);
         return (1.0 / r) * a;
     }
+    
+    public inline function clone():Quaternion
+    {
+        var self:Quaternion = this;
+        return new Quaternion(self.s, self.v);
+    }
+    
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Float
+    {
+        var self:Quaternion = this;
+        switch (i)
+        {
+            case 0:
+                return self.s;
+            case 1:
+                return self.v.x;
+            case 2:
+                return self.v.y;
+            case 3:
+                return self.v.z;
+            default:
+                throw "Invalid element";
+        }
+    }
+    
+    @:arrayAccess
+    public inline function setArrayElement(i:Int, value:Float):Float
+    {
+        var self:Quaternion = this;
+        switch (i)
+        {
+            case 0:
+                return self.s = value;
+            case 1:
+                return self.v.x = value;
+            case 2:
+                return self.v.y = value;
+            case 3:
+                return self.v.z = value;
+            default:
+                throw "Invalid element";
+        }
+    }
 
     /**
      * Get the log for the quaternion.
@@ -172,12 +216,6 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         return 2.0 * (self.v * u) * self.v +
             (self.s * self.s - self.v * self.v) * u +
             2 * self.s * (self.v ^ u);
-    }
-    
-    public inline function clone():Quaternion
-    {
-        var self:Quaternion = this;
-        return new Quaternion(self.s, self.v);
     }
     
     private static inline function get_zero():Quaternion

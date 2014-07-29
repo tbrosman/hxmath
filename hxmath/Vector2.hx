@@ -114,6 +114,36 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         return new Vector2(self.x, self.y);
     }
     
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Float
+    {
+        var self:Vector2 = this;
+        switch (i)
+        {
+            case 0:
+                return self.x;
+            case 1:
+                return self.y;
+            default:
+                throw "Invalid element";
+        }
+    }
+    
+    @:arrayAccess
+    public inline function setArrayElement(i:Int, value:Float):Float
+    {
+        var self:Vector2 = this;
+        switch (i)
+        {
+            case 0:
+                return self.x = value;
+            case 1:
+                return self.y = value;
+            default:
+                throw "Invalid element";
+        }
+    }
+    
     private static inline function get_zero():Vector2
     {
         return new Vector2(0.0, 0.0);

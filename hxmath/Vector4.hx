@@ -114,6 +114,44 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
         return new Vector4(self.x, self.y, self.z, self.w);
     }
     
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Float
+    {
+        var self:Vector4 = this;
+        switch (i)
+        {
+            case 0:
+                return self.x;
+            case 1:
+                return self.y;
+            case 2:
+                return self.z;
+            case 3:
+                return self.w;
+            default:
+                throw "Invalid element";
+        }
+    }
+    
+    @:arrayAccess
+    public inline function setArrayElement(i:Int, value:Float):Float
+    {
+        var self:Vector4 = this;
+        switch (i)
+        {
+            case 0:
+                return self.x = value;
+            case 1:
+                return self.y = value;
+            case 2:
+                return self.z = value;
+            case 3:
+                return self.w = value;
+            default:
+                throw "Invalid element";
+        }
+    }
+    
     private inline function get_length():Float
     {
         var self:Vector4 = this;

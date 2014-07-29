@@ -174,6 +174,53 @@ class TestStructures extends MathTestCase
             });
     }
     
+    public function testArrayAccess()
+    {
+        var vec2 = Vector2.zero;
+        vec2[1] = 1.0;
+        assertEquals(1.0, vec2.y);
+        assertEquals(1.0, vec2[1]);
+        
+        var vec3 = Vector3.zero;
+        vec3[1] = 1.0;
+        assertEquals(1.0, vec3.y);
+        assertEquals(1.0, vec3[1]);
+        
+        var vec4 = Vector4.zero;
+        vec4[1] = 1.0;
+        assertEquals(1.0, vec4.y);
+        assertEquals(1.0, vec4[1]);
+        
+        var mat2x2 = Matrix2x2.zero;
+        mat2x2[2] = 1.0;
+        assertEquals(1.0, mat2x2.c);
+        assertEquals(1.0, mat2x2[2]);
+        assertEquals(1.0, mat2x2.getElement(0, 1));
+        
+        var mat3x2 = Matrix3x2.zero;
+        mat3x2[3] = 1.0;
+        assertEquals(1.0, mat3x2.c);
+        assertEquals(1.0, mat3x2[3]);
+        assertEquals(1.0, mat3x2.getElement(0, 1));
+        
+        var mat3x3 = Matrix3x3.zero;
+        mat3x3[5] = 1.0;
+        assertEquals(1.0, mat3x3.m21);
+        assertEquals(1.0, mat3x3[5]);
+        assertEquals(1.0, mat3x3.getElement(2, 1));
+        
+        var mat4x4 = Matrix4x4.zero;
+        mat4x4[5] = 1.0;
+        assertEquals(1.0, mat4x4.m11);
+        assertEquals(1.0, mat4x4[5]);
+        assertEquals(1.0, mat4x4.getElement(1, 1));
+        
+        var quat = Quaternion.zero;
+        quat[2] = 1.0;
+        assertEquals(1.0, quat.v.y);
+        assertEquals(1.0, quat[2]);
+    }
+    
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
     {
         original.tag = "original";

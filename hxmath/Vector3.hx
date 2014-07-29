@@ -106,6 +106,40 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         return new Vector3(self.x, self.y, self.z);
     }
     
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Float
+    {
+        var self:Vector3 = this;
+        switch (i)
+        {
+            case 0:
+                return self.x;
+            case 1:
+                return self.y;
+            case 2:
+                return self.z;
+            default:
+                throw "Invalid element";
+        }
+    }
+    
+    @:arrayAccess
+    public inline function setArrayElement(i:Int, value:Float):Float
+    {
+        var self:Vector3 = this;
+        switch (i)
+        {
+            case 0:
+                return self.x = value;
+            case 1:
+                return self.y = value;
+            case 2:
+                return self.z = value;
+            default:
+                throw "Invalid element";
+        }
+    }
+    
     private inline function get_length():Float
     {
         var self:Vector3 = this;

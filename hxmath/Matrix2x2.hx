@@ -153,12 +153,28 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         );
     }
     
-    public inline function element(column:Int, row:Int):Float
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Float
+    {
+        var row:Int = Math.floor(i / 2);
+        var col:Int = i - row * 2;
+        return getElement(col, row);
+    }
+    
+    @:arrayAccess
+    public inline function setArrayElement(i:Int, value:Float):Float
+    {
+        var row:Int = Math.floor(i / 2);
+        var col:Int = i - row * 2;
+        return setElement(col, row, value);
+    }
+    
+    public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix2x2 = this;
         var k:Float;
-        
-        switch [row, column]
+
+        switch [column, row]
         {
             case [0, 0]:
                 k = self.a;
@@ -173,6 +189,27 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         }
         
         return k;
+    }
+    
+    public inline function setElement(column:Int, row:Int, value:Float):Float
+    {
+        var self:Matrix2x2 = this;
+        
+        switch [column, row]
+        {
+            case [0, 0]:
+                self.a = value;
+            case [1, 0]:
+                self.b = value;
+            case [0, 1]:
+                self.c = value;
+            case [1, 1]:
+                self.d = value;
+            default:
+                throw "Invalid element";
+        }
+        
+        return value;
     }
     
     public inline function col(index:Int):Vector2

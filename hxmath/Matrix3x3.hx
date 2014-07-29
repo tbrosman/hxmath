@@ -238,6 +238,85 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         ]);
     }
     
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Float
+    {
+        var row:Int = Math.floor(i / 3);
+        var col:Int = i - row * 3;
+        return getElement(col, row);
+    }
+    
+    @:arrayAccess
+    public inline function setArrayElement(i:Int, value:Float):Float
+    {
+        var row:Int = Math.floor(i / 3);
+        var col:Int = i - row * 3;
+        return setElement(col, row, value);
+    }
+    
+    public inline function getElement(column:Int, row:Int):Float
+    {
+        var self:Matrix3x3 = this;
+        var k:Float;
+
+        switch [column, row]
+        {
+            case [0, 0]:
+                k = self.m00;
+            case [1, 0]:
+                k = self.m10;
+            case [2, 0]:
+                k = self.m20;
+            case [0, 1]:
+                k = self.m01;
+            case [1, 1]:
+                k = self.m11;
+            case [2, 1]:
+                k = self.m21;
+            case [0, 2]:
+                k = self.m02;
+            case [1, 2]:
+                k = self.m12;
+            case [2, 2]:
+                k = self.m22;
+            default:
+                throw "Invalid element";
+        }
+        
+        return k;
+    }
+    
+    public inline function setElement(column:Int, row:Int, value:Float):Float
+    {
+        var self:Matrix3x3 = this;
+
+        switch [column, row]
+        {
+            case [0, 0]:
+                self.m00 = value;
+            case [1, 0]:
+                self.m10 = value;
+            case [2, 0]:
+                self.m20 = value;
+            case [0, 1]:
+                self.m01 = value;
+            case [1, 1]:
+                self.m11 = value;
+            case [2, 1]:
+                self.m21 = value;
+            case [0, 2]:
+                self.m02 = value;
+            case [1, 2]:
+                self.m12 = value;
+            case [2, 2]:
+                self.m22 = value;
+            default:
+                throw "Invalid element";
+        }
+        
+        return value;
+    }
+    
     public inline function col(index:Int):Vector3
     {
         var self:Matrix3x3 = this;

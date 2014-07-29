@@ -145,12 +145,28 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
             self.tx, self.ty);
     }
     
-    public inline function element(column:Int, row:Int):Float
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Float
+    {
+        var row:Int = Math.floor(i / 3);
+        var col:Int = i - row * 3;
+        return getElement(col, row);
+    }
+    
+    @:arrayAccess
+    public inline function setArrayElement(i:Int, value:Float):Float
+    {
+        var row:Int = Math.floor(i / 3);
+        var col:Int = i - row * 3;
+        return setElement(col, row, value);
+    }
+    
+    public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix3x2 = this;
         var k:Float;
         
-        switch [row, column]
+        switch [column, row]
         {
             case [0, 0]:
                 k = self.a;
@@ -169,6 +185,31 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
         }
         
         return k;
+    }
+    
+    public inline function setElement(column:Int, row:Int, value:Float):Float
+    {
+        var self:Matrix3x2 = this;
+        
+        switch [column, row]
+        {
+            case [0, 0]:
+                self.a  = value;
+            case [1, 0]:
+                self.b  = value;
+            case [2, 0]:
+                self.tx = value;
+            case [0, 1]:
+                self.c  = value;
+            case [1, 1]:
+                self.d  = value;
+            case [2, 1]:
+                self.ty = value;
+            default:
+                throw "Invalid element";
+        }
+        
+        return value;
     }
     
     public inline function col(index:Int):Vector2
