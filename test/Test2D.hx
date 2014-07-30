@@ -68,8 +68,8 @@ class Test2D extends MathTestCase
         // After 90 degree ccw rotation:
         // x -> +y
         // y -> -x
-        assertApproxEquals(((Matrix2x2.rotation(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length, 0.0);
-        assertApproxEquals(((Matrix2x2.rotation(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length, 0.0);
+        assertApproxEquals(((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length, 0.0);
+        assertApproxEquals(((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length, 0.0);
     }
     
     public function testPolarConversion()
@@ -92,5 +92,21 @@ class Test2D extends MathTestCase
         assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(1, -1)) < 0.0);
         assertApproxEquals(Vector2.yAxis.signedAngleWith(Vector2.xAxis), -Math.PI / 2.0);
         assertApproxEquals(Vector2.xAxis.signedAngleWith(Vector2.yAxis), Math.PI / 2.0);
+    }
+    
+    public function testOrbit()
+    {
+        for (i in 0...5)
+        {
+            var center = randomVector2() + new Vector2(1, 1);
+            var m:Matrix3x2 = Matrix3x2.orbit(center, Math.PI / 2);
+            
+            for (j in 0...5)
+            {
+                var point = randomVector2();
+                var pointAfter = m * point;
+                assertApproxEquals(0.0, (point - center) * (pointAfter - center));
+            }
+        }
     }
 }

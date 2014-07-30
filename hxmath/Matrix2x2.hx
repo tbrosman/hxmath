@@ -123,7 +123,7 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
      * @param angle     The angle to rotate (in radians).
      * @return          The rotation matrix.
      */
-    public static inline function rotation(angle:Float):Matrix2x2
+    public static inline function rotate(angle:Float):Matrix2x2
     {
         var s = Math.sin(angle);
         var c = Math.cos(angle);

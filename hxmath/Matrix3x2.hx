@@ -33,7 +33,7 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     public var t(get, set):Vector2;
     
     // 2x2 sub-matrix corresponding to the linear portion of the transformation
-    public var linearSubMatrix(get, never):Matrix2x2;
+    public var linearSubMatrix(get, set):Matrix2x2;
     
     // Linear portion is row-major, affine portion is column-major
     public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0, tx:Float = 0.0, ty:Float = 0.0) 
@@ -135,6 +135,49 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
         m.d  -= n.d;
         m.tx -= n.tx;
         m.ty -= n.ty;
+        return m;
+    }
+    
+    /**
+     * Rotate by a given angle.
+     * 
+     * @param angle     The angle to rotate by (ccw).
+     * @return          The matrix.
+     */
+    public static inline function rotate(angle:Float):Matrix3x2
+    {
+        var m:Matrix3x2 = Matrix3x2.get_identity();
+        m.linearSubMatrix = Matrix2x2.rotate(angle);
+        return m;
+    }
+    
+    /**
+     * Translate by a given vector.
+     * 
+     * @param v     The vector to translate by.
+     * @return      The matrix.
+     */
+    public static inline function translate(v:Vector2):Matrix3x2
+    {
+        var m:Matrix3x2 = Matrix3x2.get_identity();
+        m.t = v;
+        return m;
+    }
+    
+    /**
+     * Orbit around a given center point. The matrix is equivalent to the following composition:
+     *
+     * Matrix3x2.translate(center) * Matrix3x2.rotate(angle) * Matrix3x2.translate(-center)
+     * 
+     * @param center    The point to rotate around.
+     * @param angle     The angle to rotate ccw around the center.
+     * @return          The matrix.
+     */
+    public static inline function orbit(center:Vector2, angle:Float):Matrix3x2
+    {
+        var m:Matrix3x2 = Matrix3x2.get_identity();
+        m.linearSubMatrix = Matrix2x2.rotate(angle);
+        m.t = center - (m.linearSubMatrix * center);
         return m;
     }
     
@@ -298,7 +341,19 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     private inline function get_linearSubMatrix():Matrix2x2
     {
         var self2x2:Matrix2x2 = this;
-        var selfLinear:Matrix2x2 = self2x2;
-        return selfLinear;
+        return self2x2;
+    }
+    
+    private inline function set_linearSubMatrix(value:Matrix2x2):Matrix2x2
+    {
+        var self2x2:Matrix2x2 = this;
+        
+        // TODO: copy functions
+        self2x2.a = value.a;
+        self2x2.b = value.b;
+        self2x2.c = value.c;
+        self2x2.d = value.d;
+        
+        return self2x2;
     }
 }

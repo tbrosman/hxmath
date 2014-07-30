@@ -3,6 +3,7 @@ import haxe.PosInfos;
 import hxmath.Matrix2x2;
 import hxmath.Matrix3x3;
 import hxmath.Matrix4x4;
+import hxmath.Vector2;
 import nanotest.NanoTestCase;
 
 /**
@@ -43,6 +44,14 @@ class MathTestCase extends NanoTestCase
         {
             fail('expected $expected +-$tolerance but was $actual');
         }
+    }
+    
+    private function randomVector2(precision:Float = 1e-4):Vector2
+    {
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        var data = randomArray(2, distribution);
+        return new Vector2(data[0], data[1]);
     }
     
     private function randomMatrix2x2(precision:Float=1e-4):Matrix2x2
