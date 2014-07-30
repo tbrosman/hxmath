@@ -77,4 +77,20 @@ class Test2D extends MathTestCase
         assertApproxEquals(0.0, (Vector2.fromPolar(Math.PI, 1.0) + Vector2.xAxis).length);
         assertApproxEquals(Math.PI, (-Vector2.xAxis).angle);
     }
+    
+    public function testNorms()
+    {
+        assertTrue(Vector2.yAxis.normal.leftRot * new Vector2(-1, 0) > 0.0);
+        assertTrue(Vector2.yAxis.normal.rightRot * new Vector2(-1, 0) < 0.0);
+    }
+    
+    public function testAngles()
+    {
+        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)) > 0.0);
+        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(1, 1)) < 0.0);
+        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(-1, -1)) > 0.0);
+        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(1, -1)) < 0.0);
+        assertApproxEquals(Vector2.yAxis.signedAngleWith(Vector2.xAxis), -Math.PI / 2.0);
+        assertApproxEquals(Vector2.xAxis.signedAngleWith(Vector2.yAxis), Math.PI / 2.0);
+    }
 }

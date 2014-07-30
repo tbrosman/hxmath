@@ -18,6 +18,9 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     public var length(get, never):Float;
     public var lengthSq(get, never):Float;
     public var angle(get, never):Float;
+    public var normal(get, never):Vector2;
+    public var leftRot(get, never):Vector2;
+    public var rightRot(get, never):Vector2;
     
     public function new(x:Float = 0.0, y:Float = 0.0)
     {
@@ -163,6 +166,34 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         
         return self;
     }
+    
+    /**
+     * Find the (unsigned) angle between this vector and another vector.
+     * 
+     * @param b     The other vector.
+     * @return      The unsigned angle between this vector and the other in radians.
+     */
+    public inline function angleWith(b:Vector2):Float
+    {
+        var self:Vector2 = this;
+        return Math.acos((self * b) / (self.length * b.length));
+    }
+    
+    /**
+     * Find the signed angle between this vector and another vector (i.e. the signed angle this vector must be rotated
+     * to align with the other vector). If the other vector is farther rotated counterclockwise, the angle will be
+     * positive, whereas if the other vector is farther rotated clockwise, the angle will be negative.
+     * 
+     * @param b     The other vector.
+     * @return      The signed angle between this vector and the other in radians.
+     */
+    public inline function signedAngleWith(b:Vector2):Float
+    {
+        var self:Vector2 = this;
+        
+        // sign(|a b|) = sign(sin(angle)) = sign(angle)
+        return Math.asin(MathUtil.det2x2(self.x, b.x, self.y, b.y) / (self.length * b.length));
+    }
 
     private static inline function get_zero():Vector2
     {
@@ -199,6 +230,33 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     {
         var self:Vector2 = this;
         return Math.atan2(self.y, self.x);
+    }
+    
+    private inline function get_normal():Vector2
+    {
+        var self:Vector2 = this;
+        var length = self.length;
+        
+        if (length > 0.0)
+        {
+            return new Vector2(self.x / length, self.y / length);
+        }
+        else
+        {
+            return Vector2.zero;
+        }
+    }
+    
+    private inline function get_leftRot():Vector2
+    {
+        var self:Vector2 = this;
+        return new Vector2(-self.y, self.x);
+    }
+    
+    private inline function get_rightRot():Vector2
+    {
+        var self:Vector2 = this;
+        return new Vector2(self.y, -self.x);
     }
 }
 
