@@ -86,12 +86,16 @@ class Test2D extends MathTestCase
     
     public function testAngles()
     {
-        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)) > 0.0);
-        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(1, 1)) < 0.0);
-        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(-1, -1)) > 0.0);
-        assertTrue(Vector2.yAxis.signedAngleWith(new Vector2(1, -1)) < 0.0);
+        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)), Math.PI / 4.0);
+        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, 1)), -Math.PI / 4.0);
+        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, -1)), 3.0 * Math.PI / 4.0);
+        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, -1)), -3.0 * Math.PI / 4.0);
+        
         assertApproxEquals(Vector2.yAxis.signedAngleWith(Vector2.xAxis), -Math.PI / 2.0);
         assertApproxEquals(Vector2.xAxis.signedAngleWith(Vector2.yAxis), Math.PI / 2.0);
+        
+        assertApproxEquals(Vector2.yAxis.angleWith(Vector2.xAxis), Math.PI / 2.0);
+        assertApproxEquals(Vector2.xAxis.angleWith(Vector2.yAxis), Math.PI / 2.0);
     }
     
     public function testOrbit()

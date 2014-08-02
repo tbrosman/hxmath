@@ -42,7 +42,7 @@ class MathTestCase extends NanoTestCase
         }
         else
         {
-            fail('expected $expected +-$tolerance but was $actual');
+            fail('expected $expected +-$tolerance but was $actual', p);
         }
     }
     

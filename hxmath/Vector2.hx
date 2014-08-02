@@ -168,10 +168,10 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     }
     
     /**
-     * Find the (unsigned) angle between this vector and another vector.
+     * Find the arccosine of the angle between two vectors.
      * 
      * @param b     The other vector.
-     * @return      The unsigned angle between this vector and the other in radians.
+     * @return      The arccosine angle between this vector and the other in radians.
      */
     public inline function angleWith(b:Vector2):Float
     {
@@ -180,9 +180,13 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     }
     
     /**
-     * Find the signed angle between this vector and another vector (i.e. the signed angle this vector must be rotated
-     * to align with the other vector). If the other vector is farther rotated counterclockwise, the angle will be
-     * positive, whereas if the other vector is farther rotated clockwise, the angle will be negative.
+     * Find the signed angle between two vectors.
+     * 
+     * If the other vector is in the left halfspace of this vector (e.g. the shortest angle to align
+     * this vector with the other is ccw) then the result is positive.
+     * 
+     * If the other vector is in the right halfspace of this vector (e.g. the shortest angle to align
+     * this vector with the other is cw) then the result is negative.
      * 
      * @param b     The other vector.
      * @return      The signed angle between this vector and the other in radians.
@@ -191,8 +195,11 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     {
         var self:Vector2 = this;
         
+        // Compensate for the range of arcsine [-pi/2, pi/2) by using arccos [0, pi) to do the actual angle calculation
+        // and the sine (from the determinant) to calculate the sign.
+        
         // sign(|a b|) = sign(sin(angle)) = sign(angle)
-        return Math.asin(MathUtil.det2x2(self.x, b.x, self.y, b.y) / (self.length * b.length));
+        return MathUtil.sign(MathUtil.det2x2(self.x, b.x, self.y, b.y)) * self.angleWith(b);
     }
 
     private static inline function get_zero():Vector2
