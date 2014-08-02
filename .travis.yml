@@ -1,0 +1,16 @@
+language: java
+
+env: 
+  - TARGET=neko
+
+before_install:
+  - sudo add-apt-repository ppa:eyecreate/haxe -y
+  - sudo apt-get update
+  - sudo apt-get install haxe -y
+  - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
+  - mkdir ~/haxelib
+  - haxelib -notimeout setup ~/haxelib 
+  - haxelib -notimeout install nanotest
+
+script:
+  - haxe test_neko.hxml || neko Test.n
