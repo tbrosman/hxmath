@@ -1,5 +1,7 @@
 # HxMath
 
+[![Build Status](https://travis-ci.org/tbrosman/hxmath.svg?branch=master)](https://travis-ci.org/tbrosman/hxmath)
+
 ## What it is
 
 A game-oriented math library for the Haxe language using abstracts instead of classes to take advantage of Haxe's structural subtyping and maximize compatibility with existing libraries. Specifically, (most of) the abstracts are compatible with OpenFL's existing math structures: just cast to the abstract type, no copying necessary!
@@ -18,13 +20,13 @@ You can get the latest stable release on haxelib: http://lib.haxe.org/p/hxmath
 
 Why write this:
 
-```
+```haxe
     a.subtract(b).dot(c.cross(d))
 ```
 
 when you can write this:
 
-```
+```haxe
     (a - b) * (c ^ d)
 ```
 
@@ -33,7 +35,7 @@ when you can write this:
 * Shape-compatible with (most of) the existing OpenFL math structures. This means no more copying/constructing new types to perform math operations.
 
 Specifically, you can cast both openfl.Vector to a Vector2 without copying, manually construct another Vector2 from FlxPoint (which has a different getter/setter signature for x/y), then use them together:
-```
+```haxe
         var pointA = new flixel.util.FlxPoint(3.0, 2.0);
         var pointACast:Vector2 = new Vector2(pointA.x, pointA.y);
         var pointBCast:Vector2 = new flash.geom.Point(2.0, 1.0);
