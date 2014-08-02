@@ -51,6 +51,17 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             };
         }
     }
+    
+    /**
+     * Construct a Matrix3x3 from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Float>):Matrix3x3
+    {
+        return new Matrix3x3(rawData);
+    }
 
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, a:Matrix3x3):Matrix3x3
@@ -228,6 +239,21 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             0.0, sy, 0.0,
             0.0, 0.0, sz
         ]);
+    }
+    
+    /**
+     * Copy the contents of this structure to another.
+     * 
+     * @param other     The target structure.
+     */
+    public inline function copyTo(other:Matrix3x3):Void
+    {
+        var self:Matrix3x3 = this;
+        
+        for (i in 0...Matrix3x3.elementCount)
+        {
+            other[i] = self[i];
+        }
     }
     
     public inline function clone():Matrix3x3

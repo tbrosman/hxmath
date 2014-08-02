@@ -25,6 +25,22 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         this = {x: x, y: y, z: z};
     }
     
+    /**
+     * Construct a Vector3 from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Float>):Vector3
+    {
+        if (rawData.length != Vector3.elementCount)
+        {
+            throw "Invalid rawData.";
+        }
+        
+        return new Vector3(rawData[0], rawData[1], rawData[2]);
+    }
+    
     @:op(A * B)
     public static inline function dot(a:Vector3, b:Vector3):Float
     {
@@ -100,6 +116,21 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3
     {
         return t*a + (1.0 - t)*b;
+    }
+    
+    /**
+     * Copy the contents of this structure to another.
+     * 
+     * @param other     The target structure.
+     */
+    public inline function copyTo(other:Vector3):Void
+    {
+        var self:Vector3 = this;
+        
+        for (i in 0...Vector3.elementCount)
+        {
+            other[i] = self[i];
+        }
     }
     
     public inline function clone():Vector3

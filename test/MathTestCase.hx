@@ -1,9 +1,13 @@
 package test;
 import haxe.PosInfos;
 import hxmath.Matrix2x2;
+import hxmath.Matrix3x2;
 import hxmath.Matrix3x3;
 import hxmath.Matrix4x4;
+import hxmath.Quaternion;
 import hxmath.Vector2;
+import hxmath.Vector3;
+import hxmath.Vector4;
 import nanotest.NanoTestCase;
 
 /**
@@ -50,29 +54,55 @@ class MathTestCase extends NanoTestCase
     {
         var distribution = new Distribution();
         distribution.precision = precision;
-        var data = randomArray(2, distribution);
-        return new Vector2(data[0], data[1]);
+        return Vector2.fromArray(randomArray(Vector2.elementCount, distribution));
+    }
+    
+    private function randomVector3(precision:Float = 1e-4):Vector3
+    {
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        return Vector3.fromArray(randomArray(Vector3.elementCount, distribution));
+    }
+    
+    private function randomVector4(precision:Float = 1e-4):Vector4
+    {
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        return Vector4.fromArray(randomArray(Vector4.elementCount, distribution));
     }
     
     private function randomMatrix2x2(precision:Float=1e-4):Matrix2x2
     {
         var distribution = new Distribution();
         distribution.precision = precision;
-        var data = randomArray(4, distribution);
-        return new Matrix2x2(data[0], data[1], data[2], data[3]);
+        return Matrix2x2.fromArray(randomArray(Matrix2x2.elementCount, distribution));
+    }
+    
+    private function randomMatrix3x2(precision:Float=1e-4):Matrix3x2
+    {
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        return Matrix3x2.fromArray(randomArray(Matrix3x2.elementCount, distribution));
     }
 
     private function randomMatrix3x3(precision:Float=1e-4):Matrix3x3
     {
         var distribution = new Distribution();
         distribution.precision = precision;
-        return new Matrix3x3(randomArray(9, distribution));
+        return Matrix3x3.fromArray(randomArray(Matrix3x3.elementCount, distribution));
     }
     
     private function randomMatrix4x4(precision:Float=1e-4):Matrix4x4
     {
         var distribution = new Distribution();
         distribution.precision = precision;
-        return new Matrix4x4(randomArray(16, distribution));
+        return Matrix4x4.fromArray(randomArray(Matrix4x4.elementCount, distribution));
+    }
+    
+    private function randomQuaternion(precision:Float=1e-4):Quaternion
+    {
+        var distribution = new Distribution();
+        distribution.precision = precision;
+        return Quaternion.fromArray(randomArray(Quaternion.elementCount, distribution));
     }
 }

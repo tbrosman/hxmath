@@ -27,6 +27,22 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
         this = {x: x, y: y, z: z, w: w};
     }
     
+    /**
+     * Construct a Vector4 from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Float>):Vector4
+    {
+        if (rawData.length != Vector4.elementCount)
+        {
+            throw "Invalid rawData.";
+        }
+        
+        return new Vector4(rawData[0], rawData[1], rawData[2], rawData[3]);
+    }
+    
     @:op(A + B)
     public static inline function add(a:Vector4, b:Vector4):Vector4
     {
@@ -108,6 +124,21 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     public static inline function lerp(a:Vector4, b:Vector4, t:Float):Vector4
     {
         return t*a + (1.0 - t)*b;
+    }
+    
+    /**
+     * Copy the contents of this structure to another.
+     * 
+     * @param other     The target structure.
+     */
+    public inline function copyTo(other:Vector4):Void
+    {
+        var self:Vector4 = this;
+        
+        for (i in 0...Vector4.elementCount)
+        {
+            other[i] = self[i];
+        }
     }
     
     public inline function clone():Vector4

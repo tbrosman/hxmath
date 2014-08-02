@@ -28,6 +28,22 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     }
     
     /**
+     * Construct a Vector2 from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Float>):Vector2
+    {
+        if (rawData.length != Vector2.elementCount)
+        {
+            throw "Invalid rawData.";
+        }
+        
+        return new Vector2(rawData[0], rawData[1]);
+    }
+    
+    /**
      * Create a new Vector2 from polar coordinates.
      * Example angle-to-vector direction conversions:
      *   0       radians -> +X axis
@@ -43,7 +59,7 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     {
         return new Vector2(radius * Math.cos(angle), radius * Math.sin(angle));
     }
-       
+    
     @:op(A * B)
     public static inline function dot(a:Vector2, b:Vector2):Float
     {
@@ -111,6 +127,21 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
     {
         return t*a + (1.0 - t)*b;
+    }
+    
+    /**
+     * Copy the contents of this structure to another.
+     * 
+     * @param other     The target structure.
+     */
+    public inline function copyTo(other:Vector2):Void
+    {
+        var self:Vector2 = this;
+        
+        for (i in 0...Vector2.elementCount)
+        {
+            other[i] = self[i];
+        }
     }
     
     public inline function clone():Vector2

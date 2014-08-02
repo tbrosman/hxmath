@@ -298,6 +298,49 @@ class TestStructures extends MathTestCase
         
     }
     
+    private function testCopyToFrom()
+    {
+        var vec2a = randomVector2();
+        var vec2b = Vector2.zero;
+        vec2a.copyTo(vec2b);
+        assertTrue(vec2a == vec2b);
+        
+        var vec3a = randomVector3();
+        var vec3b = Vector3.zero;
+        vec3a.copyTo(vec3b);
+        assertTrue(vec3a == vec3b);
+        
+        var vec4a = randomVector4();
+        var vec4b = Vector4.zero;
+        vec4a.copyTo(vec4b);
+        assertTrue(vec4a == vec4b);
+        
+        var mat2x2a = randomMatrix2x2();
+        var mat2x2b = Matrix2x2.zero;
+        mat2x2a.copyTo(mat2x2b);
+        assertTrue(mat2x2a == mat2x2b);
+        
+        var mat3x2a = randomMatrix3x2();
+        var mat3x2b = Matrix3x2.zero;
+        mat3x2a.copyTo(mat3x2b);
+        assertTrue(mat3x2a == mat3x2b);
+        
+        var mat3x3a = randomMatrix3x3();
+        var mat3x3b = Matrix3x3.zero;
+        mat3x3a.copyTo(mat3x3b);
+        assertTrue(mat3x3a == mat3x3b);
+        
+        var mat4x4a = randomMatrix4x4();
+        var mat4x4b = Matrix4x4.zero;
+        mat4x4a.copyTo(mat4x4b);
+        assertTrue(mat4x4a == mat4x4b);
+        
+        var quatA = randomQuaternion();
+        var quatB = Quaternion.zero;
+        quatA.copyTo(quatB);
+        assertTrue(quatA == quatB);
+    }
+    
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
     {
         original.tag = "original";

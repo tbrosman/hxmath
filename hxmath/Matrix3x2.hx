@@ -43,6 +43,22 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
             c: c, d: d, ty: ty };
     }
     
+    /**
+     * Construct a Matrix3x2 from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Float>):Matrix3x2
+    {
+        if (rawData.length != Matrix3x2.elementCount)
+        {
+            throw "Invalid rawData.";
+        }
+        
+        return new Matrix3x2(rawData[0], rawData[1], rawData[2], rawData[3], rawData[4], rawData[5]);
+    }
+    
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, m:Matrix3x2):Matrix3x2
     {
@@ -179,6 +195,21 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
         m.linearSubMatrix = Matrix2x2.rotate(angle);
         m.t = center - (m.linearSubMatrix * center);
         return m;
+    }
+    
+    /**
+     * Copy the contents of this structure to another.
+     * 
+     * @param other     The target structure.
+     */
+    public inline function copyTo(other:Matrix3x2):Void
+    {
+        var self:Matrix3x2 = this;
+        
+        for (i in 0...Matrix3x2.elementCount)
+        {
+            other[i] = self[i];
+        }
     }
     
     public inline function clone():Matrix3x2

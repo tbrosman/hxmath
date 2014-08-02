@@ -33,6 +33,22 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
     }
     
     /**
+     * Construct a Quaternion from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Float>):Quaternion
+    {
+        if (rawData.length != Quaternion.elementCount)
+        {
+            throw "Invalid rawData.";
+        }
+        
+        return new Quaternion(rawData[0], new Vector3(rawData[1], rawData[2], rawData[3]));
+    }
+    
+    /**
      * Create a quaternion from an axis-angle pair.
      * 
      * @param angle     The angle to rotate.
@@ -113,6 +129,21 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         var r2 = a.s * a.s + a.v * a.v;
         var r = Math.sqrt(r2);
         return (1.0 / r) * a;
+    }
+    
+    /**
+     * Copy the contents of this structure to another.
+     * 
+     * @param other     The target structure.
+     */
+    public inline function copyTo(other:Quaternion):Void
+    {
+        var self:Quaternion = this;
+        
+        for (i in 0...Quaternion.elementCount)
+        {
+            other[i] = self[i];
+        }
     }
     
     public inline function clone():Quaternion

@@ -62,6 +62,17 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             };
         }
     }
+    
+    /**
+     * Construct a Matrix4x4 from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Float>):Matrix4x4
+    {
+        return new Matrix4x4(rawData);
+    }
 
     @:op(A * B)
     public static inline function multiply(a:Matrix4x4, b:Matrix4x4):Matrix4x4
@@ -192,6 +203,21 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         a.m23 -= b.m23;
         a.m33 -= b.m33;
         return a;
+    }
+    
+    /**
+     * Copy the contents of this structure to another.
+     * 
+     * @param other     The target structure.
+     */
+    public inline function copyTo(other:Matrix4x4):Void
+    {
+        var self:Matrix4x4 = this;
+        
+        for (i in 0...Matrix4x4.elementCount)
+        {
+            other[i] = self[i];
+        }
     }
     
     public inline function clone():Matrix4x4
