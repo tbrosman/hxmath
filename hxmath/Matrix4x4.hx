@@ -208,108 +208,101 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
-        var row:Int = Math.floor(i / 4);
-        var col:Int = i - row * 4;
-        return getElement(col, row);
+        var self:Matrix4x4 = this;
+        
+        switch (i)
+        {
+            case 0:
+                return self.m00;
+            case 1:
+                return self.m10;
+            case 2:
+                return self.m20;
+            case 3:
+                return self.m30;
+            case 4:
+                return self.m01;
+            case 5:
+                return self.m11;
+            case 6:
+                return self.m21;
+            case 7:
+                return self.m31;
+            case 8:
+                return self.m02;
+            case 9:
+                return self.m12;
+            case 10:
+                return self.m22;
+            case 11:
+                return self.m32;
+            case 12:
+                return self.m03;
+            case 13:
+                return self.m13;
+            case 14:
+                return self.m23;
+            case 15:
+                return self.m33;
+            default:
+                throw "Invalid element";
+        }
     }
     
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {
-        var row:Int = Math.floor(i / 4);
-        var col:Int = i - row * 4;
-        return setElement(col, row, value);
+        var self:Matrix4x4 = this;
+        
+        switch (i)
+        {
+            case 0:
+                return self.m00 = value;
+            case 1:
+                return self.m10 = value;
+            case 2:
+                return self.m20 = value;
+            case 3:
+                return self.m30 = value;
+            case 4:
+                return self.m01 = value;
+            case 5:
+                return self.m11 = value;
+            case 6:
+                return self.m21 = value;
+            case 7:
+                return self.m31 = value;
+            case 8:
+                return self.m02 = value;
+            case 9:
+                return self.m12 = value;
+            case 10:
+                return self.m22 = value;
+            case 11:
+                return self.m32 = value;
+            case 12:
+                return self.m03 = value;
+            case 13:
+                return self.m13 = value;
+            case 14:
+                return self.m23 = value;
+            case 15:
+                return self.m33 = value;
+            default:
+                throw "Invalid element";
+        }
     }
     
     public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix4x4 = this;
-        var k:Float;
-
-        switch [column, row]
-        {
-            case [0, 0]:
-                k = self.m00;
-            case [1, 0]:
-                k = self.m10;
-            case [2, 0]:
-                k = self.m20;
-            case [3, 0]:
-                k = self.m30;
-            case [0, 1]:
-                k = self.m01;
-            case [1, 1]:
-                k = self.m11;
-            case [2, 1]:
-                k = self.m21;
-            case [3, 1]:
-                k = self.m31;
-            case [0, 2]:
-                k = self.m02;
-            case [1, 2]:
-                k = self.m12;
-            case [2, 2]:
-                k = self.m22;
-            case [3, 2]:
-                k = self.m32;
-            case [0, 3]:
-                k = self.m03;
-            case [1, 3]:
-                k = self.m13;
-            case [2, 3]:
-                k = self.m23;
-            case [3, 3]:
-                k = self.m33;
-            default:
-                throw "Invalid element";
-        }
-        
-        return k;
+        return self[row * 4 + column];
     }
     
     public inline function setElement(column:Int, row:Int, value:Float):Float
     {
         var self:Matrix4x4 = this;
-        
-        switch [column, row]
-        {
-            case [0, 0]:
-                self.m00 = value;
-            case [1, 0]:
-                self.m10 = value;
-            case [2, 0]:
-                self.m20 = value;
-            case [3, 0]:
-                self.m30 = value;
-            case [0, 1]:
-                self.m01 = value;
-            case [1, 1]:
-                self.m11 = value;
-            case [2, 1]:
-                self.m21 = value;
-            case [3, 1]:
-                self.m31 = value;
-            case [0, 2]:
-                self.m02 = value;
-            case [1, 2]:
-                self.m12 = value;
-            case [2, 2]:
-                self.m22 = value;
-            case [3, 2]:
-                self.m32 = value;
-            case [0, 3]:
-                self.m03 = value;
-            case [1, 3]:
-                self.m13 = value;
-            case [2, 3]:
-                self.m23 = value;
-            case [3, 3]:
-                self.m33 = value;
-            default:
-                throw "Invalid element";
-        }
-        
-        return value;
+        return self[row * 4 + column] = value;
     }
     
     public inline function col(index:Int):Vector4

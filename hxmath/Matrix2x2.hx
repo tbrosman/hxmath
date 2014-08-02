@@ -158,60 +158,53 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
-        var row:Int = Math.floor(i / 2);
-        var col:Int = i - row * 2;
-        return getElement(col, row);
+        var self:Matrix2x2 = this;
+        
+        switch (i)
+        {
+            case 0:
+                return self.a;
+            case 1:
+                return self.b;
+            case 2:
+                return self.c;
+            case 3:
+                return self.d;
+            default:
+                throw "Invalid element";
+        }
     }
     
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {
-        var row:Int = Math.floor(i / 2);
-        var col:Int = i - row * 2;
-        return setElement(col, row, value);
+        var self:Matrix2x2 = this;
+        
+        switch (i)
+        {
+            case 0:
+                return self.a = value;
+            case 1:
+                return self.b = value;
+            case 2:
+                return self.c = value;
+            case 3:
+                return self.d = value;
+            default:
+                throw "Invalid element";
+        }
     }
     
     public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix2x2 = this;
-        var k:Float;
-
-        switch [column, row]
-        {
-            case [0, 0]:
-                k = self.a;
-            case [1, 0]:
-                k = self.b;
-            case [0, 1]:
-                k = self.c;
-            case [1, 1]:
-                k = self.d;
-            default:
-                throw "Invalid element";
-        }
-        
-        return k;
+        return self[row * 2 + column];
     }
     
     public inline function setElement(column:Int, row:Int, value:Float):Float
     {
         var self:Matrix2x2 = this;
-        
-        switch [column, row]
-        {
-            case [0, 0]:
-                self.a = value;
-            case [1, 0]:
-                self.b = value;
-            case [0, 1]:
-                self.c = value;
-            case [1, 1]:
-                self.d = value;
-            default:
-                throw "Invalid element";
-        }
-        
-        return value;
+        return self[row * 2 + column] = value;
     }
     
     public inline function col(index:Int):Vector2

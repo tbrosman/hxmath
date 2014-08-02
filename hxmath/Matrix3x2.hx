@@ -193,68 +193,61 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
-        var row:Int = Math.floor(i / 3);
-        var col:Int = i - row * 3;
-        return getElement(col, row);
+        var self:Matrix3x2 = this;
+        
+        switch (i)
+        {
+            case 0:
+                return self.a;
+            case 1:
+                return self.b;
+            case 2:
+                return self.tx;
+            case 3:
+                return self.c;
+            case 4:
+                return self.d;
+            case 5:
+                return self.ty;
+            default:
+                throw "Invalid element";
+        }
     }
     
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {
-        var row:Int = Math.floor(i / 3);
-        var col:Int = i - row * 3;
-        return setElement(col, row, value);
+        var self:Matrix3x2 = this;
+        
+        switch (i)
+        {
+            case 0:
+                return self.a = value;
+            case 1:
+                return self.b = value;
+            case 2:
+                return self.tx = value;
+            case 3:
+                return self.c = value;
+            case 4:
+                return self.d = value;
+            case 5:
+                return self.ty = value;
+            default:
+                throw "Invalid element";
+        }
     }
     
     public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix3x2 = this;
-        var k:Float;
-        
-        switch [column, row]
-        {
-            case [0, 0]:
-                k = self.a;
-            case [1, 0]:
-                k = self.b;
-            case [2, 0]:
-                k = self.tx;
-            case [0, 1]:
-                k = self.c;
-            case [1, 1]:
-                k = self.d;
-            case [2, 1]:
-                k = self.ty;
-            default:
-                throw "Invalid element";
-        }
-        
-        return k;
+        return self[row * 3 + column];
     }
     
     public inline function setElement(column:Int, row:Int, value:Float):Float
     {
         var self:Matrix3x2 = this;
-        
-        switch [column, row]
-        {
-            case [0, 0]:
-                self.a  = value;
-            case [1, 0]:
-                self.b  = value;
-            case [2, 0]:
-                self.tx = value;
-            case [0, 1]:
-                self.c  = value;
-            case [1, 1]:
-                self.d  = value;
-            case [2, 1]:
-                self.ty = value;
-            default:
-                throw "Invalid element";
-        }
-        
-        return value;
+        return self[row * 3 + column] = value;
     }
     
     public inline function col(index:Int):Vector2
