@@ -149,7 +149,7 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         var self:Vector2 = this;
         return new Vector2(self.x, self.y);
     }
-    
+
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
