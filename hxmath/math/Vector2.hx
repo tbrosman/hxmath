@@ -1,4 +1,4 @@
-package hxmath;
+package hxmath.math;
 
 typedef Vector2Shape =
 {

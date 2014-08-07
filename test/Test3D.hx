@@ -1,10 +1,10 @@
 package test;
 
-import hxmath.Matrix3x3;
-import hxmath.Matrix4x4;
-import hxmath.Quaternion;
-import hxmath.Vector3;
-import hxmath.Vector4;
+import hxmath.math.Matrix3x3;
+import hxmath.math.Matrix4x4;
+import hxmath.math.Quaternion;
+import hxmath.math.Vector3;
+import hxmath.math.Vector4;
 
 class Test3D extends MathTestCase
 {

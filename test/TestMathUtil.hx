@@ -1,6 +1,6 @@
 package test;
-import hxmath.MathUtil;
-import hxmath.Vector2;
+import hxmath.math.MathUtil;
+import hxmath.math.Vector2;
 
 class TestMathUtil extends MathTestCase
 {

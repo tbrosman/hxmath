@@ -1,9 +1,9 @@
 package test;
 
-import hxmath.Matrix2x2;
-import hxmath.Matrix3x2;
-import hxmath.Vector2;
-import hxmath.Vector3;
+import hxmath.math.Matrix2x2;
+import hxmath.math.Matrix3x2;
+import hxmath.math.Vector2;
+import hxmath.math.Vector3;
 
 class Test2D extends MathTestCase
 {

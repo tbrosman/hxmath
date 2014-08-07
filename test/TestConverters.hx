@@ -1,7 +1,7 @@
 package test;
 
-import hxmath.converters.Vector2Converter;
-import hxmath.Vector2;
+import hxmath.math.converters.Vector2Converter;
+import hxmath.math.Vector2;
 import test.TestConverters.FlxPointMock;
     
 class FlxPointMock

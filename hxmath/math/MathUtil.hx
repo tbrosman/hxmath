@@ -1,4 +1,4 @@
-package hxmath;
+package hxmath.math;
 
 enum Orient2DResult
 {

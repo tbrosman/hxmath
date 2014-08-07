@@ -1,6 +1,6 @@
-package hxmath.converters;
-import hxmath.converters.Vector2Converter.FlxPointShape;
-import hxmath.Vector2;
+package hxmath.math.converters;
+import hxmath.math.converters.Vector2Converter.FlxPointShape;
+import hxmath.math.Vector2;
 
 typedef ConstructableVector2 =
 {

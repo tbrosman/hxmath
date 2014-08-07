@@ -1,4 +1,4 @@
-package hxmath;
+package hxmath.math;
 
 // Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix3x3Shape = 
