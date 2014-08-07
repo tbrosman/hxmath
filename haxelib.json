@@ -5,7 +5,7 @@
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
   "version": "0.4.0",
-  "releasenote": "Signed and unsigned angle functions for 2D vectors. Array operator overloads for for all structures.",
+  "releasenote": "To/from conversion functions for FlxPoint/FlxVector (by shape; no dependency on Flixel). copyTo functions to preserve the other properties of target types/avoid allocating when undesired.",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
