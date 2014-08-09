@@ -15,6 +15,7 @@ class TestMain
         runner.add(new Test3D());
         runner.add(new TestMathUtil());
         runner.add(new TestConverters());
+        runner.add(new TestFrames());
         runner.run();
     }
 }
