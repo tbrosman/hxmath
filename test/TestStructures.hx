@@ -381,6 +381,21 @@ class TestStructures extends MathTestCase
         }
     }
     
+    /**
+     * Test for the fix to issue #14.
+     */
+    public function testEqualsNullShouldNotThrow()
+    {
+        assertTrue(Vector2.zero != null);
+        assertTrue(Vector3.zero != null);
+        assertTrue(Vector4.zero != null);
+        assertTrue(Matrix2x2.zero != null);
+        assertTrue(Matrix3x2.zero != null);
+        assertTrue(Matrix3x3.zero != null);
+        assertTrue(Matrix4x4.zero != null);
+        assertTrue(Quaternion.zero != null);
+    }
+    
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
     {
         original.tag = "original";

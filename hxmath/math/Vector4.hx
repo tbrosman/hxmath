@@ -90,7 +90,9 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     @:op(A == B)
     public static inline function equals(a:Vector4, b:Vector4):Bool
     {
-        return
+        return (a == null && b == null) ||
+            a != null &&
+            b != null &&
             a.x == b.x &&
             a.y == b.y &&
             a.z == b.z &&

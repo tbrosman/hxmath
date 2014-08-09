@@ -101,7 +101,11 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     @:op(A == B)
     public static inline function equals(a:Vector2, b:Vector2):Bool
     {
-        return a.x == b.x && a.y == b.y;
+        return (a == null && b == null) ||
+            a != null &&
+            b != null &&
+            a.x == b.x &&
+            a.y == b.y;
     }
     
     @:op(A != B)

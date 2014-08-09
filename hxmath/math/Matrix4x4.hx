@@ -138,7 +138,9 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
     @:op(A == B)
     public static inline function equals(a:Matrix4x4, b:Matrix4x4):Bool
     {
-        return
+        return (a == null && b == null) ||
+            a != null &&
+            b != null &&
             a.m00 == b.m00 &&
             a.m10 == b.m10 &&
             a.m20 == b.m20 &&

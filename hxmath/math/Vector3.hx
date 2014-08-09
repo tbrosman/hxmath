@@ -94,7 +94,12 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     @:op(A == B)
     public static inline function equals(a:Vector3, b:Vector3):Bool
     {
-        return a.x == b.x && a.y == b.y && a.z == b.z;
+        return (a == null && b == null) ||
+            a != null &&
+            b != null &&
+            a.x == b.x && 
+            a.y == b.y &&
+            a.z == b.z;
     }
     
     public static inline function addWith(a:Vector3, b:Vector3):Vector3

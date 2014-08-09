@@ -102,7 +102,9 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     @:op(A == B)
     public static inline function equals(m:Matrix2x2, n:Matrix2x2):Bool
     {
-        return
+        return (m == null && n == null) ||
+            m != null &&
+            n != null &&
             m.a == n.a &&
             m.b == n.b &&
             m.c == n.c &&

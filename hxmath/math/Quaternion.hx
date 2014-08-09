@@ -101,7 +101,11 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
     @:op(A == B)
     public static inline function equals(a:Quaternion, b:Quaternion):Bool
     {
-        return a.s == b.s && a.v == b.v;
+        return (a == null && b == null) ||
+            a != null &&
+            b != null &&
+            a.s == b.s &&
+            a.v == b.v;
     }
     
     @:op(A != B)
