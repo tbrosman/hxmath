@@ -271,6 +271,21 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     }
     
     /**
+     * Multiply the tranpose of the matrix with a vector. Useful for fast inverse rotations.
+     * 
+     * @param v     The vector to multiply with.
+     * @return      this^T * v.    
+     */
+    public inline function transposeMultiplyVector(v:Vector2):Vector2
+    {
+        var self:Matrix2x2 = this;
+        
+        return new Vector2(
+            self.a * v.x + self.c * v.y,
+            self.b * v.x + self.d * v.y);
+    }
+    
+    /**
      * Apply a scalar function to each element.
      * 
      * @param func  The function to apply.

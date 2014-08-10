@@ -1,6 +1,7 @@
 package hxmath.frames;
 
 import hxmath.math.MathUtil;
+import hxmath.math.Matrix2x2;
 import hxmath.math.Matrix3x2;
 import hxmath.math.Vector2;
 
@@ -9,8 +10,11 @@ import hxmath.math.Vector2;
  */
 class Frame2
 {
-    // The associated transformation matrix
+    // The associated affine transformation matrix
     public var matrix(get, never):Matrix3x2;
+    
+    // The associated linear transformation matrix
+    public var linearMatrix(get, never):Matrix2x2;
     
     // The offset between the origin and the outer frame
     public var offset(default, set):Vector2;
@@ -56,32 +60,64 @@ class Frame2
      */
     public inline function concatWith(other:Frame2):Frame2
     {
-        var resultOffset = this.matrix.linearSubMatrix * other.offset + this.offset;
-        this.angleDegrees = MathUtil.wrap(this.angleDegrees + other.angleDegrees, 360);
-        this.offset = resultOffset;
+        var resultOffset = linearMatrix * other.offset + this.offset;
+        angleDegrees = MathUtil.wrap(this.angleDegrees + other.angleDegrees, 360);
+        offset = resultOffset;
         return this;
     }
     
     /**
-     * Transform a point (affine transformation).
+     * Transform a point from this frame into the outer frame (affine transformation).
      * 
      * @param p     The point to transform.
      * @return      The transformed point.
      */
-    public inline function transform(p:Vector2):Vector2
+    public inline function transformFrom(p:Vector2):Vector2
     {
-        return this.matrix.transform(p);
+        return matrix.transform(p);
     }
     
     /**
-     * Transform a vector (linear transformation).
+     * Transform a point from the outer frame into this frame (affine transformation).
+     * 
+     * @param p     The point to transform.
+     * @return      The transformed point.
+     */
+    public inline function transformTo(p:Vector2):Vector2
+    {
+        return linearMatrix.transposeMultiplyVector(p - matrix.t);
+    }
+    
+    /**
+     * Transform a vector from this frame into the outer frame (linear transformation).
      * 
      * @param v     The vector to transform.
      * @return      The transformed vector.
      */
-    public inline function linearTransform(v:Vector2):Vector2
+    public inline function linearTransformFrom(v:Vector2):Vector2
     {
-        return this.matrix.linearSubMatrix * v;
+        return linearMatrix * v;
+    }
+    
+    /**
+     * Transform a vector from the outer frame into this frame (linear transformation).
+     * 
+     * @param v     The vector to transform.
+     * @return      The transformed vector.
+     */
+    public inline function linearTransformTo(v:Vector2):Vector2
+    {
+        return linearMatrix.transposeMultiplyVector(v);
+    }
+    
+    /**
+     * Get the inverse frame (the effect of to/from will be swapped in the new frame).
+     * 
+     * @return      The inverse of this frame.    
+     */
+    public inline function inverse():Frame2
+    {
+        return new Frame2(-linearMatrix.transposeMultiplyVector(offset), -angleDegrees);
     }
     
     /**
@@ -112,6 +148,11 @@ class Frame2
         }
         
         return cachedMatrix;
+    }
+    
+    private inline function get_linearMatrix():Matrix2x2
+    {
+        return this.matrix.linearSubMatrix;
     }
     
     private function set_offset(offset:Vector2):Vector2
