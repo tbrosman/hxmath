@@ -28,6 +28,12 @@ class Frame2
     // The cached matrix
     private var cachedMatrix:Matrix3x2;
     
+    /**
+     * Constructor.
+     * 
+     * @param offset        The offset of the frame relative to the outer frame.
+     * @param angleDegrees  The angle of the frame relative to the outer frame.
+     */
     public function new(offset:Vector2=null, angleDegrees:Float=0.0) 
     {
         this.offset = offset == null

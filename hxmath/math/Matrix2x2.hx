@@ -19,15 +19,31 @@ typedef Matrix2x2Shape =
 @:forward(a, b, c, d)
 abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
 {
+    // The number of elements in this structure
     public static inline var elementCount:Int = 4;
     
+    // Zero matrix (A+0 = A)
     public static var zero(get, never):Matrix2x2;
+    
+    // Identity matrix (A*I = A)
     public static var identity(get, never):Matrix2x2;
     
+    // Determinant (the "area" of the basis)
     public var det(get, never):Float;
+    
+    // Transpose (columns become rows)
     public var transpose(get, never):Matrix2x2;
 
-    // Note: parameters are in row-major order for syntactic niceness
+    /**
+     * Constructor.
+     * 
+     * Note: parameters are in row-major order for syntactic niceness.
+     * 
+     * @param a     m00
+     * @param b     m10
+     * @param c     m01
+     * @param d     m11
+     */
     public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0) 
     {
         this = {
@@ -51,6 +67,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return new Matrix2x2(rawData[0], rawData[1], rawData[2], rawData[3]);
     }
 
+    /**
+     * Multiply a scalar with a matrix.
+     * 
+     * @param s
+     * @param m
+     * @return      s*m
+     */
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, m:Matrix2x2):Matrix2x2
     {
@@ -59,6 +82,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             s * m.c, s * m.d);
     }
     
+    /**
+     * Multiply a matrix with a vector.
+     * 
+     * @param m
+     * @param v
+     * @return      m*v
+     */
     @:op(A * B)
     public static inline function multiplyVector(m:Matrix2x2, v:Vector2):Vector2
     {
@@ -67,6 +97,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             m.c * v.x + m.d * v.y);
     }
     
+    /**
+     * Multiply two matrices.
+     * 
+     * @param m
+     * @param n
+     * @return      m*n
+     */
     @:op(A * B)
     public static inline function multiply(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
@@ -77,6 +114,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             m.c * n.b + m.d * n.d); // p_11 = m_i1 * n_1i
     }
     
+    /**
+     * Add two matrices.
+     * 
+     * @param m
+     * @param n
+     * @return      m + n
+     */
     @:op(A + B)
     public static inline function add(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
@@ -84,6 +128,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             .addWith(n);
     }
     
+    /**
+     * Subtract one matrix from another.
+     * 
+     * @param m
+     * @param n
+     * @return      m - n
+     */
     @:op(A - B)
     public static inline function subtract(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
@@ -91,6 +142,12 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             .subtractWith(n);
     }
     
+    /**
+     * Create a negated copy of a matrix.
+     * 
+     * @param m
+     * @return      -m
+     */
     @:op(-A)
     public static inline function negate(m:Matrix2x2):Matrix2x2
     {
@@ -99,6 +156,14 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             -m.c, -m.d);
     }
     
+    /**
+     * Test element-wise equality between two matrices.
+     * False if one of the inputs is null and the other is not.
+     * 
+     * @param m
+     * @param n
+     * @return      m_ij == n_ij
+     */
     @:op(A == B)
     public static inline function equals(m:Matrix2x2, n:Matrix2x2):Bool
     {
@@ -111,12 +176,27 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
             m.d == n.d;
     }
     
+    /**
+     * Test inequality between two matrices.
+     * 
+     * @param m
+     * @param n
+     * @return      !(m_ij == n_ij)
+     */
     @:op(A != B)
     public static inline function notEquals(m:Matrix2x2, n:Matrix2x2):Bool
     {
         return !(m == n);
     }
     
+    /**
+     * Add a matrix in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param m
+     * @param n
+     * @return      m_ij += n_ij
+     */
     public static inline function addWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
         m.a += n.a;
@@ -126,6 +206,14 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return m;
     }
     
+    /**
+     * Subtract a matrix in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param m
+     * @param n
+     * @return      m_ij -= n_ij
+     */
     public static inline function subtractWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
         m.a -= n.a;
@@ -179,6 +267,11 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         }
     }
     
+    /**
+     * Clone.
+     * 
+     * @return  The cloned object.
+     */
     public inline function clone():Matrix2x2
     {
         var self:Matrix2x2 = this;
@@ -188,6 +281,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         );
     }
     
+    /**
+     * Get an element by position.
+     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * 
+     * @param i         The element index.
+     * @return          The element.
+     */
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
@@ -208,6 +308,14 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         }
     }
     
+    /**
+     * Set an element by position.
+     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * 
+     * @param i         The element index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {
@@ -228,18 +336,41 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         }
     }
     
+    /**
+     * Get an element by (column, row) indices.
+     * Both column and row indices start at 0, e.g. the index of the first element of the first row is (0, 0).
+     * 
+     * @param column    The column index.
+     * @param row       The row index.
+     * @return          The element.
+     */
     public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix2x2 = this;
         return self[row * 2 + column];
     }
     
+    /**
+     * Set an element by (column, row) indices.
+     * Both column and row indices start at 0, e.g. the index of the first element of the first row is (0, 0).
+     * 
+     * @param column    The column index.
+     * @param row       The row index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     public inline function setElement(column:Int, row:Int, value:Float):Float
     {
         var self:Matrix2x2 = this;
         return self[row * 2 + column] = value;
     }
     
+    /**
+     * Get a column vector by index.
+     * 
+     * @param index     The 0-based index of the column.
+     * @return          The column as a vector.
+     */
     public inline function col(index:Int):Vector2
     {
         var self:Matrix2x2 = this;
@@ -254,7 +385,13 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
                 throw "Invalid column";
         }
     }
-        
+
+    /**
+     * Get a row vector by index.
+     * 
+     * @param index     The 0-based index of the row.
+     * @return          The row as a vector.
+     */
     public inline function row(index:Int):Vector2
     {
         var self:Matrix2x2 = this;
