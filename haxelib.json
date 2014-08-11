@@ -5,7 +5,7 @@
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
   "version": "0.5.0",
-  "releasenote": "To/from conversion functions for FlxPoint/FlxVector (by shape; no dependency on Flixel). copyTo functions to preserve the other properties of target types/avoid allocating when undesired.",
+  "releasenote": "2D coordinate frames have been added. They can be concatenated, inverted, used either to transform points/vectors directly or used as a way to generate OpenFL-compatible matrices. They provide a higher (and more useful) layer of abstraction than matrices along with an intuitive 'to/from' syntax describing whether the point/vector is being transformed into the frame from the outer frame, etc. A bug in the equality operators (throwing on null) has been fixed. Documentation has been added for all public members.",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
