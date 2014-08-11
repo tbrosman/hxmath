@@ -24,6 +24,9 @@ typedef Matrix4x4Shape =
     public var m33:Float;
 }
 
+/**
+ * 4x4 matrix for homogenous/projection transformations in 3D.
+ */
 @:forward(
     m00, m01, m02, m03,
     m10, m11, m12, m13,
@@ -31,15 +34,26 @@ typedef Matrix4x4Shape =
     m30, m31, m32, m33)
 abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
 {
+    // The number of elements in this structure
     public static inline var elementCount:Int = 16;
     
+    // Zero matrix (A + 0 = A, A * 0 = 0)
     public static var zero(get, never):Matrix4x4;
+    
+    // Identity matrix (A * I = A)
     public static var identity(get, never):Matrix4x4;
     
+    // Determinant (the "area" of the basis)
     public var det(get, never):Float;
+    
+    // Transpose (columns become rows)
     public var transpose(get, never):Matrix4x4;
     
-    // Row-major rawData
+    /**
+     * Constructor. Takes a row-major array input array (when written out the array is ordered like the matrix).
+     * 
+     * @param rawData   The matrix as a row-major array.
+     */
     public function new(rawData:Array<Float> = null) 
     {
         if (rawData == null)
@@ -73,7 +87,31 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
     {
         return new Matrix4x4(rawData);
     }
+    
+    /**
+     * Multiply a matrix with a vector.
+     * 
+     * @param a
+     * @param v
+     * @return      a * v
+     */
+    @:op(A * B)
+    public static inline function multiplyVector(a:Matrix4x4, v:Vector4):Vector4
+    {
+        return new Vector4(
+            a.m00 * v.x + a.m10 * v.y + a.m20 * v.z + a.m30 * v.w,
+            a.m01 * v.x + a.m11 * v.y + a.m21 * v.z + a.m31 * v.w,
+            a.m02 * v.x + a.m12 * v.y + a.m22 * v.z + a.m32 * v.w,
+            a.m03 * v.x + a.m13 * v.y + a.m23 * v.z + a.m33 * v.w);
+    }
 
+    /**
+     * Multiply two matrices.
+     * 
+     * @param a
+     * @param b
+     * @return      a * b
+     */
     @:op(A * B)
     public static inline function multiply(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
@@ -100,16 +138,13 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         ]);
     }
     
-    @:op(A * B)
-    public static inline function multiplyVector(a:Matrix4x4, v:Vector4):Vector4
-    {
-        return new Vector4(
-            a.m00 * v.x + a.m10 * v.y + a.m20 * v.z + a.m30 * v.w,
-            a.m01 * v.x + a.m11 * v.y + a.m21 * v.z + a.m31 * v.w,
-            a.m02 * v.x + a.m12 * v.y + a.m22 * v.z + a.m32 * v.w,
-            a.m03 * v.x + a.m13 * v.y + a.m23 * v.z + a.m33 * v.w);
-    }
-    
+    /**
+     * Add two matrices.
+     * 
+     * @param a
+     * @param b
+     * @return      a + b
+     */
     @:op(A + B)
     public static inline function add(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
@@ -117,6 +152,13 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             .addWith(b);
     }
     
+    /**
+     * Subtract one matrix from another.
+     * 
+     * @param a
+     * @param b
+     * @return      a - b
+     */
     @:op(A - B)
     public static inline function subtract(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
@@ -124,6 +166,12 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             .subtractWith(b);
     }
     
+    /**
+     * Create a negated copy of a matrix.
+     * 
+     * @param a
+     * @return      -a
+     */
     @:op(-A)
     public static inline function negate(a:Matrix4x4):Matrix4x4
     {
@@ -135,6 +183,14 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         ]);
     }
     
+    /**
+     * Test element-wise equality between two matrices.
+     * False if one of the inputs is null and the other is not.
+     * 
+     * @param a
+     * @param b
+     * @return      a_ij == b_ij
+     */
     @:op(A == B)
     public static inline function equals(a:Matrix4x4, b:Matrix4x4):Bool
     {
@@ -159,12 +215,27 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
             a.m33 == b.m33;
     }
     
+    /**
+     * Test inequality between two matrices.
+     * 
+     * @param a
+     * @param b
+     * @return      !(a_ij == b_ij)
+     */
     @:op(A != B)
     public static inline function notEquals(a:Matrix4x4, b:Matrix4x4):Bool
     {
         return !(a == b);
     }
     
+    /**
+     * Add a matrix in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_ij += b_ij
+     */
     public static inline function addWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
         a.m00 += b.m00;
@@ -186,6 +257,14 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         return a;
     }
     
+    /**
+     * Subtract a matrix in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_ij -= b_ij
+     */
     public static inline function subtractWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
     {
         a.m00 -= b.m00;
@@ -222,6 +301,11 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         }
     }
     
+    /**
+     * Clone.
+     * 
+     * @return  The cloned object.
+     */
     public inline function clone():Matrix4x4
     {
         var self:Matrix4x4 = this;
@@ -233,6 +317,13 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         ]);
     }
     
+    /**
+     * Get an element by position.
+     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * 
+     * @param i         The element index.
+     * @return          The element.
+     */
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
@@ -277,6 +368,14 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         }
     }
     
+    /**
+     * Set an element by position.
+     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * 
+     * @param i         The element index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {
@@ -321,18 +420,41 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
         }
     }
     
+    /**
+     * Get an element by (column, row) indices.
+     * Both column and row indices start at 0, e.g. the index of the first element of the first row is (0, 0).
+     * 
+     * @param column    The column index.
+     * @param row       The row index.
+     * @return          The element.
+     */
     public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix4x4 = this;
         return self[row * 4 + column];
     }
     
+    /**
+     * Set an element by (column, row) indices.
+     * Both column and row indices start at 0, e.g. the index of the first element of the first row is (0, 0).
+     * 
+     * @param column    The column index.
+     * @param row       The row index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     public inline function setElement(column:Int, row:Int, value:Float):Float
     {
         var self:Matrix4x4 = this;
         return self[row * 4 + column] = value;
     }
     
+    /**
+     * Get a column vector by index.
+     * 
+     * @param index     The 0-based index of the column.
+     * @return          The column as a vector.
+     */
     public inline function col(index:Int):Vector4
     {
         var self:Matrix4x4 = this;
@@ -351,7 +473,13 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
                 throw "Invalid column";
         }
     }
-        
+    
+    /**
+     * Get a row vector by index.
+     * 
+     * @param index     The 0-based index of the row.
+     * @return          The row as a vector.
+     */
     public inline function row(index:Int):Vector4
     {
         var self:Matrix4x4 = this;

@@ -2,26 +2,46 @@ package hxmath.math;
 
 typedef QuaternionShape =
 {
+    // Real portion
     public var s:Float;
+    
+    // Complex portion (i,j,k basis)
     public var v:Vector3;
 }
 
+/**
+ * Quaternion for rotation in 3D.
+ */
 @:forward(s, v)
 abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
 {
+    // The number of elements in this structure
     public static inline var elementCount:Int = 4;
     
+    // Zero quaternion (q + 0 = 0, q * 0 = 0)
     public static var zero(get, never):Quaternion;
+    
+    // One/identity quaternion (q * 1 = q)
     public static var identity(get, never):Quaternion;
     
-    /**
-     * Gets the rotation matrix (assuming the quaternion is normalized).
-     */
+    // Gets the corresponding rotation matrix
     public var matrix(get, never):Matrix3x3;
     
+    // Magnitude
     public var length(get, never):Float;
+    
+    // Quaternion dotted with itself
     public var lengthSq(get, never):Float;
     
+    // The normalized quaternion
+    public var normal(get, never):Quaternion;
+    
+    /**
+     * Constructor.
+     * 
+     * @param s     Scalar (real) part.
+     * @param v     Vector (complex) part.
+     */
     public function new(s:Float=1.0, v:Vector3=null) 
     {
         this = {
@@ -60,18 +80,39 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         return new Quaternion(Math.cos(angle / 2.0), Math.sin(angle / 2.0) * axis);
     }
     
+    /**
+     * Multiply a (real) scalar with a quaternion.
+     * 
+     * @param s
+     * @param a
+     * @return      s * a
+     */
     @:op(A * B)
     public static inline function scalarMultiply(s:Float, a:Quaternion):Quaternion
     {
         return new Quaternion(s * a.s, s * a.v);
     }
     
+    /**
+     * Multiply two quaternions.
+     * 
+     * @param a
+     * @param b
+     * @return      a * b
+     */
     @:op(A * B)
     public static inline function multiply(a:Quaternion, b:Quaternion):Quaternion
     {
         return new Quaternion(a.s * b.s - a.v * b.v, a.s * b.v + b.s * a.v + a.v ^ b.v);
     }
     
+    /**
+     * Add two quaternions.
+     * 
+     * @param a
+     * @param b
+     * @return      a + b
+     */
     @:op(A + B)
     public static inline function add(a:Quaternion, b:Quaternion):Quaternion
     {
@@ -79,6 +120,13 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
             .addWith(b);
     }
     
+    /**
+     * Subtract one quaternion from another.
+     * 
+     * @param a
+     * @param b
+     * @return      a - b
+     */
     @:op(A - B)
     public static inline function subtract(a:Quaternion, b:Quaternion):Quaternion
     {
@@ -86,18 +134,38 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
             .subtractWith(b);
     }
 
+    /**
+     * Create a complex conjugate copy of a quaternion (complex/vector portion is negated).
+     * 
+     * @param a
+     * @return      a*
+     */
     @:op(~A)
     public static inline function conjugate(a:Quaternion):Quaternion
     {
         return new Quaternion(a.s, -a.v);
     }
     
+    /**
+     * Create a negated copy of a quaternion.
+     * 
+     * @param a
+     * @return      -a
+     */
     @:op(-A)
     public static inline function negate(a:Quaternion):Quaternion
     {
         return new Quaternion(-a.s, -a.v);
     }
     
+    /**
+     * Test element-wise equality between two quaternions.
+     * False if one of the inputs is null and the other is not.
+     * 
+     * @param a
+     * @param b
+     * @return     a_i == b_i
+     */
     @:op(A == B)
     public static inline function equals(a:Quaternion, b:Quaternion):Bool
     {
@@ -108,12 +176,27 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
             a.v == b.v;
     }
     
+    /**
+     * Test inequality between two quaternions.
+     * 
+     * @param a
+     * @param b
+     * @return      !(a_i == b_i)
+     */
     @:op(A != B)
     public static inline function notEquals(a:Quaternion, b:Quaternion):Bool
     {
         return !(a == b);
     }
     
+    /**
+     * Add a quaternion in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_i += b_i
+     */
     public static inline function addWith(a:Quaternion, b:Quaternion):Quaternion
     {
         a.s += b.s;
@@ -121,18 +204,19 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         return a;
     }
     
+    /**
+     * Subtract a quaternion in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_i -= b_i
+     */
     public static inline function subtractWith(a:Quaternion, b:Quaternion):Quaternion
     {
         a.s -= b.s;
         a.v -= b.v;
         return a;
-    }
-    
-    public static inline function normalize(a:Quaternion):Quaternion
-    {
-        var r2 = a.s * a.s + a.v * a.v;
-        var r = Math.sqrt(r2);
-        return (1.0 / r) * a;
     }
     
     /**
@@ -150,12 +234,23 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         }
     }
     
+    /**
+     * Clone.
+     * 
+     * @return  The cloned object.
+     */
     public inline function clone():Quaternion
     {
         var self:Quaternion = this;
         return new Quaternion(self.s, self.v);
     }
     
+    /**
+     * Get an element by position.
+     * 
+     * @param i         The element index.
+     * @return          The element.
+     */
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
@@ -175,6 +270,13 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
         }
     }
     
+    /**
+     * Set an element by position.
+     * 
+     * @param i         The element index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {
@@ -318,5 +420,14 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
             2 * (x * z - s * y), 2 * (y * z + s * x),  1 - 2 * (x * x + y * y)]);
 
         return m;
+    }
+    
+    private inline function get_normal():Quaternion
+    {
+        var self:Quaternion = this;
+        
+        var r2 = self.s * self.s + self.v * self.v;
+        var r = Math.sqrt(r2);
+        return (1.0 / r) * self;
     }
 }

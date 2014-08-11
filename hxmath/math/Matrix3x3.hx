@@ -16,21 +16,35 @@ typedef Matrix3x3Shape =
     public var m22:Float;
 }
 
+/**
+ * 3x3 matrix for linear transformations in 3D.
+ */
 @:forward(
     m00, m01, m02,
     m10, m11, m12,
     m20, m21, m22)
 abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
 {
+    // The number of elements in this structure
     public static inline var elementCount:Int = 9;
     
+    // Zero matrix (A + 0 = A, A * 0 = 0)
     public static var zero(get, never):Matrix3x3;
+    
+    // Identity matrix (A * I = A)
     public static var identity(get, never):Matrix3x3;
     
+    // Determinant (the "area" of the basis)
     public var det(get, never):Float;
+    
+    // Transpose (columns become rows)
     public var transpose(get, never):Matrix3x3;
     
-    // Row-major rawData
+    /**
+     * Constructor. Takes a row-major array input array (when written out the array is ordered like the matrix).
+     * 
+     * @param rawData   The matrix as a row-major array.
+     */
     public function new(rawData:Array<Float> = null) 
     {
         if (rawData == null)
@@ -62,7 +76,14 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
     {
         return new Matrix3x3(rawData);
     }
-
+    
+    /**
+     * Multiply a scalar with a matrix.
+     * 
+     * @param s
+     * @param a
+     * @return      s * a
+     */
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, a:Matrix3x3):Matrix3x3
     {
@@ -72,7 +93,14 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             s * a.m02, s * a.m12, s * a.m22
         ]);
     }
-
+    
+    /**
+     * Multiply a matrix with a vector.
+     * 
+     * @param a
+     * @param v
+     * @return      a * v
+     */
     @:op(A * B)
     public static inline function multiplyVector(a:Matrix3x3, v:Vector3):Vector3
     {
@@ -82,6 +110,13 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             a.m02 * v.x + a.m12 * v.y + a.m22 * v.z);
     }
     
+    /**
+     * Multiply two matrices.
+     * 
+     * @param a
+     * @param b
+     * @return      a * b
+     */
     @:op(A * B)
     public static inline function multiply(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
@@ -100,6 +135,13 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         ]);
     }
     
+    /**
+     * Add two matrices.
+     * 
+     * @param a
+     * @param b
+     * @return      a + b
+     */
     @:op(A + B)
     public static inline function add(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
@@ -107,13 +149,26 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             .addWith(b);
     }
     
+    /**
+     * Subtract one matrix from another.
+     * 
+     * @param a
+     * @param b
+     * @return      a - b
+     */
     @:op(A - B)
     public static inline function subtract(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
         return a.clone()
             .subtractWith(b);
     }
-
+    
+    /**
+     * Create a negated copy of a matrix.
+     * 
+     * @param a
+     * @return      -a
+     */
     @:op(-A)
     public static inline function negate(a:Matrix3x3):Matrix3x3
     {
@@ -124,6 +179,14 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         ]);
     }
     
+    /**
+     * Test element-wise equality between two matrices.
+     * False if one of the inputs is null and the other is not.
+     * 
+     * @param a
+     * @param b
+     * @return      a_ij == b_ij
+     */
     @:op(A == B)
     public static inline function equals(a:Matrix3x3, b:Matrix3x3):Bool
     {
@@ -141,12 +204,27 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             a.m22 == b.m22;
     }
     
+    /**
+     * Test inequality between two matrices.
+     * 
+     * @param a
+     * @param b
+     * @return      !(a_ij == b_ij)
+     */
     @:op(A != B)
     public static inline function notEquals(a:Matrix3x3, b:Matrix3x3):Bool
     {
         return !(a == b);
     }
     
+    /**
+     * Add a matrix in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_ij += b_ij
+     */
     public static inline function addWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
         a.m00 += b.m00;
@@ -161,6 +239,14 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         return a;
     }
     
+    /**
+     * Subtract a matrix in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_ij -= b_ij
+     */
     public static inline function subtractWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
         a.m00 -= b.m00;
@@ -258,6 +344,11 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         }
     }
     
+    /**
+     * Clone.
+     * 
+     * @return  The cloned object.
+     */
     public inline function clone():Matrix3x3
     {
         var self:Matrix3x3 = this;
@@ -268,6 +359,13 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         ]);
     }
     
+    /**
+     * Get an element by position.
+     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * 
+     * @param i         The element index.
+     * @return          The element.
+     */
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
@@ -298,6 +396,14 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         }
     }
     
+    /**
+     * Set an element by position.
+     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * 
+     * @param i         The element index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {
@@ -328,18 +434,41 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
         }
     }
     
+    /**
+     * Get an element by (column, row) indices.
+     * Both column and row indices start at 0, e.g. the index of the first element of the first row is (0, 0).
+     * 
+     * @param column    The column index.
+     * @param row       The row index.
+     * @return          The element.
+     */
     public inline function getElement(column:Int, row:Int):Float
     {
         var self:Matrix3x3 = this;
         return self[row * 3 + column];
     }
     
+    /**
+     * Set an element by (column, row) indices.
+     * Both column and row indices start at 0, e.g. the index of the first element of the first row is (0, 0).
+     * 
+     * @param column    The column index.
+     * @param row       The row index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     public inline function setElement(column:Int, row:Int, value:Float):Float
     {
         var self:Matrix3x3 = this;
         return self[row * 3 + column] = value;
     }
     
+    /**
+     * Get a column vector by index.
+     * 
+     * @param index     The 0-based index of the column.
+     * @return          The column as a vector.
+     */
     public inline function col(index:Int):Vector3
     {
         var self:Matrix3x3 = this;
@@ -356,7 +485,13 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
                 throw "Invalid column";
         }
     }
-        
+    
+    /**
+     * Get a row vector by index.
+     * 
+     * @param index     The 0-based index of the row.
+     * @return          The row as a vector.
+     */
     public inline function row(index:Int):Vector3
     {
         var self:Matrix3x3 = this;

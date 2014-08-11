@@ -6,22 +6,48 @@ typedef Vector2Shape =
     public var y:Float;
 }
 
+/**
+ * A 2D vector.
+ */
 @:forward(x, y)
 abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
 {
+    // The number of elements in this structure
     public static inline var elementCount:Int = 2;
     
+    // Zero vector (v + 0 = v)
     public static var zero(get, never):Vector2;
+    
+    // X axis (1, 0)
     public static var xAxis(get, never):Vector2;
+    
+    // Y axis (0, 1)
     public static var yAxis(get, never):Vector2;
     
+    // Magnitude
     public var length(get, never):Float;
+    
+    // Vector dotted with itself
     public var lengthSq(get, never):Float;
+    
+    // The angle between this vector and the X axis
     public var angle(get, never):Float;
+    
+    // The normalized vector
     public var normal(get, never):Vector2;
+    
+    // 90 degree rotation to the left
     public var leftRot(get, never):Vector2;
+    
+    // 90 degree rotation to the right
     public var rightRot(get, never):Vector2;
     
+    /**
+     * Constructor.
+     * 
+     * @param x
+     * @param y
+     */
     public function new(x:Float = 0.0, y:Float = 0.0)
     {
         this = {x: x, y: y};
@@ -60,6 +86,13 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         return new Vector2(radius * Math.cos(angle), radius * Math.sin(angle));
     }
     
+    /**
+     * Dot product.
+     * 
+     * @param a
+     * @param b
+     * @return      sum_i (a_i * b_i)
+     */
     @:op(A * B)
     public static inline function dot(a:Vector2, b:Vector2):Float
     {
@@ -68,6 +101,13 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             a.y * b.y;
     }
     
+    /**
+     * Multiply a scalar with a vector.
+     * 
+     * @param s
+     * @param a
+     * @return      s * a
+     */
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, a:Vector2):Vector2
     {
@@ -76,6 +116,13 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             s * a.y);
     }
     
+    /**
+     * Add two vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      a + b
+     */
     @:op(A + B)
     public static inline function add(a:Vector2, b:Vector2):Vector2
     {
@@ -83,6 +130,13 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             .addWith(b);
     }
     
+    /**
+     * Subtract one vector from another.
+     * 
+     * @param a
+     * @param b
+     * @return      a - b
+     */
     @:op(A - B)
     public static inline function subtract(a:Vector2, b:Vector2):Vector2
     {
@@ -90,6 +144,12 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             .subtractWith(b);
     }
     
+    /**
+     * Create a negated copy of a vector.
+     * 
+     * @param a
+     * @return      -a
+     */
     @:op(-A)
     public static inline function negate(a:Vector2):Vector2
     {
@@ -98,6 +158,14 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             -a.y);
     }
     
+    /**
+     * Test element-wise equality between two vectors.
+     * False if one of the inputs is null and the other is not.
+     * 
+     * @param a
+     * @param b
+     * @return     a_i == b_i
+     */
     @:op(A == B)
     public static inline function equals(a:Vector2, b:Vector2):Bool
     {
@@ -108,12 +176,27 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
             a.y == b.y;
     }
     
+    /**
+     * Test inequality between two vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      !(a_i == b_i)
+     */
     @:op(A != B)
     public static inline function notEquals(a:Vector2, b:Vector2):Bool
     {
         return !(a == b);
     }
     
+    /**
+     * Add a vector in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_i += b_i
+     */
     public static inline function addWith(a:Vector2, b:Vector2):Vector2
     {
         a.x += b.x;
@@ -121,6 +204,14 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         return a;
     }
     
+    /**
+     * Subtract a vector in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_i -= b_i
+     */
     public static inline function subtractWith(a:Vector2, b:Vector2):Vector2
     {
         a.x -= b.x;
@@ -128,6 +219,14 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         return a;
     }
 
+    /**
+     * Linear interpolation between two vectors.
+     * 
+     * @param a
+     * @param b
+     * @param t
+     * @return  a + (1 - t)b
+     */
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
     {
         return t*a + (1.0 - t)*b;
@@ -148,12 +247,23 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         }
     }
     
+    /**
+     * Clone.
+     * 
+     * @return  The cloned object.
+     */
     public inline function clone():Vector2
     {
         var self:Vector2 = this;
         return new Vector2(self.x, self.y);
     }
 
+    /**
+     * Get an element by position.
+     * 
+     * @param i         The element index.
+     * @return          The element.
+     */
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
@@ -169,6 +279,13 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
         }
     }
     
+    /**
+     * Set an element by position.
+     * 
+     * @param i         The element index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {

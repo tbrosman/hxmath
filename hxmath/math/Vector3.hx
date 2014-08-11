@@ -7,19 +7,40 @@ typedef Vector3Shape =
     public var z:Float;
 }
 
+/**
+ * A 3D vector.
+ */
 @:forward(x, y, z)
 abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
 {
+    // The number of elements in this structure
     public static inline var elementCount:Int = 3;
     
+    // Zero vector (v + 0 = v)
     public static var zero(get, never):Vector3;
+    
+    // X axis (1, 0, 0)
     public static var xAxis(get, never):Vector3;
+    
+    // Y axis (0, 1, 0)
     public static var yAxis(get, never):Vector3;
+    
+    // Z axis (0, 0, 1)
     public static var zAxis(get, never):Vector3;
     
+    // Magnitude
     public var length(get, never):Float;
+    
+    // Vector dotted with itself
     public var lengthSq(get, never):Float;
     
+    /**
+     * Constructor.
+     * 
+     * @param x
+     * @param y
+     * @param z
+     */
     public function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0)
     {
         this = {x: x, y: y, z: z};
@@ -41,6 +62,13 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         return new Vector3(rawData[0], rawData[1], rawData[2]);
     }
     
+    /**
+     * Dot product.
+     * 
+     * @param a
+     * @param b
+     * @return      sum_i (a_i * b_i)
+     */
     @:op(A * B)
     public static inline function dot(a:Vector3, b:Vector3):Float
     {
@@ -50,6 +78,13 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             a.z * b.z;
     }
     
+    /**
+     * Cross product. The resulting vector is orthogonal to the plane defined by the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      a X b
+     */
     @:op(A ^ B)
     public static inline function cross(a:Vector3, b:Vector3):Vector3
     {
@@ -59,6 +94,13 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             a.x * b.y - a.y * b.x);
     }
     
+    /**
+     * Multiply a scalar with a vector.
+     * 
+     * @param s
+     * @param a
+     * @return      s * a
+     */
     @:op(A * B)
     public static inline function scalarMultiply(s:Float, a:Vector3):Vector3
     {
@@ -68,6 +110,13 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             s * a.z);
     }
     
+    /**
+     * Add two vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      a + b
+     */
     @:op(A + B)
     public static inline function add(a:Vector3, b:Vector3):Vector3
     {
@@ -75,6 +124,13 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             .addWith(b);
     }
     
+    /**
+     * Subtract one vector from another.
+     * 
+     * @param a
+     * @param b
+     * @return      a - b
+     */
     @:op(A - B)
     public static inline function subtract(a:Vector3, b:Vector3):Vector3
     {
@@ -82,6 +138,12 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             .subtractWith(b);
     }
     
+    /**
+     * Create a negated copy of a vector.
+     * 
+     * @param a
+     * @return      -a
+     */
     @:op(-A)
     public static inline function negate(a:Vector3):Vector3
     {
@@ -91,6 +153,14 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             -a.z);
     }
     
+    /**
+     * Test element-wise equality between two vectors.
+     * False if one of the inputs is null and the other is not.
+     * 
+     * @param a
+     * @param b
+     * @return     a_i == b_i
+     */
     @:op(A == B)
     public static inline function equals(a:Vector3, b:Vector3):Bool
     {
@@ -102,6 +172,27 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
             a.z == b.z;
     }
     
+    /**
+     * Test inequality between two vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      !(a_i == b_i)
+     */
+    @:op(A != B)
+    public static inline function notEquals(a:Vector3, b:Vector3):Bool
+    {
+        return !(a == b);
+    }
+    
+    /**
+     * Add a vector in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_i += b_i
+     */
     public static inline function addWith(a:Vector3, b:Vector3):Vector3
     {
         a.x += b.x;
@@ -110,6 +201,14 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         return a;
     }
     
+    /**
+     * Subtract a vector in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @param b
+     * @return      a_i -= b_i
+     */
     public static inline function subtractWith(a:Vector3, b:Vector3):Vector3
     {
         a.x -= b.x;
@@ -118,6 +217,14 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         return a;
     }
     
+    /**
+     * Linear interpolation between two vectors.
+     * 
+     * @param a
+     * @param b
+     * @param t
+     * @return  a + (1 - t)b
+     */
     public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3
     {
         return t*a + (1.0 - t)*b;
@@ -138,12 +245,23 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         }
     }
     
+    /**
+     * Clone.
+     * 
+     * @return  The cloned object.
+     */
     public inline function clone():Vector3
     {
         var self:Vector3 = this;
         return new Vector3(self.x, self.y, self.z);
     }
     
+    /**
+     * Get an element by position.
+     * 
+     * @param i         The element index.
+     * @return          The element.
+     */
     @:arrayAccess
     public inline function getArrayElement(i:Int):Float
     {
@@ -161,6 +279,13 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
         }
     }
     
+    /**
+     * Set an element by position.
+     * 
+     * @param i         The element index.
+     * @param value     The new value.
+     * @return          The updated element.
+     */
     @:arrayAccess
     public inline function setArrayElement(i:Int, value:Float):Float
     {

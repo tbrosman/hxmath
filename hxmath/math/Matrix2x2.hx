@@ -16,16 +16,21 @@ typedef Matrix2x2Shape =
     public var d:Float;
 }
 
-@:forward(a, b, c, d)
+/**
+ * 2x2 matrix for linear operations defined over a shape matching the 2x2 linear sub-matrix in flash.geom.Matrix.
+ */
+@:forward(
+    a, b,
+    c, d)
 abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 4;
     
-    // Zero matrix (A+0 = A)
+    // Zero matrix (A + 0 = A, A * 0 = 0)
     public static var zero(get, never):Matrix2x2;
     
-    // Identity matrix (A*I = A)
+    // Identity matrix (A * I = A)
     public static var identity(get, never):Matrix2x2;
     
     // Determinant (the "area" of the basis)
@@ -72,7 +77,7 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
      * 
      * @param s
      * @param m
-     * @return      s*m
+     * @return      s * m
      */
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, m:Matrix2x2):Matrix2x2
@@ -87,7 +92,7 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
      * 
      * @param m
      * @param v
-     * @return      m*v
+     * @return      m * v
      */
     @:op(A * B)
     public static inline function multiplyVector(m:Matrix2x2, v:Vector2):Vector2
@@ -102,7 +107,7 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
      * 
      * @param m
      * @param n
-     * @return      m*n
+     * @return      m * n
      */
     @:op(A * B)
     public static inline function multiply(m:Matrix2x2, n:Matrix2x2):Matrix2x2

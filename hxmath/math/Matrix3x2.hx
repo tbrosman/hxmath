@@ -21,13 +21,19 @@ typedef Matrix3x2Shape =
     public var ty:Float;
 }
 
-@:forward(a, b, c, d, tx, ty)
+/**
+ * 3x2 matrix for mixed affine/linear operations defined over a shape matching flash.geom.Matrix.
+ */
+@:forward(
+    a, b,
+    c, d,
+    tx, ty)
 abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 6;
     
-    // Zero matrix (A+0 = A)
+    // Zero matrix (A + 0 = A, A * 0 = 0)
     public static var zero(get, never):Matrix3x2;
     
     // Identity matrix (A.concat(I) = A)
@@ -79,7 +85,7 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
      * 
      * @param s
      * @param m
-     * @return      s*m
+     * @return      s * m
      */
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, m:Matrix3x2):Matrix3x2
