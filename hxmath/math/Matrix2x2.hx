@@ -195,40 +195,6 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
     }
     
     /**
-     * Add a matrix in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param m
-     * @param n
-     * @return      m_ij += n_ij
-     */
-    public static inline function addWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
-    {
-        m.a += n.a;
-        m.b += n.b;
-        m.c += n.c;
-        m.d += n.d;
-        return m;
-    }
-    
-    /**
-     * Subtract a matrix in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param m
-     * @param n
-     * @return      m_ij -= n_ij
-     */
-    public static inline function subtractWith(m:Matrix2x2, n:Matrix2x2):Matrix2x2
-    {
-        m.a -= n.a;
-        m.b -= n.b;
-        m.c -= n.c;
-        m.d -= n.d;
-        return m;
-    }
-    
-    /**
      * Counter-clockwise rotation.
      * 
      * @param angle     The angle to rotate (in radians).
@@ -255,6 +221,44 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return new Matrix2x2(
             sx, 0.0,
             0.0, sy);
+    }
+    
+    /**
+     * Add a matrix in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param m
+     * @return      self_ij += m_ij
+     */
+    public inline function addWith(m:Matrix2x2):Matrix2x2
+    {
+        var self:Matrix2x2 = this;
+        
+        self.a  += m.a;
+        self.b  += m.b;
+        self.c  += m.c;
+        self.d  += m.d;
+        
+        return self;
+    }
+    
+    /**
+     * Subtract a matrix in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param m
+     * @return      self_ij -= m_ij
+     */
+    public inline function subtractWith(m:Matrix2x2):Matrix2x2
+    {
+        var self:Matrix2x2 = this;
+        
+        self.a  -= m.a;
+        self.b  -= m.b;
+        self.c  -= m.c;
+        self.d  -= m.d;
+        
+        return self;
     }
     
     /**

@@ -233,28 +233,30 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
-     * @param b
-     * @return      a_ij += b_ij
+     * @return      self_ij += a_ij
      */
-    public static inline function addWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
+    public inline function addWith(a:Matrix4x4):Matrix4x4
     {
-        a.m00 += b.m00;
-        a.m10 += b.m10;
-        a.m20 += b.m20;
-        a.m30 += b.m30;
-        a.m01 += b.m01;
-        a.m11 += b.m11;
-        a.m21 += b.m21;
-        a.m31 += b.m31;
-        a.m02 += b.m02;
-        a.m12 += b.m12;
-        a.m22 += b.m22;
-        a.m32 += b.m32;
-        a.m03 += b.m03;
-        a.m13 += b.m13;
-        a.m23 += b.m23;
-        a.m33 += b.m33;
-        return a;
+        var self:Matrix4x4 = this;
+        
+        self.m00 += a.m00;
+        self.m10 += a.m10;
+        self.m20 += a.m20;
+        self.m30 += a.m30;
+        self.m01 += a.m01;
+        self.m11 += a.m11;
+        self.m21 += a.m21;
+        self.m31 += a.m31;
+        self.m02 += a.m02;
+        self.m12 += a.m12;
+        self.m22 += a.m22;
+        self.m32 += a.m32;
+        self.m03 += a.m03;
+        self.m13 += a.m13;
+        self.m23 += a.m23;
+        self.m33 += a.m33;
+        
+        return self;
     }
     
     /**
@@ -262,28 +264,30 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
      * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
-     * @param b
-     * @return      a_ij -= b_ij
+     * @return      self_ij -= a_ij
      */
-    public static inline function subtractWith(a:Matrix4x4, b:Matrix4x4):Matrix4x4
+    public inline function subtractWith(a:Matrix4x4):Matrix4x4
     {
-        a.m00 -= b.m00;
-        a.m10 -= b.m10;
-        a.m20 -= b.m20;
-        a.m30 -= b.m30;
-        a.m01 -= b.m01;
-        a.m11 -= b.m11;
-        a.m21 -= b.m21;
-        a.m31 -= b.m31;
-        a.m02 -= b.m02;
-        a.m12 -= b.m12;
-        a.m22 -= b.m22;
-        a.m32 -= b.m32;
-        a.m03 -= b.m03;
-        a.m13 -= b.m13;
-        a.m23 -= b.m23;
-        a.m33 -= b.m33;
-        return a;
+        var self:Matrix4x4 = this;
+        
+        self.m00 -= a.m00;
+        self.m10 -= a.m10;
+        self.m20 -= a.m20;
+        self.m30 -= a.m30;
+        self.m01 -= a.m01;
+        self.m11 -= a.m11;
+        self.m21 -= a.m21;
+        self.m31 -= a.m31;
+        self.m02 -= a.m02;
+        self.m12 -= a.m12;
+        self.m22 -= a.m22;
+        self.m32 -= a.m32;
+        self.m03 -= a.m03;
+        self.m13 -= a.m13;
+        self.m23 -= a.m23;
+        self.m33 -= a.m33;
+        
+        return self;
     }
     
     /**

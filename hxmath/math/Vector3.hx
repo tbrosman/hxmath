@@ -186,38 +186,6 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     }
     
     /**
-     * Add a vector in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_i += b_i
-     */
-    public static inline function addWith(a:Vector3, b:Vector3):Vector3
-    {
-        a.x += b.x;
-        a.y += b.y;
-        a.z += b.z;
-        return a;
-    }
-    
-    /**
-     * Subtract a vector in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_i -= b_i
-     */
-    public static inline function subtractWith(a:Vector3, b:Vector3):Vector3
-    {
-        a.x -= b.x;
-        a.y -= b.y;
-        a.z -= b.z;
-        return a;
-    }
-    
-    /**
      * Linear interpolation between two vectors.
      * 
      * @param a
@@ -228,6 +196,42 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
     public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3
     {
         return t*a + (1.0 - t)*b;
+    }
+    
+    /**
+     * Add a vector in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i += a_i
+     */
+    public inline function addWith(a:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x += a.x;
+        self.y += a.y;
+        self.z += a.z;
+        
+        return self;
+    }
+    
+    /**
+     * Subtract a vector in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i -= a_i
+     */
+    public inline function subtractWith(a:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x -= a.x;
+        self.y -= a.y;
+        self.z -= a.z;
+        
+        return self;
     }
     
     /**

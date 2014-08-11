@@ -190,36 +190,6 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     }
     
     /**
-     * Add a vector in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_i += b_i
-     */
-    public static inline function addWith(a:Vector2, b:Vector2):Vector2
-    {
-        a.x += b.x;
-        a.y += b.y;
-        return a;
-    }
-    
-    /**
-     * Subtract a vector in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_i -= b_i
-     */
-    public static inline function subtractWith(a:Vector2, b:Vector2):Vector2
-    {
-        a.x -= b.x;
-        a.y -= b.y;
-        return a;
-    }
-
-    /**
      * Linear interpolation between two vectors.
      * 
      * @param a
@@ -230,6 +200,40 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
     {
         return t*a + (1.0 - t)*b;
+    }
+    
+    /**
+     * Add a vector in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i += a_i
+     */
+    public inline function addWith(a:Vector2):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x += a.x;
+        self.y += a.y;
+        
+        return self;
+    }
+    
+    /**
+     * Subtract a vector in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i -= a_i
+     */
+    public inline function subtractWith(a:Vector2):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x -= a.x;
+        self.y -= a.y;
+        
+        return self;
     }
     
     /**

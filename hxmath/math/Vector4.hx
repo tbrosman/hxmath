@@ -179,40 +179,6 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     }
     
     /**
-     * Add a vector in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_i += b_i
-     */
-    public static inline function addWith(a:Vector4, b:Vector4):Vector4
-    {
-        a.x += b.x;
-        a.y += b.y;
-        a.z += b.z;
-        a.w += b.w;
-        return a;
-    }
-    
-    /**
-     * Subtract a vector in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_i -= b_i
-     */
-    public static inline function subtractWith(a:Vector4, b:Vector4):Vector4
-    {
-        a.x -= b.x;
-        a.y -= b.y;
-        a.z -= b.z;
-        a.w -= b.w;
-        return a;
-    }
-    
-    /**
      * Linear interpolation between two vectors.
      * 
      * @param a
@@ -223,6 +189,44 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     public static inline function lerp(a:Vector4, b:Vector4, t:Float):Vector4
     {
         return t*a + (1.0 - t)*b;
+    }
+    
+    /**
+     * Add a vector in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i += a_i
+     */
+    public inline function addWith(a:Vector4):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.x += a.x;
+        self.y += a.y;
+        self.z += a.z;
+        self.w += a.w;
+        
+        return self;
+    }
+    
+    /**
+     * Subtract a vector in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i -= a_i
+     */
+    public inline function subtractWith(a:Vector4):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.x -= a.x;
+        self.y -= a.y;
+        self.z -= a.z;
+        self.w -= a.w;
+        
+        return self;
     }
     
     /**

@@ -218,50 +218,6 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
     }
     
     /**
-     * Add a matrix in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_ij += b_ij
-     */
-    public static inline function addWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
-    {
-        a.m00 += b.m00;
-        a.m10 += b.m10;
-        a.m20 += b.m20;
-        a.m01 += b.m01;
-        a.m11 += b.m11;
-        a.m21 += b.m21;
-        a.m02 += b.m02;
-        a.m12 += b.m12;
-        a.m22 += b.m22;
-        return a;
-    }
-    
-    /**
-     * Subtract a matrix in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param a
-     * @param b
-     * @return      a_ij -= b_ij
-     */
-    public static inline function subtractWith(a:Matrix3x3, b:Matrix3x3):Matrix3x3
-    {
-        a.m00 -= b.m00;
-        a.m10 -= b.m10;
-        a.m20 -= b.m20;
-        a.m01 -= b.m01;
-        a.m11 -= b.m11;
-        a.m21 -= b.m21;
-        a.m02 -= b.m02;
-        a.m12 -= b.m12;
-        a.m22 -= b.m22;
-        return a;
-    }
-    
-    /**
      * Counter-clockwise rotation around the X axis.
      * 
      * @param angle     The angle to rotate (in radians).
@@ -327,6 +283,54 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
             0.0, sy, 0.0,
             0.0, 0.0, sz
         ]);
+    }
+    
+    /**
+     * Add a matrix in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_ij += a_ij
+     */
+    public inline function addWith(a:Matrix3x3):Matrix3x3
+    {
+        var self:Matrix3x3 = this;
+        
+        self.m00 += a.m00;
+        self.m10 += a.m10;
+        self.m20 += a.m20;
+        self.m01 += a.m01;
+        self.m11 += a.m11;
+        self.m21 += a.m21;
+        self.m02 += a.m02;
+        self.m12 += a.m12;
+        self.m22 += a.m22;
+        
+        return self;
+    }
+    
+    /**
+     * Subtract a matrix in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_ij -= a_ij
+     */
+    public inline function subtractWith(a:Matrix3x3):Matrix3x3
+    {
+        var self:Matrix3x3 = this;
+        
+        self.m00 -= a.m00;
+        self.m10 -= a.m10;
+        self.m20 -= a.m20;
+        self.m01 -= a.m01;
+        self.m11 -= a.m11;
+        self.m21 -= a.m21;
+        self.m02 -= a.m02;
+        self.m12 -= a.m12;
+        self.m22 -= a.m22;
+        
+        return self;
     }
     
     /**

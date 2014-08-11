@@ -194,14 +194,16 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
-     * @param b
-     * @return      a_i += b_i
+     * @return      self_i += a_i
      */
-    public static inline function addWith(a:Quaternion, b:Quaternion):Quaternion
+    public inline function addWith(a:Quaternion):Quaternion
     {
-        a.s += b.s;
-        a.v += b.v;
-        return a;
+        var self:Quaternion = this;
+        
+        self.s += a.s;
+        self.v += a.v;
+        
+        return self;
     }
     
     /**
@@ -209,14 +211,16 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
      * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
-     * @param b
-     * @return      a_i -= b_i
+     * @return      self_i -= a_i
      */
-    public static inline function subtractWith(a:Quaternion, b:Quaternion):Quaternion
+    public inline function subtractWith(a:Quaternion):Quaternion
     {
-        a.s -= b.s;
-        a.v -= b.v;
-        return a;
+        var self:Quaternion = this;
+        
+        self.s -= a.s;
+        self.v -= a.v;
+        
+        return self;
     }
     
     /**

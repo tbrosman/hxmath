@@ -213,44 +213,6 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     }
     
     /**
-     * Add a matrix in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param m
-     * @param n
-     * @return      m_ij += n_ij
-     */
-    public static inline function addWith(m:Matrix3x2, n:Matrix3x2):Matrix3x2
-    {
-        m.a  += n.a;
-        m.b  += n.b;
-        m.c  += n.c;
-        m.d  += n.d;
-        m.tx += n.tx;
-        m.ty += n.ty;
-        return m;
-    }
-    
-    /**
-     * Subtract a matrix in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
-     * 
-     * @param m
-     * @param n
-     * @return      m_ij -= n_ij
-     */
-    public static inline function subtractWith(m:Matrix3x2, n:Matrix3x2):Matrix3x2
-    {
-        m.a  -= n.a;
-        m.b  -= n.b;
-        m.c  -= n.c;
-        m.d  -= n.d;
-        m.tx -= n.tx;
-        m.ty -= n.ty;
-        return m;
-    }
-    
-    /**
      * Rotate by a given angle.
      * 
      * @param angle     The angle to rotate by (ccw).
@@ -306,6 +268,48 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
         {
             other[i] = self[i];
         }
+    }
+    
+    /**
+     * Add a matrix in place.
+     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param m
+     * @return      self_ij += m_ij
+     */
+    public inline function addWith(m:Matrix3x2):Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        
+        self.a  += m.a;
+        self.b  += m.b;
+        self.c  += m.c;
+        self.d  += m.d;
+        self.tx += m.tx;
+        self.ty += m.ty;
+        
+        return self;
+    }
+    
+    /**
+     * Subtract a matrix in place.
+     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param m
+     * @return      self_ij -= m_ij
+     */
+    public inline function subtractWith(m:Matrix3x2):Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        
+        self.a  -= m.a;
+        self.b  -= m.b;
+        self.c  -= m.c;
+        self.d  -= m.d;
+        self.tx -= m.tx;
+        self.ty -= m.ty;
+        
+        return self;
     }
     
     /**
