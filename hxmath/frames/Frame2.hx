@@ -66,8 +66,8 @@ class Frame2
      */
     public inline function concatWith(other:Frame2):Frame2
     {
-        var resultOffset = linearMatrix * other.offset + this.offset;
-        angleDegrees = MathUtil.wrap(this.angleDegrees + other.angleDegrees, 360);
+        var resultOffset = linearMatrix * other.offset + offset;
+        angleDegrees = MathUtil.wrap(angleDegrees + other.angleDegrees, 360);
         offset = resultOffset;
         return this;
     }
@@ -151,6 +151,7 @@ class Frame2
         {
             cachedMatrix = Matrix3x2.rotate(MathUtil.degToRad(angleDegrees));
             cachedMatrix.t = offset;
+            isDirty = false;
         }
         
         return cachedMatrix;
@@ -158,20 +159,20 @@ class Frame2
     
     private inline function get_linearMatrix():Matrix2x2
     {
-        return this.matrix.linearSubMatrix;
+        return matrix.linearSubMatrix;
     }
     
     private function set_offset(offset:Vector2):Vector2
     {
         this.offset = offset;
         isDirty = true;
-        return this.offset;
+        return offset;
     }
     
     private function set_angleDegrees(angleDegrees:Float):Float
     {
         this.angleDegrees = angleDegrees;
         isDirty = true;
-        return this.angleDegrees;
+        return angleDegrees;
     }
 }
