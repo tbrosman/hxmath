@@ -1,4 +1,5 @@
 package hxmath.math;
+import hxmath.math.Matrix4x4.Matrix4x4Default;
 
 // Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix4x4Shape = 
@@ -22,6 +23,59 @@ typedef Matrix4x4Shape =
     public var m31:Float;
     public var m32:Float;
     public var m33:Float;
+}
+
+/**
+ * The default underlying type.
+ */
+class Matrix4x4Default
+{
+    public var m00:Float;
+    public var m01:Float;
+    public var m02:Float;
+    public var m03:Float;
+    
+    public var m10:Float;
+    public var m11:Float;
+    public var m12:Float;
+    public var m13:Float;
+    
+    public var m20:Float;
+    public var m21:Float;
+    public var m22:Float;
+    public var m23:Float;
+    
+    public var m30:Float;
+    public var m31:Float;
+    public var m32:Float;
+    public var m33:Float;
+    
+    public function new(
+        m00:Float, m10:Float, m20:Float, m30:Float,
+        m01:Float, m11:Float, m21:Float, m31:Float,
+        m02:Float, m12:Float, m22:Float, m32:Float,
+        m03:Float, m13:Float, m23:Float, m33:Float)
+    {
+        this.m00 = m00;
+        this.m10 = m10;
+        this.m20 = m20;
+        this.m30 = m30;
+        
+        this.m01 = m01;
+        this.m11 = m11;
+        this.m21 = m21;
+        this.m31 = m31;
+        
+        this.m02 = m02;
+        this.m12 = m12;
+        this.m22 = m22;
+        this.m32 = m32;
+        
+        this.m03 = m03;
+        this.m13 = m13;
+        this.m23 = m23;
+        this.m33 = m33;
+    }
 }
 
 /**
@@ -68,12 +122,11 @@ abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
                 throw "Invalid rawData.";
             }
             
-            this = {
-                m00: rawData[0],  m10: rawData[1],  m20: rawData[2],  m30: rawData[3],
-                m01: rawData[4],  m11: rawData[5],  m21: rawData[6],  m31: rawData[7],
-                m02: rawData[8],  m12: rawData[9],  m22: rawData[10], m32: rawData[11],
-                m03: rawData[12], m13: rawData[13], m23: rawData[14], m33: rawData[15]
-            };
+            this = new Matrix4x4Default(
+                rawData[0],  rawData[1],  rawData[2],  rawData[3],
+                rawData[4],  rawData[5],  rawData[6],  rawData[7],
+                rawData[8],  rawData[9],  rawData[10], rawData[11],
+                rawData[12], rawData[13], rawData[14], rawData[15]);
         }
     }
     

@@ -10,6 +10,21 @@ typedef QuaternionShape =
 }
 
 /**
+ * The default underlying type.
+ */
+class QuaternionDefault
+{
+    public var s:Float;
+    public var v:Vector3;
+    
+    public function new(s:Float, v:Vector3)
+    {
+        this.s = s;
+        this.v = v;
+    }
+}
+
+/**
  * Quaternion for rotation in 3D.
  */
 @:forward(s, v)
@@ -44,12 +59,11 @@ abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
      */
     public function new(s:Float=1.0, v:Vector3=null) 
     {
-        this = {
-            s: s,
-            v: v != null
+        this = new QuaternionDefault(
+            s,
+            v != null
                 ? v
-                : Vector3.zero
-        };
+                : Vector3.zero);
     }
     
     /**

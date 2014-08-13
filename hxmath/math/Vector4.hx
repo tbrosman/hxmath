@@ -9,6 +9,25 @@ typedef Vector4Shape =
 }
 
 /**
+ * The default underlying type.
+ */
+class Vector4Default
+{
+    public var x:Float;
+    public var y:Float;
+    public var z:Float;
+    public var w:Float;
+    
+    public function new(x:Float, y:Float, z:Float, w:Float)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
+}
+
+/**
  * A 4D vector (used with homogenous/projection matrices in 3D).
  */
 @:forward(x, y, z, w)
@@ -48,7 +67,7 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
      */
     public function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0, w:Float = 0.0)
     {
-        this = {x: x, y: y, z: z, w: w};
+        this = new Vector4Default(x, y, z, w);
     }
     
     /**

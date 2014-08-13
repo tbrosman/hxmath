@@ -22,6 +22,29 @@ typedef Matrix3x2Shape =
 }
 
 /**
+ * The default underlying type.
+ */
+class Matrix3x2Default
+{
+    public var a:Float;
+    public var b:Float;
+    public var c:Float;
+    public var d:Float;
+    public var tx:Float;
+    public var ty:Float;
+    
+    public function new(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float)
+    {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+        this.tx = tx;
+        this.ty = ty;
+    }
+}
+
+/**
  * 3x2 matrix for mixed affine/linear operations defined over a shape matching flash.geom.Matrix.
  */
 @:forward(
@@ -59,9 +82,7 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
      */
     public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0, tx:Float = 0.0, ty:Float = 0.0) 
     {
-        this = {
-            a: a, b: b, tx: tx, 
-            c: c, d: d, ty: ty };
+        this = new Matrix3x2Default(a, b, c, d, tx, ty);
     }
     
     /**

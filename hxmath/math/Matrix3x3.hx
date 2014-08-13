@@ -17,6 +17,42 @@ typedef Matrix3x3Shape =
 }
 
 /**
+ * The default underlying type.
+ */
+class Matrix3x3Default
+{
+    public var m00:Float;
+    public var m01:Float;
+    public var m02:Float;
+    
+    public var m10:Float;
+    public var m11:Float;
+    public var m12:Float;
+    
+    public var m20:Float;
+    public var m21:Float;
+    public var m22:Float;
+    
+    public function new(
+        m00:Float, m10:Float, m20:Float,
+        m01:Float, m11:Float, m21:Float,
+        m02:Float, m12:Float, m22:Float)
+    {
+        this.m00 = m00;
+        this.m10 = m10;
+        this.m20 = m20;
+        
+        this.m01 = m01;
+        this.m11 = m11;
+        this.m21 = m21;
+        
+        this.m02 = m02;
+        this.m12 = m12;
+        this.m22 = m22;
+    }
+}
+
+/**
  * 3x3 matrix for linear transformations in 3D.
  */
 @:forward(
@@ -58,11 +94,10 @@ abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
                 throw "Invalid rawData.";
             }
             
-            this = {
-                m00: rawData[0], m10: rawData[1], m20: rawData[2],
-                m01: rawData[3], m11: rawData[4], m21: rawData[5],
-                m02: rawData[6], m12: rawData[7], m22: rawData[8]
-            };
+            this = new Matrix3x3Default(
+                rawData[0], rawData[1], rawData[2],
+                rawData[3], rawData[4], rawData[5],
+                rawData[6], rawData[7], rawData[8]);
         }
     }
     

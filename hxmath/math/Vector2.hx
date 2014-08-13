@@ -7,6 +7,21 @@ typedef Vector2Shape =
 }
 
 /**
+ * The default underlying type.
+ */
+class Vector2Default
+{
+    public var x:Float;
+    public var y:Float;
+    
+    public function new(x:Float, y:Float)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+/**
  * A 2D vector.
  */
 @:forward(x, y)
@@ -50,7 +65,7 @@ abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
      */
     public function new(x:Float = 0.0, y:Float = 0.0)
     {
-        this = {x: x, y: y};
+        this = new Vector2Default(x, y);
     }
     
     /**

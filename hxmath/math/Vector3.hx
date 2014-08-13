@@ -1,10 +1,28 @@
 package hxmath.math;
+import hxmath.math.Vector3.Vector3Default;
 
 typedef Vector3Shape =
 {
     public var x:Float;
     public var y:Float;
     public var z:Float;
+}
+
+/**
+ * The default underlying type.
+ */
+class Vector3Default
+{
+    public var x:Float;
+    public var y:Float;
+    public var z:Float;
+    
+    public function new(x:Float, y:Float, z:Float)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 }
 
 /**
@@ -43,7 +61,7 @@ abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
      */
     public function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0)
     {
-        this = {x: x, y: y, z: z};
+        this = new Vector3Default(x, y, z);
     }
     
     /**

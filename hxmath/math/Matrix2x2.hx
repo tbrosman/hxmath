@@ -17,6 +17,25 @@ typedef Matrix2x2Shape =
 }
 
 /**
+ * The default underlying type.
+ */
+class Matrix2x2Default
+{
+    public var a:Float;
+    public var b:Float;
+    public var c:Float;
+    public var d:Float;
+    
+    public function new(a:Float, b:Float, c:Float, d:Float)
+    {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+    }
+}
+
+/**
  * 2x2 matrix for linear operations defined over a shape matching the 2x2 linear sub-matrix in flash.geom.Matrix.
  */
 @:forward(
@@ -51,9 +70,7 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
      */
     public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0) 
     {
-        this = {
-            a: a, b: b,
-            c: c, d: d };
+        this = new Matrix2x2Default(a, b, c, d);
     }
     
     /**
