@@ -10,23 +10,32 @@ import hxmath.math.Vector2;
  */
 class Frame2
 {
-    // The associated affine transformation matrix
+    // The associated affine transformation matrix. The private variable holds the cached/last calculated matrix.
     public var matrix(get, never):Matrix3x2;
     
     // The associated linear transformation matrix
     public var linearMatrix(get, never):Matrix2x2;
     
     // The offset between the origin and the outer frame
-    public var offset(default, set):Vector2;
+    public var offset(get, set):Vector2;
     
     // The angle by which the frame is rotated about the origin
-    public var angleDegrees(default, set):Float;
+    public var angleDegrees(get, set):Float;
+    
+    // The last calculated/cached matrix
+    private var lastMatrix:Matrix3x2;
+    
+    // Stores offset in non-adapter cases
+    private var internalOffset:Vector2;
+    
+    // Stores angle in non-adapter cases
+    private var internalAngleDegrees:Float;
+    
+    // True if the matrix is cached
+    private var isCached:Bool = true;
     
     // True if the cached matrix needs to be recalculated
     private var isDirty:Bool = true;
-    
-    // The cached matrix
-    private var cachedMatrix:Matrix3x2;
     
     /**
      * Constructor.
@@ -34,12 +43,13 @@ class Frame2
      * @param offset        The offset of the frame relative to the outer frame.
      * @param angleDegrees  The angle of the frame relative to the outer frame.
      */
-    public function new(offset:Vector2=null, angleDegrees:Float=0.0) 
+    public function new(offset:Vector2=null, angleDegrees:Float=0.0, isCached:Bool=true) 
     {
-        this.offset = offset == null
+        internalOffset = offset == null
             ? Vector2.zero
             : offset;
-        this.angleDegrees = angleDegrees;
+        internalAngleDegrees = angleDegrees;
+        this.isCached = isCached;
     }
     
     /**
@@ -138,7 +148,7 @@ class Frame2
         // Copy the cached matrix if it is not dirty
         if (!isDirty)
         {
-            result.cachedMatrix = cachedMatrix;
+            result.lastMatrix = lastMatrix;
             result.isDirty = false;
         }
         
@@ -147,14 +157,15 @@ class Frame2
     
     private inline function get_matrix():Matrix3x2
     {
-        if (isDirty)
+        // If no caching or the matrix is cached but dirty, recalculate its
+        if (!isCached || isDirty)
         {
-            cachedMatrix = Matrix3x2.rotate(MathUtil.degToRad(angleDegrees));
-            cachedMatrix.t = offset;
+            lastMatrix = Matrix3x2.rotate(MathUtil.degToRad(angleDegrees));
+            lastMatrix.t = offset;
             isDirty = false;
         }
         
-        return cachedMatrix;
+        return lastMatrix;
     }
     
     private inline function get_linearMatrix():Matrix2x2
@@ -162,16 +173,26 @@ class Frame2
         return matrix.linearSubMatrix;
     }
     
+    private function get_offset():Vector2
+    {
+        return internalOffset;
+    }
+    
     private function set_offset(offset:Vector2):Vector2
     {
-        this.offset = offset;
+        internalOffset = offset;
         isDirty = true;
         return offset;
     }
     
+    private function get_angleDegrees():Float
+    {
+        return internalAngleDegrees;
+    }
+    
     private function set_angleDegrees(angleDegrees:Float):Float
     {
-        this.angleDegrees = angleDegrees;
+        internalAngleDegrees = angleDegrees;
         isDirty = true;
         return angleDegrees;
     }
