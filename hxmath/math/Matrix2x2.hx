@@ -202,11 +202,8 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
      */
     public static inline function rotate(angle:Float):Matrix2x2
     {
-        var s = Math.sin(angle);
-        var c = Math.cos(angle);
-        return new Matrix2x2(
-             c, -s,
-             s,  c);
+        return new Matrix2x2()
+            .setRotate(angle);
     }
     
     /**
@@ -221,6 +218,27 @@ abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
         return new Matrix2x2(
             sx, 0.0,
             0.0, sy);
+    }
+    
+    /**
+     * Set this matrix to a counter-clockwise rotation.
+     * 
+     * @param angle     The angle to rotate (in radians).
+     * @return          This.
+     */
+    public inline function setRotate(angle:Float):Matrix2x2
+    {
+        var self:Matrix2x2 = this;
+        
+        var s = Math.sin(angle);
+        var c = Math.cos(angle);
+        
+        self.a = c;
+        self.b = -s;
+        self.c = s;
+        self.d = c;
+        
+        return self;
     }
     
     /**

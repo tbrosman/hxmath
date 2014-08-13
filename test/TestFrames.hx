@@ -1,8 +1,34 @@
 package test;
 
-import haxe.ds.Vector.Vector;
+import hxmath.frames.adapters.FlxSpriteFrame2;
 import hxmath.frames.Frame2;
 import hxmath.math.Vector2;
+
+class FlxObjectMock
+{
+    public var x(default, set):Float;
+    public var y(default, set):Float;
+    public var angle(default, set):Float;
+    
+    public function new()
+    {
+    }
+    
+    private function set_x(x:Float):Float
+    {
+        return this.x = x;
+    }
+    
+    private function set_y(y:Float):Float
+    {
+        return this.y = y;
+    }
+    
+    private function set_angle(angle:Float):Float
+    {
+        return this.angle = angle;
+    }
+}
 
 class TestFrames extends MathTestCase
 {
@@ -71,5 +97,17 @@ class TestFrames extends MathTestCase
         assertApproxEquals((aInv.concat(a).offset - Vector2.zero).length, 0.0);
         assertApproxEquals(a.concat(aInv).angleDegrees, 0.0);
         assertApproxEquals(aInv.concat(a).angleDegrees, 0.0);
+    }
+    
+    public function testFlxSpriteFrame2()
+    {
+        var dummySprite = new FlxObjectMock();
+        var frame = new FlxSpriteFrame2(dummySprite);
+        frame.offset = new Vector2();
+        frame.angleDegrees = 90;
+        
+        assertEquals(frame.offset.x, dummySprite.x);
+        assertEquals(frame.offset.y, dummySprite.y);
+        assertEquals(frame.angleDegrees, dummySprite.angle);
     }
 }
