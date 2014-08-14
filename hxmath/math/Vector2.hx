@@ -21,11 +21,17 @@ class Vector2Default
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef Vector2Type = Vector2Shape;
+#else
+typedef Vector2Type = Vector2Default;
+#end
+
 /**
  * A 2D vector.
  */
 @:forward(x, y)
-abstract Vector2(Vector2Shape) from Vector2Shape to Vector2Shape
+abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 2;

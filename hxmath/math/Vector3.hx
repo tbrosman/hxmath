@@ -25,11 +25,17 @@ class Vector3Default
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef Vector3Type = Vector3Shape;
+#else
+typedef Vector3Type = Vector3Default;
+#end
+
 /**
  * A 3D vector.
  */
 @:forward(x, y, z)
-abstract Vector3(Vector3Shape) from Vector3Shape to Vector3Shape
+abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 3;

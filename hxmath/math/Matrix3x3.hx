@@ -52,6 +52,12 @@ class Matrix3x3Default
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef Matrix3x3Type = Matrix3x3Shape;
+#else
+typedef Matrix3x3Type = Matrix3x3Default;
+#end
+
 /**
  * 3x3 matrix for linear transformations in 3D.
  */
@@ -59,7 +65,7 @@ class Matrix3x3Default
     m00, m01, m02,
     m10, m11, m12,
     m20, m21, m22)
-abstract Matrix3x3(Matrix3x3Shape) from Matrix3x3Shape to Matrix3x3Shape
+abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 9;

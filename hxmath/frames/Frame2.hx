@@ -50,7 +50,7 @@ class Frame2 extends BaseFrame2
         if (!isCached || isDirty)
         {
             // Set fields in place to avoid reallocating
-            internalMatrix.linearSubMatrix.setRotate(MathUtil.degToRad(angleDegrees));
+            internalMatrix.setRotate(MathUtil.degToRad(angleDegrees));
             internalMatrix.t = offset;
             isDirty = false;
         }

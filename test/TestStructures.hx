@@ -398,8 +398,11 @@ class TestStructures extends MathTestCase
     
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
     {
+        // No type-preserving abstract casts if using the Default underlying types
+        #if HXMATH_USE_DYNAMIC_STRUCTURES
         original.tag = "original";
         var after:Dynamic = transform(original);
         assertEquals(original, after);
+        #end
     }
 }

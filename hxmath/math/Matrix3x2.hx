@@ -44,6 +44,12 @@ class Matrix3x2Default
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef Matrix3x2Type = Matrix3x2Shape;
+#else
+typedef Matrix3x2Type = Matrix3x2Default;
+#end
+
 /**
  * 3x2 matrix for mixed affine/linear operations defined over a shape matching flash.geom.Matrix.
  */
@@ -51,7 +57,7 @@ class Matrix3x2Default
     a, b,
     c, d,
     tx, ty)
-abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
+abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 6;
@@ -292,6 +298,27 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
     }
     
     /**
+     * Set this matrix to a counter-clockwise rotation.
+     * 
+     * @param angle     The angle to rotate (in radians).
+     * @return          This.
+     */
+    public inline function setRotate(angle:Float):Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        
+        var s = Math.sin(angle);
+        var c = Math.cos(angle);
+        
+        self.a = c;
+        self.b = -s;
+        self.c = s;
+        self.d = c;
+        
+        return self;
+    }
+    
+    /**
      * Add a matrix in place.
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
@@ -528,20 +555,22 @@ abstract Matrix3x2(Matrix3x2Shape) from Matrix3x2Shape to Matrix3x2Shape
         var self:Matrix3x2 = this;
         self.tx = t.x;
         self.ty = t.y;
-        
-        return new Vector2(self.tx, self.ty);
+        return t;
     }
     
     private inline function get_linearSubMatrix():Matrix2x2
     {
-        var self2x2:Matrix2x2 = this;
-        return self2x2;
+        var self:Matrix3x2 = this;
+        return new Matrix2x2(self.a, self.b, self.c, self.d);
     }
     
     private inline function set_linearSubMatrix(value:Matrix2x2):Matrix2x2
     {
-        var self2x2:Matrix2x2 = this;
-        value.copyTo(self2x2);
-        return self2x2;
+        var self:Matrix3x2 = this;
+        self.a = value.a;
+        self.b = value.b;
+        self.c = value.c;
+        self.d = value.d;
+        return value;
     }
 }

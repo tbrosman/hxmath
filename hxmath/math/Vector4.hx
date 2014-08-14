@@ -27,6 +27,12 @@ class Vector4Default
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef Vector4Type = Vector4Shape;
+#else
+typedef Vector4Type = Vector4Default;
+#end
+
 /**
  * A 4D vector (used with homogenous/projection matrices in 3D).
  */

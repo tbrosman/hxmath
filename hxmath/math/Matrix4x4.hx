@@ -78,6 +78,12 @@ class Matrix4x4Default
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef Matrix4x4Type = Matrix4x4Shape;
+#else
+typedef Matrix4x4Type = Matrix4x4Default;
+#end
+
 /**
  * 4x4 matrix for homogenous/projection transformations in 3D.
  */
@@ -86,7 +92,7 @@ class Matrix4x4Default
     m10, m11, m12, m13,
     m20, m21, m22, m23,
     m30, m31, m32, m33)
-abstract Matrix4x4(Matrix4x4Shape) from Matrix4x4Shape to Matrix4x4Shape
+abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 16;

@@ -24,7 +24,7 @@ class Test3D extends MathTestCase
             var a = randomMatrix3x3();
             var b = randomMatrix3x3();
             var c = a.clone();
-            assertTrue((c += b) == (a + b));
+            assertTrue((c.addWith(b)) == (a + b));
         }
         
         for (i in 0...10)
@@ -32,7 +32,7 @@ class Test3D extends MathTestCase
             var a = randomMatrix3x3();
             var b = randomMatrix3x3();
             var c = a.clone();
-            assertTrue((c -= b) == (a - b));
+            assertTrue((c.subtractWith(b)) == (a - b));
         }
     }
     

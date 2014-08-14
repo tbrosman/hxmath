@@ -1,5 +1,5 @@
 -cp .
 -main Test
 -lib nanotest
--neko bin/neko/Test.n
+-cpp bin/cpp
 -D EXIT_ON_FINISH

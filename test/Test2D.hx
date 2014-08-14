@@ -51,7 +51,9 @@ class Test2D extends MathTestCase
     public function testPolarConversion()
     {
         assertApproxEquals(0.0, (Vector2.fromPolar(Math.PI, 1.0) + Vector2.xAxis).length);
-        assertApproxEquals(Math.PI, (-Vector2.xAxis).angle);
+        
+        // Some backends give +PI, others -PI (they are both equivalent)
+        assertApproxEquals(Math.PI, Math.abs((-Vector2.xAxis).angle));
     }
     
     public function testNorms()
@@ -88,5 +90,12 @@ class Test2D extends MathTestCase
                 assertApproxEquals(0.0, (point - center) * (pointAfter - center));
             }
         }
+    }
+    
+    public function testLinearSubMatrix()
+    {
+        var m = new Matrix3x2();
+        m.linearSubMatrix = new Matrix2x2(1.0, 2.0, 3.0, 4.0);
+        assertTrue(m.linearSubMatrix == new Matrix2x2(1.0, 2.0, 3.0, 4.0));
     }
 }

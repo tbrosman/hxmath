@@ -39,6 +39,8 @@ class TestFrames extends MathTestCase
         var b = new Frame2(Vector2.xAxis, 90.0);
         var c = a.concat(b);
         
+        assertTrue(a.transformFrom(b.offset) == Vector2.yAxis + originA);
+
         // (R(90) * xAxis) + originA = yAxis + originA
         assertTrue(c.offset == Vector2.yAxis + originA);
         assertEquals(c.angleDegrees, 180.0);

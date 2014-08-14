@@ -24,11 +24,17 @@ class QuaternionDefault
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef QuaternionType = QuaternionShape;
+#else
+typedef QuaternionType = QuaternionDefault;
+#end
+
 /**
  * Quaternion for rotation in 3D.
  */
 @:forward(s, v)
-abstract Quaternion(QuaternionShape) from QuaternionShape to QuaternionShape
+abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 4;

@@ -35,13 +35,19 @@ class Matrix2x2Default
     }
 }
 
+#if HXMATH_USE_DYNAMIC_STRUCTURES
+typedef Matrix2x2Type = Matrix2x2Shape;
+#else
+typedef Matrix2x2Type = Matrix2x2Default;
+#end
+
 /**
  * 2x2 matrix for linear operations defined over a shape matching the 2x2 linear sub-matrix in flash.geom.Matrix.
  */
 @:forward(
     a, b,
     c, d)
-abstract Matrix2x2(Matrix2x2Shape) from Matrix2x2Shape to Matrix2x2Shape
+abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 4;
