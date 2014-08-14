@@ -14,4 +14,4 @@ before_install:
 
 script:
   - haxe test_neko.hxml
-  - neko Test.n
+  - neko bin/Test.n
