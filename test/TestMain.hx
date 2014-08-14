@@ -16,6 +16,7 @@ class TestMain
         runner.add(new TestMathUtil());
         runner.add(new TestConverters());
         runner.add(new TestFrames());
+        //runner.add(new TestStress());
         runner.run();
     }
 }
