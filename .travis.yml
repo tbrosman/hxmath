@@ -13,4 +13,5 @@ before_install:
   - haxelib -notimeout install nanotest
 
 script:
-  - haxe test_neko.hxml || neko Test.n
+  - haxe test_neko.hxml
+  - neko Test.n

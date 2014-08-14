@@ -7,7 +7,7 @@ import nanotest.NanoTestRunner;
  */
 class TestMain
 {
-    public static function main()
+    public static function main():Bool
     {
         var runner = new NanoTestRunner();
         runner.add(new TestStructures());
@@ -17,6 +17,6 @@ class TestMain
         runner.add(new TestConverters());
         runner.add(new TestFrames());
         //runner.add(new TestStress());
-        runner.run();
+        return runner.run();
     }
 }

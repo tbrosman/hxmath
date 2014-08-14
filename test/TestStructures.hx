@@ -14,6 +14,11 @@ import hxmath.math.Vector4;
  */
 class TestStructures extends MathTestCase
 {
+    public function testShouldFail()
+    {
+        assertEquals(true, false);
+    }
+    
     public function testDefaultConstructors()
     {
         assertTrue(new Matrix2x2() == Matrix2x2.identity);

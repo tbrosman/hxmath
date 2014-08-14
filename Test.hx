@@ -2,11 +2,12 @@ import test.TestMain;
 
 class Test {
     static function main() {
-        TestMain.main();
+        var failed = TestMain.main();
         
-        #if sys
+        #if (sys && !EXIT_ON_FINISH)
         Sys.stdin().readLine();
+        #else
+        Sys.exit(failed ? -1 : 0);
         #end
-        return;
     }
 }

@@ -2,3 +2,4 @@
 -main Test
 -lib nanotest
 -neko bin/Test.n
+-D EXIT_ON_FINISH
