@@ -1,6 +1,6 @@
 package hxmath.frames.adapters;
 
-import hxmath.frames.Frame2;
+import hxmath.frames.BaseFrame2;
 import hxmath.math.Vector2;
 
 typedef FlxObjectShape =
@@ -13,7 +13,7 @@ typedef FlxObjectShape =
 /**
  * A coordinate frame adapter for FlxSprite.
  */
-class FlxSpriteFrame2 extends Frame2
+class FlxSpriteFrame2 extends BaseFrame2
 {
     // The owning FlxObject
     private var owner:FlxObjectShape;
