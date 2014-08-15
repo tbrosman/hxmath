@@ -8,14 +8,14 @@ import hxmath.math.Vector2;
  * An abstract 2D affine frame that can be extended without carrying over all the variables of the full Frame2 class.
  */
 @:forward(matrix, offset, angleDegrees)
-abstract Frame2(IFrame2Data) from IFrame2Data
+abstract Frame2(IFrame2) from IFrame2
 {
     // The associated linear transformation matrix
     public var linearMatrix(get, never):Matrix2x2;
 
     public function new(offset:Vector2, angleDegrees:Float) 
     {
-        this = new Frame2Data(offset, angleDegrees);
+        this = new Frame2Default(offset, angleDegrees);
     }
     
     /**

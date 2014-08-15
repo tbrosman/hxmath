@@ -7,7 +7,7 @@ import hxmath.math.Vector2;
  * ...
  * @author TABIV
  */
-interface IFrame2Data
+interface IFrame2
 {
     // The associated affine transformation matrix. The private variable holds the cached/last calculated matrix.
     public var matrix(get, never):Matrix3x2;

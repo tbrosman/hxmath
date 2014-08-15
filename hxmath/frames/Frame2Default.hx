@@ -8,7 +8,7 @@ import hxmath.math.Vector2;
 /**
  * A 2D affine frame with an offset from the outer frame as well as a rotation relative to the outer frame.
  */
-class Frame2Data implements IFrame2Data
+class Frame2Default implements IFrame2
 {
     // The associated affine transformation matrix. The private variable holds the cached/last calculated matrix.
     public var matrix(get, never):Matrix3x2;
