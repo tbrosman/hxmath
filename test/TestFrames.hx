@@ -1,7 +1,8 @@
 package test;
 
-import hxmath.frames.adapters.FlxSpriteFrame2;
+import hxmath.frames.adapters.FlxSpriteFrame2Data;
 import hxmath.frames.Frame2;
+import hxmath.frames.Frame2Data;
 import hxmath.math.Vector2;
 
 class FlxObjectMock
@@ -104,7 +105,7 @@ class TestFrames extends MathTestCase
     public function testFlxSpriteFrame2()
     {
         var dummySprite = new FlxObjectMock();
-        var frame = new FlxSpriteFrame2(dummySprite);
+        var frame:Frame2 = new FlxSpriteFrame2Data(dummySprite);
         frame.offset = new Vector2();
         frame.angleDegrees = 90;
         
