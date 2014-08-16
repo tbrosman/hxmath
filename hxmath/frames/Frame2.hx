@@ -5,14 +5,22 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Vector2;
  
 /**
- * An abstract 2D affine frame that can be extended without carrying over all the variables of the full Frame2 class.
+ * A 2D affine frame with an offset and an angle. Frames allow you to transform between world/outer coordinates and
+ * local/inner coordinates in a form that is more meaningful/less verbose compared to a matrix. Frames can be
+ * concatenated, inverted, and converted to matrices.
  */
 @:forward(matrix, offset, angleDegrees)
 abstract Frame2(IFrame2) from IFrame2
 {
     // The associated linear transformation matrix
     public var linearMatrix(get, never):Matrix2x2;
-
+    
+    /**
+     * Constructor.
+     * 
+     * @param offset        The offset/translation of the origin of the frame.
+     * @param angleDegrees  The angle/orientation of the frame.
+     */
     public function new(offset:Vector2, angleDegrees:Float) 
     {
         this = new Frame2Default(offset, angleDegrees);

@@ -6,7 +6,7 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Vector2;
 
 /**
- * A 2D affine frame with an offset from the outer frame as well as a rotation relative to the outer frame.
+ * The default underlying type for Frame2.
  */
 class Frame2Default implements IFrame2
 {
