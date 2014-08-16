@@ -30,10 +30,7 @@ abstract Frame2(IFrame2) from IFrame2
     {
         // Set fields in place to avoid reallocating
         matrix.setRotate(MathUtil.degToRad(angleDegrees));
-        
-        // TODO: make this in-place and avoid allocating the vector
-        matrix.t = offset;
-        
+        matrix.setTranslate(offset.x, offset.y);
         return matrix;
     }
     
@@ -63,7 +60,7 @@ abstract Frame2(IFrame2) from IFrame2
     public inline function concatWith(other:Frame2):Frame2
     {
         var self:Frame2 = this;
-        var resultOffset = self.linearMatrix * other.offset + self.offset;
+        var resultOffset = (self.linearMatrix * other.offset).addWith(self.offset);
         self.angleDegrees = MathUtil.wrap(self.angleDegrees + other.angleDegrees, 360);
         self.offset = resultOffset;
         return self;
@@ -125,7 +122,9 @@ abstract Frame2(IFrame2) from IFrame2
     public inline function inverse():Frame2
     {
         var self:Frame2 = this;
-        return new Frame2(-self.linearMatrix.transposeMultiplyVector(self.offset), -self.angleDegrees);
+        return new Frame2(
+            self.linearMatrix.transposeMultiplyVector(self.offset).applyNegate(),
+            -self.angleDegrees);
     }
     
     /**

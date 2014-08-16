@@ -327,6 +327,21 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     }
     
     /**
+     * Negate a vector in-place.
+     * 
+     * @return  This.    
+     */
+    public inline function applyNegate():Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x = -self.x;
+        self.y = -self.y;
+        
+        return self;
+    }
+    
+    /**
      * Apply a scalar function to each element.
      * 
      * @param func  The function to apply.

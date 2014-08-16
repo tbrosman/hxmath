@@ -298,7 +298,7 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
     }
     
     /**
-     * Set this matrix to a counter-clockwise rotation.
+     * Set the upper-left 2x2 matrix to a counter-clockwise rotation.
      * 
      * @param angle     The angle to rotate (in radians).
      * @return          This.
@@ -314,6 +314,23 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
         self.b = -s;
         self.c = s;
         self.d = c;
+        
+        return self;
+    }
+    
+    /**
+     * Set the right column to a translation
+     * 
+     * @param x
+     * @param y
+     * @return          This.
+     */
+    public inline function setTranslate(x:Float, y:Float):Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        
+        self.tx = x;
+        self.ty = y;
         
         return self;
     }
