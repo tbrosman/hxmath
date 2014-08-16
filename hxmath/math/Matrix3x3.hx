@@ -83,28 +83,27 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     public var transpose(get, never):Matrix3x3;
     
     /**
-     * Constructor. Takes a row-major array input array (when written out the array is ordered like the matrix).
+     * Constructor. Parameters are in row-major order (when written out the array is ordered like the matrix).
      * 
-     * @param rawData   The matrix as a row-major array.
+     * @param m00
+     * @param m10
+     * @param m20
+     * @param m01
+     * @param m11
+     * @param m21
+     * @param m02
+     * @param m12
+     * @param m22
      */
-    public function new(rawData:Array<Float> = null) 
+    public inline function new(
+        m00:Float, m10:Float, m20:Float,
+        m01:Float, m11:Float, m21:Float,
+        m02:Float, m12:Float, m22:Float)
     {
-        if (rawData == null)
-        {
-            this = Matrix3x3.identity;
-        }
-        else
-        {
-            if (rawData.length != 9)
-            {
-                throw "Invalid rawData.";
-            }
-            
-            this = new Matrix3x3Default(
-                rawData[0], rawData[1], rawData[2],
-                rawData[3], rawData[4], rawData[5],
-                rawData[6], rawData[7], rawData[8]);
-        }
+        this = new Matrix3x3Default(
+            m00, m10, m20,
+            m01, m11, m21,
+            m02, m12, m22);
     }
     
     /**
@@ -115,7 +114,15 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
      */
     public static inline function fromArray(rawData:Array<Float>):Matrix3x3
     {
-        return new Matrix3x3(rawData);
+        if (rawData.length != Matrix3x3.elementCount)
+        {
+            throw "Invalid rawData.";
+        }
+        
+        return new Matrix3x3(
+            rawData[0], rawData[1], rawData[2],
+            rawData[3], rawData[4], rawData[5],
+            rawData[6], rawData[7], rawData[8]);
     }
     
     /**
@@ -128,11 +135,10 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     @:op(A * B)
     public static inline function multiplyScalar(s:Float, a:Matrix3x3):Matrix3x3
     {
-        return new Matrix3x3([
+        return new Matrix3x3(
             s * a.m00, s * a.m10, s * a.m20,
             s * a.m01, s * a.m11, s * a.m21,
-            s * a.m02, s * a.m12, s * a.m22
-        ]);
+            s * a.m02, s * a.m12, s * a.m22);
     }
     
     /**
@@ -161,19 +167,18 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     @:op(A * B)
     public static inline function multiply(a:Matrix3x3, b:Matrix3x3):Matrix3x3
     {
-        return new Matrix3x3([
-            a.m00 * b.m00 + a.m10 * b.m01 + a.m20 * b.m02, // p_00 = a_i0 * b_0i
-            a.m00 * b.m10 + a.m10 * b.m11 + a.m20 * b.m12, // p_10 = a_i0 * b_1i
-            a.m00 * b.m20 + a.m10 * b.m21 + a.m20 * b.m22, // p_20 = a_i0 * b_2i
+        return new Matrix3x3(
+            a.m00 * b.m00 + a.m10 * b.m01 + a.m20 * b.m02,  // p_00 = a_i0 * b_0i
+            a.m00 * b.m10 + a.m10 * b.m11 + a.m20 * b.m12,  // p_10 = a_i0 * b_1i
+            a.m00 * b.m20 + a.m10 * b.m21 + a.m20 * b.m22,  // p_20 = a_i0 * b_2i
             
-            a.m01 * b.m00 + a.m11 * b.m01 + a.m21 * b.m02, // p_01 = a_i1 * b_0i
-            a.m01 * b.m10 + a.m11 * b.m11 + a.m21 * b.m12, // p_11 = a_i1 * b_1i
-            a.m01 * b.m20 + a.m11 * b.m21 + a.m21 * b.m22, // p_21 = a_i1 * b_2i
+            a.m01 * b.m00 + a.m11 * b.m01 + a.m21 * b.m02,  // p_01 = a_i1 * b_0i
+            a.m01 * b.m10 + a.m11 * b.m11 + a.m21 * b.m12,  // p_11 = a_i1 * b_1i
+            a.m01 * b.m20 + a.m11 * b.m21 + a.m21 * b.m22,  // p_21 = a_i1 * b_2i
             
-            a.m02 * b.m00 + a.m12 * b.m01 + a.m22 * b.m02, // p_02 = a_i2 * b_0i
-            a.m02 * b.m10 + a.m12 * b.m11 + a.m22 * b.m12, // p_12 = a_i2 * b_1i
-            a.m02 * b.m20 + a.m12 * b.m21 + a.m22 * b.m22  // p_22 = a_i2 * b_2i
-        ]);
+            a.m02 * b.m00 + a.m12 * b.m01 + a.m22 * b.m02,  // p_02 = a_i2 * b_0i
+            a.m02 * b.m10 + a.m12 * b.m11 + a.m22 * b.m12,  // p_12 = a_i2 * b_1i
+            a.m02 * b.m20 + a.m12 * b.m21 + a.m22 * b.m22); // p_22 = a_i2 * b_2i
     }
     
     /**
@@ -213,11 +218,10 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     @:op(-A)
     public static inline function negate(a:Matrix3x3):Matrix3x3
     {
-        return new Matrix3x3([
+        return new Matrix3x3(
             -a.m00, -a.m10, -a.m20,
             -a.m01, -a.m11, -a.m21,
-            -a.m02, -a.m12, -a.m22
-        ]);
+            -a.m02, -a.m12, -a.m22);
     }
     
     /**
@@ -268,11 +272,10 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     {
         var s = Math.sin(angle);
         var c = Math.cos(angle);
-        return new Matrix3x3([
+        return new Matrix3x3(
             1, 0,  0,
             0, c, -s,
-            0, s,  c
-        ]);
+            0, s,  c);
     }
     
     /**
@@ -285,11 +288,10 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     {
         var s = Math.sin(angle);
         var c = Math.cos(angle);
-        return new Matrix3x3([
+        return new Matrix3x3(
              c,  0, s,
              0,  1, 0,
-            -s,  0, c
-        ]);
+            -s,  0, c);
     }
     
     /**
@@ -302,11 +304,10 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     {
         var s = Math.sin(angle);
         var c = Math.cos(angle);
-        return new Matrix3x3([
+        return new Matrix3x3(
             c, -s, 0,
             s,  c, 0,
-            0,  0, 1
-        ]);
+            0,  0, 1);
     }
 
     /**
@@ -319,11 +320,10 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
      */
     public static inline function scale(sx:Float, sy:Float, sz:Float):Matrix3x3
     {
-        return new Matrix3x3([
+        return new Matrix3x3(
             sx, 0.0, 0.0,
             0.0, sy, 0.0,
-            0.0, 0.0, sz
-        ]);
+            0.0, 0.0, sz);
     }
     
     /**
@@ -397,11 +397,10 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     public inline function clone():Matrix3x3
     {
         var self:Matrix3x3 = this;
-        return new Matrix3x3([
+        return new Matrix3x3(
             self.m00, self.m10, self.m20,
             self.m01, self.m11, self.m21,
-            self.m02, self.m12, self.m22
-        ]);
+            self.m02, self.m12, self.m22);
     }
     
     /**
@@ -574,20 +573,18 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     
     private static inline function get_zero():Matrix3x3
     {
-        return new Matrix3x3([
+        return new Matrix3x3(
             0.0, 0.0, 0.0,
             0.0, 0.0, 0.0,
-            0.0, 0.0, 0.0
-        ]);
+            0.0, 0.0, 0.0);
     }
     
     private static inline function get_identity():Matrix3x3
     {
-        return new Matrix3x3([
+        return new Matrix3x3(
             1.0, 0.0, 0.0,
             0.0, 1.0, 0.0,
-            0.0, 0.0, 1.0
-        ]);
+            0.0, 0.0, 1.0);
     }
     
     private inline function get_det():Float
@@ -602,9 +599,9 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     private inline function get_transpose():Matrix3x3
     {
         var self:Matrix3x3 = this;
-        return new Matrix3x3([
+        return new Matrix3x3(
             self.m00, self.m01, self.m02,
             self.m10, self.m11, self.m12,
-            self.m20, self.m21, self.m22]);
+            self.m20, self.m21, self.m22);
     }
 }

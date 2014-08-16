@@ -86,7 +86,7 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
      * @param tx    m20
      * @param ty    m21
      */
-    public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0, tx:Float = 0.0, ty:Float = 0.0) 
+    public inline function new(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float)
     {
         this = new Matrix3x2Default(a, b, c, d, tx, ty);
     }

@@ -63,13 +63,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      * @param s     Scalar (real) part.
      * @param v     Vector (complex) part.
      */
-    public function new(s:Float=1.0, v:Vector3=null) 
+    public inline function new(s:Float, v:Vector3) 
     {
-        this = new QuaternionDefault(
-            s,
-            v != null
-                ? v
-                : Vector3.zero);
+        this = new QuaternionDefault(s, v);
     }
     
     /**
@@ -438,10 +434,10 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var y = self.v.y;
         var z = self.v.z;
         
-        var m = new Matrix3x3([
+        var m = new Matrix3x3(
             1 - 2 * (y * y + z * z), 2 * (x * y - s * z), 2 * (s * y + x * z),
             2 * (x * y + s * z), 1 - 2 * (x * x + z * z), 2 * (y * z - s * x),
-            2 * (x * z - s * y), 2 * (y * z + s * x),  1 - 2 * (x * x + y * y)]);
+            2 * (x * z - s * y), 2 * (y * z + s * x),  1 - 2 * (x * x + y * y));
 
         return m;
     }

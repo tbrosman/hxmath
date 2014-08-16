@@ -21,7 +21,7 @@ class FlxSpriteFrame2 implements IFrame2
     private var owner:FlxObjectShape;
     
     // The internal matrix to avoid reallocation
-    private var internalMatrix:Matrix3x2 = new Matrix3x2();
+    private var internalMatrix:Matrix3x2 = Matrix3x2.identity;
     
     // The associated affine transformation matrix. The private variable holds the cached/last calculated matrix.
     public var matrix(get, never):Matrix3x2;

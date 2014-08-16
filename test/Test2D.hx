@@ -94,7 +94,7 @@ class Test2D extends MathTestCase
     
     public function testLinearSubMatrix()
     {
-        var m = new Matrix3x2();
+        var m = Matrix3x2.identity;
         m.linearSubMatrix = new Matrix2x2(1.0, 2.0, 3.0, 4.0);
         assertTrue(m.linearSubMatrix == new Matrix2x2(1.0, 2.0, 3.0, 4.0));
     }

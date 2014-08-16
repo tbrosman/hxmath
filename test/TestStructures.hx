@@ -14,19 +14,6 @@ import hxmath.math.Vector4;
  */
 class TestStructures extends MathTestCase
 {
-    public function testDefaultConstructors()
-    {
-        assertTrue(new Matrix2x2() == Matrix2x2.identity);
-        assertTrue(new Matrix3x2() == Matrix3x2.identity);
-        assertTrue(new Matrix4x4() == Matrix4x4.identity);
-        
-        assertTrue(new Vector2() == Vector2.zero);
-        assertTrue(new Vector3() == Vector3.zero);
-        assertTrue(new Vector4() == Vector4.zero);
-        
-        assertTrue(new Quaternion() == Quaternion.identity);
-    }
-    
     public function testEquals()
     {
         assertTrue(Matrix2x2.identity == Matrix2x2.identity);

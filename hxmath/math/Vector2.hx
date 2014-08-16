@@ -69,7 +69,7 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
      * @param x
      * @param y
      */
-    public function new(x:Float = 0.0, y:Float = 0.0)
+    public inline function new(x:Float = 0.0, y:Float = 0.0)
     {
         this = new Vector2Default(x, y);
     }

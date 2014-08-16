@@ -49,7 +49,7 @@ class Frame2Default implements IFrame2
         internalAngleDegrees = angleDegrees;
         this.isCached = isCached;
         isDirty = true;
-        internalMatrix = new Matrix3x2();
+        internalMatrix = Matrix3x2.identity;
     }
 
     private inline function get_matrix():Matrix3x2

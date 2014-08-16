@@ -65,7 +65,7 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
      * @param y
      * @param z
      */
-    public function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0)
+    public inline function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0)
     {
         this = new Vector3Default(x, y, z);
     }

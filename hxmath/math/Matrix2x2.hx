@@ -74,7 +74,7 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
      * @param c     m01
      * @param d     m11
      */
-    public function new(a:Float = 1.0, b:Float = 0.0, c:Float = 0.0, d:Float = 1.0) 
+    public inline function new(a:Float, b:Float, c:Float, d:Float) 
     {
         this = new Matrix2x2Default(a, b, c, d);
     }
@@ -225,7 +225,8 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
      */
     public static inline function rotate(angle:Float):Matrix2x2
     {
-        return new Matrix2x2()
+        // .zero doesn't work (compiler bug?)
+        return Matrix2x2.get_zero()
             .setRotate(angle);
     }
     
