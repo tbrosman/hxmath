@@ -108,6 +108,24 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     }
     
     /**
+     * Convert to an IntVector2 using either truncation (the default) or a specified function.
+     * 
+     * @param func  The optional scalar conversion function.
+     * @return      The equivalent IntVector2 (as determined by the conversion function).
+     */
+    public inline function toIntVector2(func:Float->Int = null):IntVector2
+    {
+        var self:Vector2 = this;
+        
+        if (func == null)
+        {
+            func = Std.int;
+        }
+        
+        return new IntVector2(func(self.x), func(self.y));
+    }
+    
+    /**
      * Dot product.
      * 
      * @param a
