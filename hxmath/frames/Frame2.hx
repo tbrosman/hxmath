@@ -43,6 +43,21 @@ abstract Frame2(IFrame2) from IFrame2
     }
     
     /**
+     * Linearly interpolate between two frames.
+     * 
+     * @param frameA    The frame at t = 0
+     * @param frameB    The frame at t = 1
+     * @param t         A float in the range [0, 1]
+     * @return          The interpolated frame
+     */
+    public static inline function lerp(frameA:Frame2, frameB:Frame2, t:Float):Frame2
+    {
+        return new Frame2(
+            Vector2.lerp(frameA.offset, frameB.offset, t),
+            MathUtil.lerpCyclic(frameA.angleDegrees, frameB.angleDegrees, t, 360));
+    }
+    
+    /**
      * Concat this frame with another frame to produce a new frame.
      * 
      * result = this * other

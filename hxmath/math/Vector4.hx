@@ -206,14 +206,14 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     /**
      * Linear interpolation between two vectors.
      * 
-     * @param a
-     * @param b
-     * @param t
-     * @return  a + (1 - t)b
+     * @param a     The value at t = 0
+     * @param b     The value at t = 1
+     * @param t     A number in the range [0, 1]
+     * @return      The interpolated value
      */
     public static inline function lerp(a:Vector4, b:Vector4, t:Float):Vector4
     {
-        return t*a + (1.0 - t)*b;
+        return (1.0 - t)*a + t*b;
     }
     
     /**

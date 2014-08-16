@@ -10,6 +10,34 @@ enum Orient2DResult
 class MathUtil
 {
     /**
+     * Linear inteprolation for a cyclic coordinate.
+     * 
+     * @param a     The value at t = 0
+     * @param b     The value at t = 1
+     * @param t     A float in the range [0, 1]
+     * @param max   a, b are numbers in a range [0, max) (e.g. for degrees: [0, 360))
+     * @return      The interpolated value
+     */
+    public static inline function lerpCyclic(a:Float, b:Float, t:Float, max:Float):Float
+    {
+        // If the difference between the two is greater than one half cycle
+        if (Math.abs(a - b) > 0.5 * max)
+        {
+            // Add one cycle to the smaller number
+            if (a < b)
+            {
+                a += max;
+            }
+            else
+            {
+                b += max;
+            }
+        }
+        
+        return MathUtil.wrap((1.0 - t) * a + t * b, max);
+    }
+    
+    /**
      * The sign function with a tolerance.
      * 
      * @param   x   The number to test.

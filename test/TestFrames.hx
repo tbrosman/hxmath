@@ -113,4 +113,32 @@ class TestFrames extends MathTestCase
         assertEquals(frame.offset.y, dummySprite.y);
         assertEquals(frame.angleDegrees, dummySprite.angle);
     }
+    
+    public function testLerpFrame2()
+    {
+        var frameA = new Frame2(new Vector2(1.0, 0.0), 330.0);
+        var frameB = new Frame2(new Vector2(0.0, 1.0), 60.0);
+        
+        // Lerping from either direction should be equivalent at t = 0.5
+        var frameC = Frame2.lerp(frameA, frameB, 0.5);
+        var frameC2 = Frame2.lerp(frameB, frameA, 0.5);
+        assertApproxEquals((frameC.offset - new Vector2(0.5, 0.5)).length, 0.0);
+        assertApproxEquals(frameC.angleDegrees, 15.0);
+        assertApproxEquals((frameC2.offset - new Vector2(0.5, 0.5)).length, 0.0);
+        assertApproxEquals(frameC2.angleDegrees, 15.0);
+        
+        var frameD = Frame2.lerp(frameA, frameB, 1.0 / 3.0);
+        var frameD2 = Frame2.lerp(frameB, frameA, 2.0 / 3.0);
+        assertApproxEquals((frameD.offset - new Vector2(2.0 / 3.0, 1.0 / 3.0)).length, 0.0);
+        assertApproxEquals(frameD.angleDegrees, 0.0);
+        assertApproxEquals((frameD2.offset - new Vector2(2.0 / 3.0, 1.0 / 3.0)).length, 0.0);
+        assertApproxEquals(frameD2.angleDegrees, 0.0);
+        
+        var frameE = Frame2.lerp(frameA, frameB, 2.0 / 3.0);
+        var frameE2 = Frame2.lerp(frameB, frameA, 1.0 / 3.0);
+        assertApproxEquals((frameE.offset - new Vector2(1.0 / 3.0, 2.0 / 3.0)).length, 0.0);
+        assertApproxEquals(frameE.angleDegrees, 30.0);
+        assertApproxEquals((frameE2.offset - new Vector2(1.0 / 3.0, 2.0 / 3.0)).length, 0.0);
+        assertApproxEquals(frameE2.angleDegrees, 30.0);
+    }
 }

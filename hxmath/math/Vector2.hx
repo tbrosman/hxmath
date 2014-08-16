@@ -213,14 +213,14 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     /**
      * Linear interpolation between two vectors.
      * 
-     * @param a
-     * @param b
-     * @param t
-     * @return  a + (1 - t)b
+     * @param a     The value at t = 0
+     * @param b     The value at t = 1
+     * @param t     A number in the range [0, 1]
+     * @return      The interpolated value
      */
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
     {
-        return t*a + (1.0 - t)*b;
+        return (1.0 - t)*a + t*b;
     }
     
     /**
