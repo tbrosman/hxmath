@@ -93,6 +93,18 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     }
     
     /**
+     * Convert a shape-similar vector.
+     * 
+     * @param other     The vector to convert.    
+     * @return          The hxmath equivalent.
+     */
+    @:from
+    public static inline function fromVector4Shape(other:Vector4Shape):Vector4
+    {
+        return new Vector4(other.x, other.y, other.z, other.w);
+    }
+    
+    /**
      * Dot product.
      * 
      * @param a

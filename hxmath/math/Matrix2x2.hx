@@ -94,6 +94,18 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
         
         return new Matrix2x2(rawData[0], rawData[1], rawData[2], rawData[3]);
     }
+    
+    /**
+     * Convert a shape-similar matrix.
+     * 
+     * @param other     The matrix to convert.
+     * @return          The hxmath equivalent.
+     */
+    @:from
+    public static inline function fromMatrix2x2Shape(other:Matrix2x2):Matrix2x2
+    {
+        return new Matrix2x2(other.a, other.b, other.c, other.d);
+    }
 
     /**
      * Multiply a scalar with a matrix.

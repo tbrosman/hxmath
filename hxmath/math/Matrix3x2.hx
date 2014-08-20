@@ -108,6 +108,18 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
     }
     
     /**
+     * Convert a shape-similar matrix.
+     * 
+     * @param other     The matrix to convert.
+     * @return          The hxmath equivalent.
+     */
+    @:from
+    public static inline function fromMatrix3x2Shape(other:Matrix3x2):Matrix3x2
+    {
+        return new Matrix3x2(other.a, other.b, other.c, other.d, other.tx, other.ty);
+    }
+    
+    /**
      * Multiply a scalar with a matrix.
      * 
      * @param s

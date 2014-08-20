@@ -163,6 +163,22 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     }
     
     /**
+     * Convert a shape-similar matrix.
+     * 
+     * @param other     The matrix to convert.
+     * @return          The hxmath equivalent.
+     */
+    @:from
+    public static inline function fromMatrix4x4Shape(other:Matrix4x4):Matrix4x4
+    {
+        return new Matrix4x4(
+            other.m00, other.m10, other.m20, other.m30,
+            other.m01, other.m11, other.m21, other.m31,
+            other.m02, other.m12, other.m22, other.m32,
+            other.m03, other.m13, other.m23, other.m33);
+    }
+    
+    /**
      * Multiply a matrix with a vector.
      * 
      * @param a

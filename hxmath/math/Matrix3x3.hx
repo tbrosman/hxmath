@@ -126,6 +126,21 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     }
     
     /**
+     * Convert a shape-similar matrix.
+     * 
+     * @param other     The matrix to convert.
+     * @return          The hxmath equivalent.
+     */
+    @:from
+    public static inline function fromMatrix3x3Shape(other:Matrix3x3):Matrix3x3
+    {
+        return new Matrix3x3(
+            other.m00, other.m10, other.m20,
+            other.m01, other.m11, other.m21,
+            other.m02, other.m12, other.m22);
+    }
+    
+    /**
      * Multiply a scalar with a matrix.
      * 
      * @param s

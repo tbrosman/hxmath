@@ -1,14 +1,5 @@
 package hxmath.math;
 
-typedef QuaternionShape =
-{
-    // Real portion
-    public var s:Float;
-    
-    // Complex portion (i,j,k basis)
-    public var v:Vector3;
-}
-
 /**
  * The default underlying type.
  */
@@ -24,11 +15,7 @@ class QuaternionDefault
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef QuaternionType = QuaternionShape;
-#else
 typedef QuaternionType = QuaternionDefault;
-#end
 
 /**
  * Quaternion for rotation in 3D.

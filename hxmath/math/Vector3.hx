@@ -87,6 +87,18 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Convert a shape-similar vector.
+     * 
+     * @param other     The vector to convert.
+     * @return          The hxmath equivalent.
+     */
+    @:from
+    public static inline function fromVector3Shape(other:Vector3Shape):Vector3
+    {
+        return new Vector3(other.x, other.y, other.z);
+    }
+    
+    /**
      * Dot product.
      * 
      * @param a

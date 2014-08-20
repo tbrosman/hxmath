@@ -1,4 +1,5 @@
 package hxmath.math;
+import hxmath.math.Vector2.Vector2Shape;
 
 typedef Vector2Shape =
 {
@@ -105,6 +106,18 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     public static inline function fromPolar(angle:Float, radius:Float):Vector2
     {
         return new Vector2(radius * Math.cos(angle), radius * Math.sin(angle));
+    }
+    
+    /**
+     * Convert a shape-similar vector.
+     * 
+     * @param other     The vector to convert.
+     * @return          The hxmath equivalent.
+     */
+    @:from
+    public static inline function fromVector2Shape(other:Vector2Shape):Vector2
+    {
+        return new Vector2(other.x, other.y);
     }
     
     /**
