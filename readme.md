@@ -1,9 +1,10 @@
 # HxMath
 
-Latest stable release: http://lib.haxe.org/p/hxmath
-API documentation: http://tbrosman.github.io/hxmath/
-
 [![Build Status](https://travis-ci.org/tbrosman/hxmath.svg?branch=master)](https://travis-ci.org/tbrosman/hxmath)
+
+Latest stable release: http://lib.haxe.org/p/hxmath
+
+API documentation: http://tbrosman.github.io/hxmath
 
 ## What it is
 
