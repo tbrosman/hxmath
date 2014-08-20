@@ -4,7 +4,7 @@
   "license": "MIT",
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "releasenote": "-For core math structures: changed all underlying types to be static and removed default constructors. This is a huge performance gain for static targets like C++.
   -Refactored coordinate frames to allow for implicit frames (adapters over existing sprites/entities with minimal overhead).",
   "contributors": ["tbrosman"],
