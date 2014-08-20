@@ -71,7 +71,7 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
      * @param z
      * @param w
      */
-    public inline function new(x:Float = 0.0, y:Float = 0.0, z:Float = 0.0, w:Float = 0.0)
+    public inline function new(x:Float, y:Float, z:Float, w:Float)
     {
         this = new Vector4Default(x, y, z, w);
     }

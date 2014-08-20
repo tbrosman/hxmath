@@ -106,7 +106,7 @@ class TestFrames extends MathTestCase
     {
         var dummySprite = new FlxObjectMock();
         var frame:Frame2 = new FlxSpriteFrame2(dummySprite);
-        frame.offset = new Vector2();
+        frame.offset = Vector2.zero;
         frame.angleDegrees = 90;
         
         assertEquals(frame.offset.x, dummySprite.x);

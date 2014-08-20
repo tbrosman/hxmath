@@ -59,7 +59,7 @@ class TestConverters extends MathTestCase
         assertEquals(v.x, q.x);
         assertEquals(v.y, q.y);
         
-        var u = new Vector2();
+        var u = Vector2.zero;
         Vector2Converter.copyFromFlxPoint(u, q);
         assertEquals(u.x, q.x);
         assertEquals(u.y, q.y);
