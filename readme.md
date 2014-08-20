@@ -1,5 +1,8 @@
 # HxMath
 
+Latest stable release: http://lib.haxe.org/p/hxmath
+API documentation: http://tbrosman.github.io/hxmath/
+
 [![Build Status](https://travis-ci.org/tbrosman/hxmath.svg?branch=master)](https://travis-ci.org/tbrosman/hxmath)
 
 ## What it is
@@ -8,9 +11,7 @@ A game-oriented math library for the Haxe language using abstracts instead of cl
 
 ## Project Status
 
-hxmath is at a reasonably stable point where the structures work consistently and have test coverage. There are additional features planned, but for the most part the 2D math portion will not change from this point on.
-
-You can get the latest stable release on haxelib: http://lib.haxe.org/p/hxmath
+2D math is stable/reasonably fast on Flash and C++. All structures and most operations have test coverage. There are additional features planned, but most of these are beyond the domain of the core math (hxmath.math) structures.
 
 ## Features
 
@@ -32,7 +33,8 @@ when you can write this:
 
 ('^' chosen due to the correspondence between the Hodge dual for 2-blades in 3-space and the cross product)
 
-* Shape-compatible with (most of) the existing OpenFL math structures. This means no more copying/constructing new types to perform math operations.
+* Shape-compatible with (most of) the existing OpenFL math structures.
+  * Note that the abstracts can no longer be cast from shape-similar structures without copying as of 0.7.0 (see issue #16). This is actually faster (especially on statically-typed platforms) due to the way abstracts over typedefs are implemented.
 
 Specifically, you can cast both openfl.Vector to a Vector2 without copying, manually construct another Vector2 from FlxPoint (which has a different getter/setter signature for x/y), then use them together:
 ```haxe
@@ -43,9 +45,40 @@ Specifically, you can cast both openfl.Vector to a Vector2 without copying, manu
         trace(pointACast * pointBCast);
 ```
 
-In the case of the OpenFL Point, an intermediate variable isn't even required due to shape-compatibility!
+* 2D and 3D math (both affine and linear structures)
+  * Vector2, Vector3, Vector4
+  * Matrix2x2, Matrix3x2, Matrix3x3, Matrix4x4
+  * Quaternion
 
-* 2D and 3D math (both affine and linear structures).
+* Coordinate frames
+
+More expressive than matrices with intuitive to/from notation. Example: say your character has an `armFrame` and a `bodyFrame`, with the `armFrame` oriented at a 90 degree angle to the `bodyFrame` and offset by 10 units up, 4 units right:
+
+```haxe
+    var armFrame = new Frame2(new Vector2(4.0, 10.0), 90);
+```
+
+To get a point defined in the `armFrame` into the `bodyFrame you would write:
+
+```haxe
+    var bodyPoint = armFrame.transformFrom(armPoint);
+```
+
+Similarly, to get a point from the `bodyFrame` to the `armFrame`:
+
+```haxe
+    var armPoint = armFrame.transformTo(bodyPoint);
+```
+
+If the `bodyFrame` is defined in the `worldFrame`, to create a combined transformation from the `armFrame` to `worldFrame`:
+
+```haxe
+    // In the from direction: apply armFrame.from followed by bodyFrame.from
+	//   (bodyFrame.matrix * armFrame.matrix)
+	// In the to direction:   apply bodyFrame.to  followed by armFrame.to   
+	//   (armFrame.inverse().matrix * bodyFrame.inverse().matrix) == (bodyFrame * armFrame).inverse().matrix
+    var armInWorldFrame = bodyFrame.concat(armFrame);
+```
 
 * More to come
 
@@ -53,11 +86,16 @@ In the case of the OpenFL Point, an intermediate variable isn't even required du
 
 ### Basic functions/properties
 
-* All (linear) structures have the following operators: `==`, `!=`, `+`, `+=`, `-`, `-=`, and unary `-`.
+* Operator overloads: All (linear) structures have the following operators: `==`, `!=`, `+`, `-`, and unary `-`.
+  * Additionally, `.addWith` and `.subtractWith` are available as functions for direct modification of the object. This is due to the fact you cannot overwrite `+=`, `-=`, etc directly and the generated implementations create new objects. For the `*with` operations, no new object is created and the additional structure of the underlying object is preserved.
 
-* Additionally, `.addWith` and `.subtractWith` are available as functions for direct modification of the object. This is due to the fact you cannot overwrite `+=`, `-=`, etc directly and the generated implementations create new objects. For the `*with` operations, no new object is created and the additional structure of the underlying object is preserved.
+* `clone`, `copyTo`
+  * `copyTo` is like clone, but without re-allocating.
 
-* All structures have clone() functions.
+* Array access (read/write) for linear structures
+
+* `lerp`
+  * On linear structures and other objects as appropriate (e.g. you can interpolate between `Frame2` instances).
 
 ### Products
 
