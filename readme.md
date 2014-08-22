@@ -29,10 +29,10 @@ Why write this:
 when you can write this:
 
 ```haxe
-    (a - b) * (c ^ d)
+    (a - b) * (c % d)
 ```
 
-('^' chosen due to the correspondence between the Hodge dual for 2-blades in 3-space and the cross product)
+('%' chosen due to operator precedence)
 
 * Shape-compatible with (most of) the existing OpenFL math structures.
   * Note that the abstracts can no longer be cast from shape-similar structures without copying as of 0.7.0 (see issue #16). This is actually faster (especially on statically-typed platforms) due to the way abstracts over typedefs are implemented.
@@ -102,7 +102,7 @@ If the `bodyFrame` is defined in the `worldFrame`, to create a combined transfor
 
 * The product `*` operator is overloaded for multiple right-hand types: `matrix * matrix` will multiply two matrices, whereas `matrix * vector` will transform a vector. For vectors, the dot product is defined as `vector * vector`.
 
-* The cross product between two Vector3 structures is defined using `^`, e.g. `Vector3.xAxis ^ Vector3.yAxis == Vector3.zAxis`.
+* The cross product between two Vector3 structures is defined using `%`, e.g. `Vector3.xAxis % Vector3.yAxis == Vector3.zAxis`.
 
 ### Matrix Indices
 

@@ -106,7 +106,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     @:op(A * B)
     public static inline function multiply(a:Quaternion, b:Quaternion):Quaternion
     {
-        return new Quaternion(a.s * b.s - a.v * b.v, a.s * b.v + b.s * a.v + a.v ^ b.v);
+        return new Quaternion(a.s * b.s - a.v * b.v, a.s * b.v + b.s * a.v + a.v % b.v);
     }
     
     /**
@@ -379,7 +379,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         return 2.0 * (self.v * u) * self.v +
             (self.s * self.s - self.v * self.v) * u +
-            2 * self.s * (self.v ^ u);
+            2 * self.s * (self.v % u);
     }
     
     private static inline function get_zero():Quaternion

@@ -36,6 +36,11 @@ class Test3D extends MathTestCase
         }
     }
     
+    public function testCrossProductPrecedence()
+    {
+        assertTrue(Vector3.xAxis + Vector3.yAxis % Vector3.zAxis == 2.0 * Vector3.xAxis);
+    }
+    
     public function testAxialRotation()
     {
         // After 90 degree ccw rotation around X:

@@ -121,7 +121,7 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
      * @param b
      * @return      a X b
      */
-    @:op(A ^ B)
+    @:op(A % B)
     public static inline function cross(a:Vector3, b:Vector3):Vector3
     {
         return new Vector3(
