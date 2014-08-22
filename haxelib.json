@@ -4,7 +4,7 @@
   "license": "MIT",
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "releasenote": "Bugfix: Changed the cross product operator to '%' to avoid non-obvious precedence issues (Quaternion product was broken as a result). Added Frame3 for 3D transformations.",
   "contributors": ["tbrosman"],
   "dependencies": {
