@@ -1,5 +1,6 @@
 package test;
 
+import hxmath.math.MathUtil;
 import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
 import hxmath.math.Quaternion;
@@ -43,23 +44,25 @@ class Test3D extends MathTestCase
     
     public function testAxialRotation()
     {
+        var quarterRot = 90.0;
+        
         // After 90 degree ccw rotation around X:
         // y -> +z
         // z -> -y
-        assertApproxEquals(((Matrix3x3.rotationX(Math.PI / 2.0) * Vector3.yAxis) - Vector3.zAxis).length, 0.0);
-        assertApproxEquals(((Matrix3x3.rotationX(Math.PI / 2.0) * Vector3.zAxis) + Vector3.yAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationX(quarterRot) * Vector3.yAxis) - Vector3.zAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationX(quarterRot) * Vector3.zAxis) + Vector3.yAxis).length, 0.0);
         
         // After 90 degree ccw rotation around Y:
         // z -> +x
         // x -> -z
-        assertApproxEquals(((Matrix3x3.rotationY(Math.PI / 2.0) * Vector3.zAxis) - Vector3.xAxis).length, 0.0);
-        assertApproxEquals(((Matrix3x3.rotationY(Math.PI / 2.0) * Vector3.xAxis) + Vector3.zAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationY(quarterRot) * Vector3.zAxis) - Vector3.xAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationY(quarterRot) * Vector3.xAxis) + Vector3.zAxis).length, 0.0);
         
         // After 90 degree ccw rotation around Z:
         // x -> +y
         // y -> -x
-        assertApproxEquals(((Matrix3x3.rotationZ(Math.PI / 2.0) * Vector3.xAxis) - Vector3.yAxis).length, 0.0);
-        assertApproxEquals(((Matrix3x3.rotationZ(Math.PI / 2.0) * Vector3.yAxis) + Vector3.xAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationZ(quarterRot) * Vector3.xAxis) - Vector3.yAxis).length, 0.0);
+        assertApproxEquals(((Matrix3x3.rotationZ(quarterRot) * Vector3.yAxis) + Vector3.xAxis).length, 0.0);
     }
     
     public function testQuaternionToMatrix()
@@ -68,7 +71,7 @@ class Test3D extends MathTestCase
         {
             var axes = [Vector3.xAxis, Vector3.yAxis, Vector3.zAxis];
             var const = [Matrix3x3.rotationX, Matrix3x3.rotationY, Matrix3x3.rotationZ];
-            var angle = unitAngle * Math.PI * 2.0;
+            var angle = unitAngle * 360.0;
             var q = Quaternion.fromAxisAngle(angle, axes[axis]);
             var n = q.matrix;
             var m = const[axis](angle);
@@ -83,11 +86,15 @@ class Test3D extends MathTestCase
             for (i in 0...10)
             {
                 unitAngle += 0.01;
+                var totalLength = 0.0;
+                
                 for (c in 0...3)
                 {
                     var pair = createMatrixPair(unitAngle, axis);
-                    assertApproxEquals((pair.n.col(c) - pair.m.col(c)).length, 0.0);
+                    totalLength += (pair.n.col(c) - pair.m.col(c)).length;
                 }
+                
+                assertApproxEquals(totalLength, 0.0);
             }
         }
     }

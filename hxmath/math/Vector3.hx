@@ -344,6 +344,22 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Negate vector in-place.
+     * 
+     * @return  This.    
+     */
+    public inline function applyNegate():Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x = -self.x;
+        self.y = -self.y;
+        self.z = -self.z;
+        
+        return self;
+    }
+    
+    /**
      * Apply a scalar function to each element.
      * 
      * @param func  The function to apply.

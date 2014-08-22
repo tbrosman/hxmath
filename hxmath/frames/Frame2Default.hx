@@ -54,7 +54,7 @@ class Frame2Default implements IFrame2
 
     private inline function get_matrix():Matrix3x2
     {
-        // If no caching or the matrix is cached but dirty, recalculate its
+        // If no caching or the matrix is cached but dirty, recalculate it
         if (!isCached || isDirty)
         {
             Frame2.calculateMatrix(internalMatrix, offset, angleDegrees);

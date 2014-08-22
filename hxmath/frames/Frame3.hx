@@ -1,29 +1,30 @@
 package hxmath.frames;
 import hxmath.math.MathUtil;
-import hxmath.math.Matrix2x2;
-import hxmath.math.Matrix3x2;
-import hxmath.math.Vector2;
+import hxmath.math.Matrix3x3;
+import hxmath.math.Matrix4x4;
+import hxmath.math.Quaternion;
+import hxmath.math.Vector3;
  
 /**
- * A 2D affine frame with an offset and an angle. Frames allow you to transform between world/outer coordinates and
+ * A 3D affine frame with an offset and an orientation. Frames allow you to transform between world/outer coordinates and
  * local/inner coordinates in a form that is more meaningful/less verbose compared to a matrix. Frames can be
  * concatenated, inverted, and converted to matrices.
  */
-@:forward(matrix, offset, angleDegrees)
-abstract Frame2(IFrame2) from IFrame2
+@:forward(matrix, offset, orientation)
+abstract Frame3(IFrame3) from IFrame3
 {
     // The associated linear transformation matrix
-    public var linearMatrix(get, never):Matrix2x2;
+    public var linearMatrix(get, never):Matrix3x3;
     
     /**
      * Constructor.
      * 
      * @param offset        The offset/translation of the origin of the frame.
-     * @param angleDegrees  The angle/orientation of the frame.
+     * @param orientation   The orientation of the frame.
      */
-    public function new(offset:Vector2, angleDegrees:Float) 
+    public function new(offset:Vector3, orientation:Quaternion) 
     {
-        this = new Frame2Default(offset, angleDegrees);
+        this = new Frame3Default(offset, orientation);
     }
     
     /**
@@ -34,11 +35,11 @@ abstract Frame2(IFrame2) from IFrame2
      * @param angleDegrees  The angle in degrees.
      * @return              The matrix that was passed in.
      */
-    public static inline function calculateMatrix(matrix:Matrix3x2, offset:Vector2, angleDegrees:Float):Matrix3x2
+    public static inline function calculateMatrix(matrix:Matrix4x4, offset:Vector3, orientation:Quaternion):Matrix4x4
     {
         // Set fields in place to avoid reallocating
-        matrix.setRotate(MathUtil.degToRad(angleDegrees));
-        matrix.setTranslate(offset.x, offset.y);
+        matrix.setRotateFromQuaternion(orientation);
+        matrix.setTranslate(offset.x, offset.y, offset.z);
         return matrix;
     }
     
@@ -50,11 +51,11 @@ abstract Frame2(IFrame2) from IFrame2
      * @param t         A float in the range [0, 1]
      * @return          The interpolated frame
      */
-    public static inline function lerp(frameA:Frame2, frameB:Frame2, t:Float):Frame2
+    public static inline function lerp(frameA:Frame3, frameB:Frame3, t:Float):Frame3
     {
-        return new Frame2(
-            Vector2.lerp(frameA.offset, frameB.offset, t),
-            MathUtil.lerpCyclic(frameA.angleDegrees, frameB.angleDegrees, t, 360));
+        return new Frame3(
+            Vector3.lerp(frameA.offset, frameB.offset, t),
+            Quaternion.lerp(frameA.orientation, frameB.orientation, t));
     }
     
     /**
@@ -65,9 +66,9 @@ abstract Frame2(IFrame2) from IFrame2
      * @param other     The transformation applied before this one.
      * @return          The combined result.
      */
-    public inline function concat(other:Frame2):Frame2
+    public inline function concat(other:Frame3):Frame3
     {
-        var self:Frame2 = this;
+        var self:Frame3 = this;
         return self.clone()
             .concatWith(other);
     }
@@ -80,11 +81,13 @@ abstract Frame2(IFrame2) from IFrame2
      * @param other     The transformation applied before this one.
      * @return          The combined result (this object).
      */
-    public inline function concatWith(other:Frame2):Frame2
+    public inline function concatWith(other:Frame3):Frame3
     {
-        var self:Frame2 = this;
-        var resultOffset = (self.linearMatrix * other.offset).addWith(self.offset);
-        self.angleDegrees = MathUtil.wrap(self.angleDegrees + other.angleDegrees, 360);
+        var self:Frame3 = this;
+        var resultOffset = self.orientation
+            .rotate(other.offset)
+            .addWith(self.offset);
+        self.orientation = (self.orientation * other.orientation).normal;
         self.offset = resultOffset;
         return self;
     }
@@ -95,10 +98,12 @@ abstract Frame2(IFrame2) from IFrame2
      * @param p     The point to transform.
      * @return      The transformed point.
      */
-    public inline function transformFrom(p:Vector2):Vector2
+    public inline function transformFrom(p:Vector3):Vector3
     {
-        var self:Frame2 = this;
-        return self.matrix.transform(p);
+        var self:Frame3 = this;
+        return self.orientation
+            .rotate(p)
+            .addWith(self.offset);
     }
     
     /**
@@ -107,10 +112,11 @@ abstract Frame2(IFrame2) from IFrame2
      * @param p     The point to transform.
      * @return      The transformed point.
      */
-    public inline function transformTo(p:Vector2):Vector2
+    public inline function transformTo(p:Vector3):Vector3
     {
-        var self:Frame2 = this;
-        return self.linearMatrix.transposeMultiplyVector(p - self.offset);
+        var self:Frame3 = this;
+        return (~self.orientation)
+            .rotate(p - self.offset);
     }
     
     /**
@@ -119,10 +125,11 @@ abstract Frame2(IFrame2) from IFrame2
      * @param v     The vector to transform.
      * @return      The transformed vector.
      */
-    public inline function linearTransformFrom(v:Vector2):Vector2
+    public inline function linearTransformFrom(v:Vector3):Vector3
     {
-        var self:Frame2 = this;
-        return self.linearMatrix * v;
+        var self:Frame3 = this;
+        return self.orientation
+            .rotate(v);
     }
     
     /**
@@ -131,10 +138,11 @@ abstract Frame2(IFrame2) from IFrame2
      * @param v     The vector to transform.
      * @return      The transformed vector.
      */
-    public inline function linearTransformTo(v:Vector2):Vector2
+    public inline function linearTransformTo(v:Vector3):Vector3
     {
-        var self:Frame2 = this;
-        return self.linearMatrix.transposeMultiplyVector(v);
+        var self:Frame3 = this;
+        return (~self.orientation)
+            .rotate(v);
     }
     
     /**
@@ -142,12 +150,15 @@ abstract Frame2(IFrame2) from IFrame2
      * 
      * @return      The inverse of this frame.    
      */
-    public inline function inverse():Frame2
+    public inline function inverse():Frame3
     {
-        var self:Frame2 = this;
-        return new Frame2(
-            self.linearMatrix.transposeMultiplyVector(self.offset).applyNegate(),
-            -self.angleDegrees);
+        var self:Frame3 = this;
+        var conjugate = ~self.orientation;
+        return new Frame3(
+            conjugate
+                .rotate(self.offset)
+                .applyNegate(),
+            conjugate);
     }
     
     /**
@@ -155,15 +166,15 @@ abstract Frame2(IFrame2) from IFrame2
      * 
      * @return  The clone.    
      */
-    public inline function clone():Frame2
+    public inline function clone():Frame3
     {
-        var self:Frame2 = this;
-        return new Frame2(self.offset, self.angleDegrees);
+        var self:Frame3 = this;
+        return new Frame3(self.offset, self.orientation);
     }
     
-    private inline function get_linearMatrix():Matrix2x2
+    private inline function get_linearMatrix():Matrix3x3
     {
-        var self:Frame2 = this;
-        return self.matrix.linearSubMatrix;
+        var self:Frame3 = this;
+        return self.matrix.subMatrix;
     }
 }

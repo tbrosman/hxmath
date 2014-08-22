@@ -9,6 +9,9 @@ enum Orient2DResult
 
 class MathUtil
 {
+    // Standard epsilon value
+    public static inline var eps = 1e-6;
+    
     /**
      * Linear inteprolation for a cyclic coordinate.
      * 

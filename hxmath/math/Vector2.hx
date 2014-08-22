@@ -358,7 +358,7 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     }
     
     /**
-     * Negate a vector in-place.
+     * Negate vector in-place.
      * 
      * @return  This.    
      */

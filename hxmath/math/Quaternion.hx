@@ -74,13 +74,14 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     /**
      * Create a quaternion from an axis-angle pair.
      * 
-     * @param angle     The angle to rotate.
-     * @param axis      The axis to rotate around.
-     * @return          The quaternion.
+     * @param angleDegrees  The angle to rotate in degrees.
+     * @param axis          The axis to rotate around.
+     * @return              The quaternion.
      */
-    public static inline function fromAxisAngle(angle:Float, axis:Vector3):Quaternion
+    public static inline function fromAxisAngle(angleDegrees:Float, axis:Vector3):Quaternion
     {
-        return new Quaternion(Math.cos(angle / 2.0), Math.sin(angle / 2.0) * axis);
+        var angleRadians = MathUtil.degToRad(angleDegrees);
+        return new Quaternion(Math.cos(angleRadians / 2.0), Math.sin(angleRadians / 2.0) * axis);
     }
     
     /**
@@ -190,6 +191,30 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     public static inline function notEquals(a:Quaternion, b:Quaternion):Bool
     {
         return !(a == b);
+    }
+    
+    /**
+     * Linear interpolation between two quaternions.
+     * 
+     * @param a     The value at t = 0
+     * @param b     The value at t = 1
+     * @param t     A number in the range [0, 1]
+     * @return      The interpolated value
+     */
+    public static inline function lerp(a:Quaternion, b:Quaternion, t:Float):Quaternion
+    {
+        return (1.0 - t)*a + t*b;
+    }
+    
+    /**
+     * Dot product.
+     * 
+     * @param a
+     * @return      sum_i (a_i * b_i)
+     */
+    public static inline function dot(a:Quaternion, b:Quaternion):Float
+    {
+        return a.s * b.s + a.v * b.v;
     }
     
     /**

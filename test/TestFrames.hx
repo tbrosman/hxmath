@@ -3,7 +3,10 @@ package test;
 import hxmath.frames.adapters.FlxSpriteFrame2;
 import hxmath.frames.Frame2;
 import hxmath.frames.Frame2Default;
+import hxmath.frames.Frame3;
+import hxmath.math.Quaternion;
 import hxmath.math.Vector2;
+import hxmath.math.Vector3;
 
 class FlxObjectMock
 {
@@ -48,6 +51,25 @@ class TestFrames extends MathTestCase
         
         // Should just give the offset point
         assertTrue(c.matrix * Vector2.zero == Vector2.yAxis + originA);
+    }
+    
+    public function testFrame3Concat()
+    {
+        var originA = new Vector3(1.0, 1.0, 0.0);
+        var a = new Frame3(originA, Quaternion.fromAxisAngle(90.0, Vector3.zAxis));
+        var b = new Frame3(Vector3.xAxis, Quaternion.fromAxisAngle(90.0, Vector3.zAxis));
+        var c = a.concat(b);
+        
+        assertApproxEquals(0.0, (a.transformFrom(b.offset) - (Vector3.yAxis + originA)).length);
+        
+        // (R(90) * xAxis) + originA = yAxis + originA
+        assertApproxEquals(0.0, (c.offset - (Vector3.yAxis + originA)).length);
+        
+        // R(90, z) * R(90, z) should be orthogonal to identity
+        assertApproxEquals(0.0, Quaternion.dot(c.orientation, Quaternion.identity));
+        
+        // Should just give the offset point
+        assertApproxEquals(0.0, (c.transformFrom(Vector3.zero) - (Vector3.yAxis + originA)).length);
     }
     
     public function testFrame2LinearAffineTransform()

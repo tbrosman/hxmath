@@ -280,13 +280,14 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     /**
      * Counter-clockwise rotation around the X axis.
      * 
-     * @param angle     The angle to rotate (in radians).
+     * @param angle     The angle to rotate (in degrees).
      * @return          The rotation matrix.
      */
-    public static inline function rotationX(angle:Float):Matrix3x3
+    public static inline function rotationX(angleDegrees:Float):Matrix3x3
     {
-        var s = Math.sin(angle);
-        var c = Math.cos(angle);
+        var angleRadians = MathUtil.degToRad(angleDegrees);
+        var s = Math.sin(angleRadians);
+        var c = Math.cos(angleRadians);
         return new Matrix3x3(
             1, 0,  0,
             0, c, -s,
@@ -296,13 +297,14 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     /**
      * Counter-clockwise rotation around the Y axis.
      * 
-     * @param angle     The angle to rotate (in radians).
+     * @param angle     The angle to rotate (in degrees).
      * @return          The rotation matrix.
      */
-    public static inline function rotationY(angle:Float):Matrix3x3
+    public static inline function rotationY(angleDegrees:Float):Matrix3x3
     {
-        var s = Math.sin(angle);
-        var c = Math.cos(angle);
+        var angleRadians = MathUtil.degToRad(angleDegrees);
+        var s = Math.sin(angleRadians);
+        var c = Math.cos(angleRadians);
         return new Matrix3x3(
              c,  0, s,
              0,  1, 0,
@@ -312,13 +314,14 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     /**
      * Counter-clockwise rotation around the Z axis.
      * 
-     * @param angle     The angle to rotate (in radians).
+     * @param angle     The angle to rotate (in degrees).
      * @return          The rotation matrix.
      */
-    public static inline function rotationZ(angle:Float):Matrix3x3
+    public static inline function rotationZ(angleDegrees:Float):Matrix3x3
     {
-        var s = Math.sin(angle);
-        var c = Math.cos(angle);
+        var angleRadians = MathUtil.degToRad(angleDegrees);
+        var s = Math.sin(angleRadians);
+        var c = Math.cos(angleRadians);
         return new Matrix3x3(
             c, -s, 0,
             s,  c, 0,

@@ -108,6 +108,9 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     
     // Transpose (columns become rows)
     public var transpose(get, never):Matrix4x4;
+    
+    // Get the upper-left sub-matrix
+    public var subMatrix(get, never):Matrix3x3;
 
     /**
      * Constructor. Parameters are in row-major order (when written out the array is ordered like the matrix).
@@ -394,6 +397,56 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     }
     
     /**
+     * Set the linear portion of this matrix to a rotation from a quaternion.
+     * 
+     * @param q         The quaternion containing the rotation.
+     * @return          This.
+     */
+    public inline function setRotateFromQuaternion(q:Quaternion):Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        
+        var s = q.s;
+        var x = q.v.x;
+        var y = q.v.y;
+        var z = q.v.z;
+        
+        self.m00 = 1 - 2 * (y * y + z * z);
+        self.m10 = 2 * (x * y - s * z);
+        self.m20 = 2 * (s * y + x * z);
+        
+        self.m01 = 2 * (x * y + s * z);
+        self.m11 = 1 - 2 * (x * x + z * z);
+        self.m21 = 2 * (y * z - s * x);
+        
+        self.m02 = 2 * (x * z - s * y);
+        self.m12 = 2 * (y * z + s * x);
+        self.m22 = 1 - 2 * (x * x + y * y);
+        
+        return self;
+    }
+    
+    /**
+     * Set the right column to a translation.
+     * 
+     * @param x
+     * @param y
+     * @param z
+     * @return      This.
+     */
+    public inline function setTranslate(x:Float, y:Float, z:Float):Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        
+        self.m30 = x;
+        self.m31 = y;
+        self.m32 = z;
+        self.m33 = 1.0;
+        
+        return self;
+    }
+    
+    /**
      * Clone.
      * 
      * @return  The cloned object.
@@ -644,5 +697,14 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
             self.m01, self.m11, self.m21, self.m31,
             self.m02, self.m12, self.m22, self.m32,
             self.m03, self.m13, self.m23, self.m33);
+    }
+    
+    private inline function get_subMatrix():Matrix3x3
+    {
+        var self:Matrix4x4 = this;
+        return new Matrix3x3(
+            self.m00, self.m10, self.m20,
+            self.m01, self.m11, self.m21,
+            self.m02, self.m12, self.m22);
     }
 }
