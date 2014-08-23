@@ -1,5 +1,6 @@
 package test;
-import haxe.ds.Vector.Vector;
+
+import hxmath.geom.Ray2;
 import hxmath.geom.Rect;
 import hxmath.math.MathUtil;
 import hxmath.math.Vector2;
@@ -150,5 +151,14 @@ class TestGeom extends MathTestCase
             .equals(innerRight));
         assertTrue(right.intersect(outer)
             .equals(innerRight));
+    }
+    
+    public function testRay2Cast()
+    {
+        var p = new Vector2(1.0, 1.0).normal;
+        var r = new Ray2(Vector2.zero, new Vector2(1.0, 1.0).normal);
+        
+        var result = r.intersectPoint(p);
+        assertApproxEquals(1.0, result);
     }
 }
