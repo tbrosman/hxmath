@@ -34,6 +34,9 @@ class Rect
     // Get the area
     public var area(get, never):Float;
     
+    // True if the rect is empty
+    public var isEmpty(get, never):Bool;
+    
     /**
      * Constructor.
      * 
@@ -90,6 +93,21 @@ class Rect
     }
     
     /**
+     * Equals.
+     * 
+     * @param r
+     * @return      True if this == r.
+     */
+    public inline function equals(r:Rect):Bool
+    {
+        return r != null &&
+            x == r.x &&
+            y == r.y &&
+            width == r.width &&
+            height == r.height;
+    }
+    
+    /**
      * Clone.
      * 
      * @return  The cloned object.
@@ -118,12 +136,61 @@ class Rect
      * on top of eachother, they should not overlap).
      * 
      * @param r
-     * @return
+     * @return      True if the rectangle overlaps.    
      */
     public inline function overlaps(r:Rect):Bool
     {
         return MathUtil.openRangeOverlaps(x, width, r.x, r.width)
             && MathUtil.openRangeOverlaps(y, height, r.y, r.height);
+    }
+    
+    /**
+     * Intersect two rectangles yielding a (potentially degenerate) rectangle.
+     * 
+     * @param r     The rectangle to intersect.
+     * @return      The resulting rectangle.
+     */
+    public inline function intersect(r:Rect):Rect
+    {
+        return clone()
+            .intersectWith(r);
+    }
+    
+    /**
+     * Set this rectangle to the intersection of this and another rectangle by clipping each edge.
+     * 
+     * @param r     The rectangle to intersect.
+     * @return      This.
+     */
+    public inline function intersectWith(r:Rect):Rect
+    {
+        // Clip left edge
+        if (x < r.x)
+        {
+            width -= (r.x - x);
+            x = r.x;
+        }
+
+        // Clip bottom edge
+        if (y < r.y)
+        {
+            height -= (r.y - y);
+            y = r.y;
+        }
+        
+        // Clip right edge
+        if (x + width > r.x + r.width)
+        {
+            width -= (x + width) - (r.x + r.width);
+        }
+        
+        // Clip top edge
+        if (y + height > r.y + r.height)
+        {
+            height -= (y + height) - (r.y + r.height);
+        }
+        
+        return this;
     }
     
     /**
@@ -181,5 +248,10 @@ class Rect
     private inline function get_area():Float
     {
         return width * height;
+    }
+    
+    private inline function get_isEmpty():Bool
+    {
+        return width <= 0.0 || height <= 0.0;
     }
 }
