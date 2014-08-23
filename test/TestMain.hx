@@ -23,6 +23,7 @@ class TestMain
             runner.add(new TestConverters());
             runner.add(new TestFrames());
             runner.add(new TestIntMath());
+            runner.add(new TestGeom());
         }
         
         if (doStressTests)

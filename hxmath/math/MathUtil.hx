@@ -60,17 +60,61 @@ class MathUtil
     }
     
     /**
+     * Check to see if the open range (aStart, aStart + aWidth) contains the value x.
+     * 
+     * @param aStart
+     * @param aWidth
+     * @param x
+     * @return          True if the range contains x.    
+     */
+    public static inline function openRangeContains(aStart:Float, aWidth:Float, x:Float):Bool
+    {
+        return (x > aStart) &&
+            (x < aStart + aWidth);
+    }
+    
+    /**
      * Check to see if the open ranges (aStart, aStart + aWidth) and (bStart, bStart + bWidth) overlap.
      * 
      * @param    aStart
      * @param    aWidth
      * @param    bStart
      * @param    bWidth
+     * @return              True if there is overlap.        
      */
     public static inline function openRangeOverlaps(aStart:Float, aWidth:Float, bStart:Float, bWidth:Float):Bool
     {
-        return (aStart + aWidth > bStart)
-            && (aStart < bStart + bWidth);
+        return (aStart + aWidth > bStart) &&
+            (aStart < bStart + bWidth);
+    }
+    
+    /**
+     * Check to see if the closed range [aStart, aStart + aWidth] contains the value x.
+     * 
+     * @param aStart
+     * @param aWidth
+     * @param x
+     * @return          True if the range contains x.    
+     */
+    public static inline function closedRangeContains(aStart:Float, aWidth:Float, x:Float):Bool
+    {
+        return (x >= aStart) &&
+            (x <= aStart + aWidth);
+    }
+    
+    /**
+     * Check to see if the closed ranges [aStart, aStart + aWidth] and [bStart, bStart + bWidth] overlap.
+     * 
+     * @param    aStart
+     * @param    aWidth
+     * @param    bStart
+     * @param    bWidth
+     * @return              True if there is overlap.
+     */
+    public static inline function closedRangeOverlaps(aStart:Float, aWidth:Float, bStart:Float, bWidth:Float):Bool
+    {
+        return (aStart + aWidth >= bStart) &&
+            (aStart <= bStart + bWidth);
     }
     
     /**
