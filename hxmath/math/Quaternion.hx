@@ -406,6 +406,31 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             (self.s * self.s - self.v * self.v) * u +
             2 * self.s * (self.v % u);
     }
+	
+	public inline function invert():Quaternion
+	{
+        var self:Quaternion = this;
+		var norm:Float = self.lengthSq;
+		if (norm > 0.0)
+		{
+			var invNorm:Float = 1.0 / norm;
+			
+			self.v.x *= -invNorm;
+			self.v.y *= -invNorm;
+			self.v.z *= -invNorm;
+			self.s *= invNorm;
+		}
+		else
+		{
+			// Invalidate
+			self.v.x = 0.0;
+			self.v.y = 0.0;
+			self.v.z = 0.0;
+			self.s = 0.0;
+		}
+		
+		return self;
+	}
     
     private static inline function get_zero():Quaternion
     {
