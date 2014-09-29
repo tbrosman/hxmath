@@ -588,19 +588,6 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
         
         return self;
     }
-	
-	public inline function multiplyScalar(value:Float):Void
-	{
-		this.m00 *= value;
-		this.m01 *= value;
-		this.m02 *= value;
-		this.m10 *= value;
-		this.m11 *= value;
-		this.m12 *= value;
-		this.m20 *= value;
-		this.m21 *= value;
-		this.m22 *= value;
-	}
     
     private static inline function get_zero():Matrix3x3
     {
