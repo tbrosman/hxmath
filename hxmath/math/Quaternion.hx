@@ -274,7 +274,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     public inline function clone():Quaternion
     {
         var self:Quaternion = this;
-        return new Quaternion(self.s, self.v);
+        return new Quaternion(self.s, self.v.clone());
     }
     
     /**
