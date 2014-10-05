@@ -360,7 +360,7 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     /**
      * Negate vector in-place.
      * 
-     * @return  This.    
+     * @return  The modified object.    
      */
     public inline function applyNegate():Vector2
     {
@@ -368,6 +368,22 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
         
         self.x = -self.x;
         self.y = -self.y;
+        
+        return self;
+    }
+    
+    /**
+     * Multiply with a scalar in-place.
+     * 
+     * @param s     The scalar.
+     * @return      The modified object.
+     */
+    public inline function applyMultiplyScalar(s:Float):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x *= s;
+        self.y *= s;
         
         return self;
     }

@@ -407,6 +407,53 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             2 * self.s * (self.v % u);
     }
     
+    /**
+     * Normalize the quaternion in-place.
+     * 
+     * @return  The modified object.
+     */
+    public inline function applyNormalize():Quaternion
+    {
+        var self:Quaternion = this;
+        var length = self.length;
+        
+        if (length > 0.0)
+        {
+            var k = 1.0 / length;
+            self.s *= k;
+            self.v.applyMultiplyScalar(k);
+        }
+        
+        return self;
+    }
+    
+    /**
+     * Conjugate the quaternion in-place.
+     * 
+     * @return  The modified object.
+     */
+    public inline function applyConjugate():Quaternion
+    {
+        var self:Quaternion = this;
+        
+        self.v.applyNegate();
+        
+        return self;
+    }
+    
+    /**
+     * Invert the quaternion in-place. Useful when the quaternion may have been denormalized.
+     * 
+     * @return  The modified object.
+     */
+    public inline function applyInvert():Quaternion
+    {
+        var self:Quaternion = this;
+        
+        return self.applyConjugate()
+            .applyNormalize();
+    }
+    
     private static inline function get_zero():Quaternion
     {
         return new Quaternion(0.0, Vector3.zero);

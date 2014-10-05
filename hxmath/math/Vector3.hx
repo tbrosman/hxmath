@@ -360,6 +360,23 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Multiply with a scalar in-place.
+     * 
+     * @param s     The scalar.
+     * @return      The modified object.
+     */
+    public inline function applyMultiplyScalar(s:Float):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x *= s;
+        self.y *= s;
+        self.z *= s;
+        
+        return self;
+    }
+    
+    /**
      * Apply a scalar function to each element.
      * 
      * @param func  The function to apply.

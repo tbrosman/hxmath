@@ -129,4 +129,18 @@ class Test3D extends MathTestCase
             assertApproxEquals(0.0, (invFrameMatrix * homogenousZ - frameMatrixInv * homogenousZ).lengthSq);
         }
     }
+    
+    public function testQuaternionInverse()
+    {
+        for (i in 0...10)
+        {
+            var q = randomQuaternion().normal;
+            var qInv = q.clone().applyConjugate();
+            
+            var p = q * qInv;
+            
+            assertApproxEquals(1.0, p.s);
+            assertApproxEquals(0.0, p.v.length);
+        }
+    }
 }
