@@ -218,6 +218,19 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     }
     
     /**
+     * Create an inverted copy.
+     * 
+     * @return  The inverse.
+     */
+    public inline function invert():Quaternion
+    {
+        var self:Quaternion = this;
+        
+        return self.clone()
+            .applyInvert();
+    }
+    
+    /**
      * Add a quaternion in place.
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

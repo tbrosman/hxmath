@@ -115,7 +115,8 @@ abstract Frame3(IFrame3) from IFrame3
     public inline function transformTo(p:Vector3):Vector3
     {
         var self:Frame3 = this;
-        return (~self.orientation)
+        return self.orientation
+            .invert()
             .rotate(p - self.offset);
     }
     
@@ -141,7 +142,8 @@ abstract Frame3(IFrame3) from IFrame3
     public inline function linearTransformTo(v:Vector3):Vector3
     {
         var self:Frame3 = this;
-        return (~self.orientation)
+        return self.orientation
+            .invert()
             .rotate(v);
     }
     
@@ -153,12 +155,14 @@ abstract Frame3(IFrame3) from IFrame3
     public inline function inverse():Frame3
     {
         var self:Frame3 = this;
-        var conjugate = ~self.orientation;
+        var inverseRotation = self.orientation
+            .invert();
+            
         return new Frame3(
-            conjugate
+            inverseRotation
                 .rotate(self.offset)
                 .applyNegate(),
-            conjugate);
+            inverseRotation);
     }
     
     /**
