@@ -103,6 +103,9 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     // Identity matrix (A * I = A)
     public static var identity(get, never):Matrix4x4;
     
+    // Translation column vector
+    public var t(get, set):Vector3;
+    
     // Determinant (the "area" of the basis)
     public var det(get, never):Float;
     
@@ -661,6 +664,58 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
         return self;
     }
     
+    /**
+     * Transpose the upper 3x3 block (the linear sub-matrix in a homogenous matrix).
+     * 
+     * @return  The modified object.
+     */
+    public inline function applySubMatrixTranspose():Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        
+        var temp:Float;
+        
+        temp = self.m01;
+        self.m01 = self.m10;
+        self.m10 = temp;
+        
+        temp = self.m02;
+        self.m02 = self.m20;
+        self.m20 = temp;
+        
+        temp = self.m12;
+        self.m12 = self.m21;
+        self.m21 = temp;
+        
+        return self;
+    }
+    
+    /**
+     * Inverts the matrix assuming that it is a homogenous affine matrix (the last column gives
+     * the translation) with a special orthogonal sub-matrix for the linear portion (a rotation
+     * without any scaling/shearing/etc).
+     * 
+     * @return  The modified object.
+     */
+    public inline function applyInvertFrame():Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        
+        // Assuming the sub-matrix is a special orthogonal matrix transpose gives the inverse
+        self.applySubMatrixTranspose();
+        
+        // The inverse of the translation is equal to -M^T * translation
+        var tx = -(self.m00 * self.m30 + self.m10 * self.m31 + self.m20 * self.m32);
+        var ty = -(self.m01 * self.m30 + self.m11 * self.m31 + self.m21 * self.m32);
+        var tz = -(self.m02 * self.m30 + self.m12 * self.m31 + self.m22 * self.m32);
+        
+        self.m30 = tx;
+        self.m31 = ty;
+        self.m32 = tz;
+        
+        return self;
+    }
+    
     private static inline function get_zero():Matrix4x4
     {
         return new Matrix4x4(
@@ -677,6 +732,21 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
             0.0, 1.0, 0.0, 0.0,
             0.0, 0.0, 1.0, 0.0,
             0.0, 0.0, 0.0, 1.0);
+    }
+    
+    private inline function get_t():Vector3
+    {
+        var self:Matrix4x4 = this;
+        return new Vector3(self.m30, self.m31, self.m32);
+    }
+    
+    private inline function set_t(t:Vector3):Vector3
+    {
+        var self:Matrix4x4 = this;
+        self.m30 = t.x;
+        self.m31 = t.y;
+        self.m32 = t.z;
+        return t;
     }
     
     private inline function get_transpose():Matrix4x4

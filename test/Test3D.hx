@@ -1,5 +1,6 @@
 package test;
 
+import hxmath.frames.Frame3;
 import hxmath.math.MathUtil;
 import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
@@ -96,6 +97,36 @@ class Test3D extends MathTestCase
                 
                 assertApproxEquals(totalLength, 0.0);
             }
+        }
+    }
+    
+    public function testMatrixFrameInverse()
+    {
+        for (i in 0...10)
+        {
+            // Create a non-degenerate frame
+            var frame = randomFrame3();
+            
+            // Get the inverse (the matrix should be equivalent)
+            var invFrame = frame.inverse();
+            
+            var frameMatrix = frame.matrix;
+            
+            // Both methods of inverting the frame should be equivalent
+            var invFrameMatrix = invFrame.matrix;
+            var frameMatrixInv = frame.matrix.applyInvertFrame();
+            
+            // A unit tetrahedron in 3D using homogenous points
+            var homogenous0 = new Vector4(0.0, 0.0, 0.0, 1.0);
+            var homogenousX = new Vector4(1.0, 0.0, 0.0, 1.0);
+            var homogenousY = new Vector4(0.0, 1.0, 0.0, 1.0);
+            var homogenousZ = new Vector4(0.0, 0.0, 1.0, 1.0);
+            
+            // The tetrahedron should be transformed identically by both matrices
+            assertApproxEquals(0.0, (invFrameMatrix * homogenous0 - frameMatrixInv * homogenous0).lengthSq);
+            assertApproxEquals(0.0, (invFrameMatrix * homogenousX - frameMatrixInv * homogenousX).lengthSq);
+            assertApproxEquals(0.0, (invFrameMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
+            assertApproxEquals(0.0, (invFrameMatrix * homogenousZ - frameMatrixInv * homogenousZ).lengthSq);
         }
     }
 }

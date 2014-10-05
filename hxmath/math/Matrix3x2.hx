@@ -557,6 +557,48 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
         return self;
     }
     
+    /**
+     * Transpose the upper 2x2 block (the linear sub-matrix in a homogenous matrix).
+     * 
+     * @return  The modified object.
+     */
+    public inline function applySubMatrixTranspose():Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        
+        var temp:Float;
+        
+        temp = self.c;
+        self.c = self.b;
+        self.b = temp;
+        
+        return self;
+    }
+    
+    /**
+     * Inverts the matrix assuming that it is a homogenous affine matrix (the last column gives
+     * the translation) with a special orthogonal sub-matrix for the linear portion (a rotation
+     * without any scaling/shearing/etc).
+     * 
+     * @return  The modified object.
+     */
+    public inline function applyInvertFrame():Matrix3x2
+    {
+        var self:Matrix3x2 = this;
+        
+        // Assuming the sub-matrix is a special orthogonal matrix transpose gives the inverse
+        self.applySubMatrixTranspose();
+        
+        // The inverse of the translation is equal to -M^T * translation
+        var tx = -(self.a * self.tx + self.b * self.ty);
+        var ty = -(self.c * self.tx + self.d * self.ty);
+        
+        self.tx = tx;
+        self.ty = ty;
+        
+        return self;
+    }
+    
     private static inline function get_zero():Matrix3x2
     {
         return new Matrix3x2(
