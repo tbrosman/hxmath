@@ -207,6 +207,50 @@ class Rect
     }
     
     /**
+     * Find the closest distance to a point.
+     * 
+     * @param p     The point.
+     * @return      The closest distance (0 if the point is contained).
+     */
+    public inline function distanceToPoint(p:Vector2):Float
+    {
+        var dx = Math.max(Math.abs(p.x - (x + 0.5 * width)) - 0.5 * width, 0);
+        var dy = Math.max(Math.abs(p.y - (y + 0.5 * height)) - 0.5 * height, 0);
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+    
+    /**
+     * Inflate this rectangle directionally by adding it with a vector.
+     * 
+     * @param v     The vector to add where the signs of the components give which corner is moved.
+     * @return      This.
+     */
+    public inline function addWith(v:Vector2):Rect
+    {
+        if (v.x < 0.0)
+        {
+            x += v.x;
+            width -= v.x;
+        }
+        else
+        {
+            width += v.x;
+        }
+
+        if (v.y < 0.0)
+        {
+            y += v.y;
+            height -= v.y;
+        }
+        else
+        {
+            height += v.y;
+        }
+
+        return this;
+    }
+    
+    /**
      * Get a vertex by index. Vertices are ordered counter-clockwise with the origin as 0.
      * 
      * @param index     The index of the vertex.

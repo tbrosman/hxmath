@@ -163,6 +163,50 @@ class TestGeom extends MathTestCase
             .equals(innerRight));
     }
     
+    /**
+     * Find the distance between a unit rectangle and points inside/outside/on the rectangle boundary.
+     */
+    public function testRectToPointDistance()
+    {
+        var unit = new Rect(0.0, 0.0, 1.0, 1.0);
+        var distanceOfTwo = [new Vector2(-2.0, 0.5), new Vector2(3.0, 0.5), new Vector2(0.5, -2.0), new Vector2(0.5, 3.0)];
+        
+        for (point in distanceOfTwo)
+        {
+            assertApproxEquals(2.0, unit.distanceToPoint(point));
+        }
+        
+        var inside = new Vector2(0.75, 0.2);
+        assertEquals(0.0, unit.distanceToPoint(inside));
+        
+        var diagonal = new Vector2( -0.5, -0.5);
+        assertApproxEquals(diagonal.length, unit.distanceToPoint(diagonal));
+        
+        var corner = new Vector2(1.0, 1.0);
+        assertEquals(0.0, unit.distanceToPoint(corner));
+    }
+    
+    public function testRectAddVector()
+    {
+        var unit = new Rect(0.0, 0.0, 1.0, 1.0);
+        var two = new Vector2(2.0, 2.0);
+        var expectedArea = (unit.width + two.x) * (unit.height + two.y);
+        
+        // In the direction of the positive quadrants
+        var unitPlusTwo = unit.clone()
+            .addWith(two);
+        
+        assertApproxEquals(expectedArea, unitPlusTwo.area);
+        assertApproxEquals(0.0, (new Vector2(unitPlusTwo.x, unitPlusTwo.y) - new Vector2(unit.x, unit.y)).length);
+        
+        // In the direction of the negative quadrants
+        var unitMinusTwo = unit.clone()
+            .addWith(-two);
+            
+        assertApproxEquals(expectedArea, unitMinusTwo.area);
+        assertApproxEquals(0.0, (new Vector2(unitMinusTwo.x, unitMinusTwo.y) + two).length);
+    }
+    
     public function testRay2Cast()
     {
         var p = new Vector2(1.0, 1.0).normal;
