@@ -74,18 +74,18 @@ class MathUtil
     }
     
     /**
-     * Check to see if the open ranges (aStart, aStart + aWidth) and (bStart, bStart + bWidth) overlap.
+     * Check to see if the open ranges (aStart, aStart + aWidth) and (bStart, bStart + bWidth) intersect.
      * 
      * @param    aStart
      * @param    aWidth
      * @param    bStart
      * @param    bWidth
-     * @return              True if there is overlap.        
+     * @return              True if the ranges intersect.       
      */
-    public static inline function openRangeOverlaps(aStart:Float, aWidth:Float, bStart:Float, bWidth:Float):Bool
+    public static inline function openRangesIntersect(aStart:Float, aWidth:Float, bStart:Float, bWidth:Float):Bool
     {
-        return (aStart + aWidth > bStart) &&
-            (aStart < bStart + bWidth);
+        return !(aStart >= bStart + bWidth ||
+            bStart >= aStart + aWidth);
     }
     
     /**

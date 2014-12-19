@@ -36,6 +36,16 @@ class TestGeom extends MathTestCase
         assertTrue(b.overlaps(e));
         assertTrue(c.overlaps(e));
         assertTrue(d.overlaps(e));
+        
+        // Create a sub-rectangle (fully-contained) of a
+        var contained = new Rect(0.25, 0.25, 0.5, 0.5);
+        assertTrue(a.overlaps(contained));
+        assertTrue(contained.overlaps(a));
+        
+        // Create a straddling rectangle across a
+        var straddling = new Rect(0.25, 0.25, 1.0, 0.5);
+        assertTrue(a.overlaps(straddling));
+        assertTrue(straddling.overlaps(a));
     }
     
     public function testRectMatrixConversion()

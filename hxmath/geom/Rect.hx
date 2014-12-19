@@ -140,8 +140,8 @@ class Rect
      */
     public inline function overlaps(r:Rect):Bool
     {
-        return MathUtil.openRangeOverlaps(x, width, r.x, r.width)
-            && MathUtil.openRangeOverlaps(y, height, r.y, r.height);
+        return MathUtil.openRangesIntersect(x, width, r.x, r.width)
+            && MathUtil.openRangesIntersect(y, height, r.y, r.height);
     }
     
     /**
