@@ -220,6 +220,19 @@ class Rect
     }
     
     /**
+     * Find the closest distance to a rect.
+     * 
+     * @param r     The rect to test against.
+     * @return      The minimum distance (0 if intersecting).
+     */
+    public inline function distanceToRect(r:Rect):Float
+    {
+        var dx = Math.max(Math.abs((r.x + 0.5 * r.width) - (x + 0.5 * width)) - 0.5 * (width + r.width), 0);
+        var dy = Math.max(Math.abs((r.y + 0.5 * r.height) - (y + 0.5 * height)) - 0.5 * (height + r.height), 0);
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+    
+    /**
      * Inflate this rectangle directionally by adding it with a vector.
      * 
      * @param v     The vector to add where the signs of the components give which corner is moved.

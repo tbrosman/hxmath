@@ -60,6 +60,31 @@ class MathUtil
     }
     
     /**
+     * Find the minimum distance between two ranges.
+     * 
+     * @param aStart
+     * @param aWidth
+     * @param bStart
+     * @param bWidth
+     * @return          The minimum distance between two ranges.
+     */
+    public static inline function rangeDistance(aStart:Float, aWidth:Float, bStart:Float, bWidth:Float):Float
+    {
+        if (aStart + aWidth < bStart)
+        {
+            return bStart - (aStart + aWidth);
+        }
+        else if (bStart + bWidth < aStart)
+        {
+            return aStart - (bStart + bWidth);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+    /**
      * Check to see if the open range (aStart, aStart + aWidth) contains the value x.
      * 
      * @param aStart
@@ -100,21 +125,6 @@ class MathUtil
     {
         return (x >= aStart) &&
             (x <= aStart + aWidth);
-    }
-    
-    /**
-     * Check to see if the closed ranges [aStart, aStart + aWidth] and [bStart, bStart + bWidth] overlap.
-     * 
-     * @param    aStart
-     * @param    aWidth
-     * @param    bStart
-     * @param    bWidth
-     * @return              True if there is overlap.
-     */
-    public static inline function closedRangeOverlaps(aStart:Float, aWidth:Float, bStart:Float, bWidth:Float):Bool
-    {
-        return (aStart + aWidth >= bStart) &&
-            (aStart <= bStart + bWidth);
     }
     
     /**

@@ -207,6 +207,19 @@ class TestGeom extends MathTestCase
         assertApproxEquals(0.0, (new Vector2(unitMinusTwo.x, unitMinusTwo.y) + two).length);
     }
     
+    public function testRectDistanceAgainstRangeAlgorithm()
+    {
+        for (i in 0...100)
+        {
+            var a = new Rect(Math.random() - 0.5, Math.random() - 0.5, Math.random(), Math.random());
+            var b = new Rect(Math.random() - 0.5, Math.random() - 0.5, Math.random(), Math.random());
+            
+            var regularDist = a.distanceToRect(b);
+            var rangeDistance = a.distanceToRect(b);
+            assertApproxEquals(rangeDistance, regularDist);
+        }
+    }
+    
     public function testRay2Cast()
     {
         var p = new Vector2(1.0, 1.0).normal;
@@ -214,5 +227,17 @@ class TestGeom extends MathTestCase
         
         var result = r.intersectPoint(p);
         assertApproxEquals(1.0, result);
+    }
+    
+    private function rangeRectDistance(a:Rect, b:Rect)
+    {
+        // Find the minimum distance along each axis
+        var minX = MathUtil.rangeDistance(a.x, a.width, b.x, b.width);
+        var minY = MathUtil.rangeDistance(a.y, a.height, b.y, b.height);
+        
+        // If both minimums are non-zero, the closest features on both rectangles are vertices
+        // If only one minimum is non-zero the closest features on both rectangles are edges
+        // In both cases, the length of the minimum vector gives the minimum distance
+        return Math.sqrt(minX * minX + minY * minY);
     }
 }
