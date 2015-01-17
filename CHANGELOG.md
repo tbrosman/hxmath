@@ -1,3 +1,16 @@
+## 0.10.0 (01/17/2015)
+* Partially implemented new conventions to reduce new allocations/increase performance (issue #23):
+  * Operators will allocate new objects for clarity
+  * Properties will normally allocate new objects (e.g. Vector2.normal)
+  * All other functions will favor in-place versions where possible/practical
+* Renamed scalarMultiply on vectors to just multiply for clarity.
+* Added to Vector2: normalizeTo, clamp, divide, rotate (issue #29)
+* Changed Frame3 to use a fully normalized quaternion inverse to avoid issues when inverting denormalized (e.g. interpolated) frames (issue #24).
+* In-place quaternion inverse with normalization (issue #25).
+* Fix for Quaternion clone doesn't clone its vector portion (issue #27).
+* Fast inversion for frame matrices (frameMatrixInvert)
+* Added Rect, the first of the geom structures.
+
 ## 0.8.0 (08/22/2014)
 * Bugfix: Changed the cross product operator to '%' to avoid non-obvious precedence issues (Quaternion product was broken as a result).
 * Added Frame3 for 3D transformations.
