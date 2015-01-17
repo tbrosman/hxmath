@@ -133,17 +133,30 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     /**
      * Multiply a scalar with a vector.
      * 
-     * @param s
      * @param a
+     * @param s
      * @return      s * a
      */
     @:op(A * B)
-    public static inline function scalarMultiply(s:Float, a:Vector3):Vector3
+    @:commutative
+    public static inline function multiply(a:Vector3, s:Float):Vector3
     {
-        return new Vector3(
-            s * a.x,
-            s * a.y,
-            s * a.z);
+        return a.clone()
+            .multiplyWith(s);
+    }
+    
+    /**
+     * Divide a vector by a scalar.
+     * 
+     * @param s
+     * @param a
+     * @return      a / s
+     */
+    @:op(A / B)
+    public static inline function divide(a:Vector3, s:Float):Vector3
+    {
+        return a.clone()
+            .divideWith(s);
     }
     
     /**
@@ -232,6 +245,42 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3
     {
         return (1.0 - t)*a + t*b;
+    }
+    
+    /**
+     * Multiply a vector with a scalar in place.
+     * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i *= s
+     */
+    public inline function multiplyWith(s:Float):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x *= s;
+        self.y *= s;
+        self.z *= s;
+        
+        return self;
+    }
+    
+    /**
+     * Divide a vector by a scalar in place.
+     * Note: /= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i /= s
+     */
+    public inline function divideWith(s:Float):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x /= s;
+        self.y /= s;
+        self.z /= s;
+        
+        return self;
     }
     
     /**
@@ -355,23 +404,6 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
         self.x = -self.x;
         self.y = -self.y;
         self.z = -self.z;
-        
-        return self;
-    }
-    
-    /**
-     * Multiply with a scalar in-place.
-     * 
-     * @param s     The scalar.
-     * @return      The modified object.
-     */
-    public inline function applyMultiplyScalar(s:Float):Vector3
-    {
-        var self:Vector3 = this;
-        
-        self.x *= s;
-        self.y *= s;
-        self.z *= s;
         
         return self;
     }

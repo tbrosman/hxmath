@@ -434,7 +434,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         {
             var k = 1.0 / length;
             self.s *= k;
-            self.v.applyMultiplyScalar(k);
+            self.v.multiplyWith(k);
         }
         
         return self;

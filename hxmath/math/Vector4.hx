@@ -124,18 +124,30 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     /**
      * Multiply a scalar with a vector.
      * 
-     * @param s
      * @param a
+     * @param s
      * @return      s * a
      */
     @:op(A * B)
-    public static inline function scalarMultiply(s:Float, a:Vector4):Vector4
+    @:commutative
+    public static inline function multiply(a:Vector4, s:Float):Vector4
     {
-        return new Vector4(
-            s * a.x,
-            s * a.y,
-            s * a.z,
-            s * a.w);
+        return a.clone()
+            .multiplyWith(s);
+    }
+    
+    /**
+     * Divide a vector by a scalar.
+     * 
+     * @param s
+     * @param a
+     * @return      a / s
+     */
+    @:op(A / B)
+    public static inline function divide(a:Vector4, s:Float):Vector4
+    {
+        return a.clone()
+            .divideWith(s);
     }
     
     /**
@@ -226,6 +238,44 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
     public static inline function lerp(a:Vector4, b:Vector4, t:Float):Vector4
     {
         return (1.0 - t)*a + t*b;
+    }
+    
+    /**
+     * Multiply a vector with a scalar in place.
+     * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i *= s
+     */
+    public inline function multiplyWith(s:Float):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.x *= s;
+        self.y *= s;
+        self.z *= s;
+        self.w *= s;
+        
+        return self;
+    }
+    
+    /**
+     * Divide a vector by a scalar in place.
+     * Note: /= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i /= s
+     */
+    public inline function divideWith(s:Float):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.x /= s;
+        self.y /= s;
+        self.z /= s;
+        self.w /= s;
+        
+        return self;
     }
     
     /**

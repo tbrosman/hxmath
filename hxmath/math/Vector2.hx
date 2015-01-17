@@ -156,16 +156,30 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     /**
      * Multiply a scalar with a vector.
      * 
-     * @param s
      * @param a
+     * @param s
      * @return      s * a
      */
     @:op(A * B)
-    public static inline function multiplyScalar(s:Float, a:Vector2):Vector2
+    @:commutative
+    public static inline function multiply(a:Vector2, s:Float):Vector2
     {
-        return new Vector2(
-            s * a.x,
-            s * a.y);
+        return a.clone()
+            .multiplyWith(s);
+    }
+    
+    /**
+     * Divide a vector by a scalar.
+     * 
+     * @param s
+     * @param a
+     * @return      a / s
+     */
+    @:op(A / B)
+    public static inline function divide(a:Vector2, s:Float):Vector2
+    {
+        return a.clone()
+            .divideWith(s);
     }
     
     /**
@@ -252,6 +266,40 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
     {
         return (1.0 - t)*a + t*b;
+    }
+    
+    /**
+     * Multiply a vector with a scalar in place.
+     * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i *= s
+     */
+    public inline function multiplyWith(s:Float):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x *= s;
+        self.y *= s;
+        
+        return self;
+    }
+    
+    /**
+     * Divide a vector by a scalar in place.
+     * Note: /= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i /= s
+     */
+    public inline function divideWith(s:Float):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x /= s;
+        self.y /= s;
+        
+        return self;
     }
     
     /**
@@ -360,7 +408,7 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     /**
      * Negate vector in-place.
      * 
-     * @return  The modified object.    
+     * @return  The modified object.
      */
     public inline function applyNegate():Vector2
     {
@@ -368,22 +416,6 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
         
         self.x = -self.x;
         self.y = -self.y;
-        
-        return self;
-    }
-    
-    /**
-     * Multiply with a scalar in-place.
-     * 
-     * @param s     The scalar.
-     * @return      The modified object.
-     */
-    public inline function applyMultiplyScalar(s:Float):Vector2
-    {
-        var self:Vector2 = this;
-        
-        self.x *= s;
-        self.y *= s;
         
         return self;
     }
@@ -440,7 +472,89 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
         // sign(|a b|) = sign(sin(angle)) = sign(angle)
         return MathUtil.sign(MathUtil.det2x2(self.x, b.x, self.y, b.y)) * self.angleWith(b);
     }
+    
+    /**
+     * Normalize this vector.
+     * 
+     * @return  The modified object.
+     */
+    public inline function normalize():Vector2
+    {
+        var self:Vector2 = this;
+        
+        var length = self.length;
+        
+        if (length > 0.0)
+        {
+            self.divideWith(length);
+        }
+        
+        return self;
+    }
+    
+    /**
+     * Normalize this vector and scale it to the specified length.
+     * 
+     * @param newLength     The new length to normalize to.
+     * @return              The modified object.
+     */
+    public inline function normalizeTo(newLength:Float):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.normalize();
+        self.multiplyWith(newLength);
+        
+        return self;
+    }
+    
+    /**
+     * Clamp this vector's length to the specified range.
+     * 
+     * @param min   The min length.
+     * @param max   The max length.
+     * @return      The modified object.
+     */
+    public inline function clamp(min:Float, max:Float):Vector2
+    {
+        var self:Vector2 = this;
+        
+        var length = self.length;
+        
+        if (length < min)
+        {
+            self.normalizeTo(min);
+        }
+        else if (length > max)
+        {
+            self.normalizeTo(max);
+        }
+        
+        return self;
+    }
 
+    /**
+     * Rotate this point counter-clockwise around a pivot point.
+     * 
+     * @param angle     The signed angle in radians.
+     * @param pivot     The pivot point to rotate around.
+     * @return          The modified object.
+     */
+    public inline function rotate(angle:Float, pivot:Vector2):Vector2
+    {
+        var self:Vector2 = this;
+        
+        var cos = Math.cos(angle);
+        var sin = Math.sin(angle);
+        var dx = self.x - pivot.x;
+        var dy = self.y - pivot.y;
+        
+        self.x = dx * Math.cos(angle) - dy * Math.sin(angle);
+        self.y = dx * Math.sin(angle) + dy * Math.cos(angle);
+        
+        return self;
+    }
+    
     private static inline function get_zero():Vector2
     {
         return new Vector2(0.0, 0.0);
@@ -481,16 +595,9 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     private inline function get_normal():Vector2
     {
         var self:Vector2 = this;
-        var length = self.length;
         
-        if (length > 0.0)
-        {
-            return new Vector2(self.x / length, self.y / length);
-        }
-        else
-        {
-            return Vector2.zero;
-        }
+        return self.clone()
+            .normalize();
     }
     
     private inline function get_leftRot():Vector2

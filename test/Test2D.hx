@@ -1,5 +1,6 @@
 package test;
 
+import haxe.ds.Vector;
 import hxmath.math.Matrix2x2;
 import hxmath.math.Matrix3x2;
 import hxmath.math.Vector2;
@@ -44,8 +45,17 @@ class Test2D extends MathTestCase
         // After 90 degree ccw rotation:
         // x -> +y
         // y -> -x
-        assertApproxEquals(((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length, 0.0);
-        assertApproxEquals(((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length, 0.0);
+        assertApproxEquals(0.0, ((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length);
+        assertApproxEquals(0.0, ((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length);
+    }
+    
+    public function testVectorRotate()
+    {
+        // After 90 degree ccw rotation around 0, 0:
+        // x -> +y
+        // y -> -x
+        assertApproxEquals(0.0, ((Vector2.xAxis.rotate(Math.PI / 2.0, Vector2.zero)) - Vector2.yAxis).length);
+        assertApproxEquals(0.0, ((Vector2.yAxis.rotate(Math.PI / 2.0, Vector2.zero)) + Vector2.xAxis).length);
     }
     
     public function testPolarConversion()
@@ -60,6 +70,32 @@ class Test2D extends MathTestCase
     {
         assertTrue(Vector2.yAxis.normal.leftRot * new Vector2(-1, 0) > 0.0);
         assertTrue(Vector2.yAxis.normal.rightRot * new Vector2(-1, 0) < 0.0);
+    }
+    
+    public function testNormalizeTo()
+    {
+        for (i in 0...30)
+        {
+            var v = randomVector2();
+            var newLength = Math.abs(randomFloat());
+            assertApproxEquals(newLength, v.normalizeTo(newLength).length);
+        }
+    }
+    
+    public function testClamp()
+    {
+        for (i in 0...30)
+        {
+            var v = 10.0 * randomVector2();
+            
+            var lowerBound = 3.0;
+            var upperBound = 7.0;
+            
+            var clamped = v.clamp(lowerBound, upperBound);
+            
+            assertTrue(clamped.length >= lowerBound - 1e-6);
+            assertTrue(clamped.length <= upperBound + 1e-6);
+        }
     }
     
     public function testAngles()
