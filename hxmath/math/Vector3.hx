@@ -124,10 +124,8 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     @:op(A % B)
     public static inline function cross(a:Vector3, b:Vector3):Vector3
     {
-        return new Vector3(
-            a.y * b.z - a.z * b.y,
-            a.z * b.x - a.x * b.z,
-            a.x * b.y - a.y * b.x);
+        return a.clone()
+            .crossWith(b);
     }
     
     /**
@@ -244,7 +242,32 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
      */
     public static inline function lerp(a:Vector3, b:Vector3, t:Float):Vector3
     {
-        return (1.0 - t)*a + t*b;
+        return new Vector3(
+            (1.0 - t) * a.x + t * b.x,
+            (1.0 - t) * a.y + t * b.y,
+            (1.0 - t) * a.z + t * b.z);
+    }
+    
+    /**
+     * Cross product in place. The resulting vector (this) is orthogonal to the plane defined by the input vectors.
+     * Note: %= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self = self X a
+     */
+    public inline function crossWith(a:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        var newX = self.y * a.z - self.z * a.y;
+        var newY = self.z * a.x - self.x * a.z;
+        var newZ = self.x * a.y - self.y * a.x;
+        
+        self.x = newX;
+        self.y = newY;
+        self.z = newZ;
+        
+        return self;
     }
     
     /**

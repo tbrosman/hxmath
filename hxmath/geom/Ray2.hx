@@ -45,7 +45,7 @@ class Ray2
     public function intersectPoint(point:Vector2, tolerance:Float=1e-6):Float
     {
         // TODO cache this/make it faster (or just use det2x2)
-        var perpNorm = normal.leftRot;
+        var perpNorm = normal.rotatedLeft;
         
         // Check the perpendicular distance from the line defining the ray
         var d = (point - origin) * perpNorm;
@@ -74,7 +74,7 @@ class Ray2
     {
         var closestHit:Float = Math.NEGATIVE_INFINITY;
         var hitIndex = -1;
-        var perpNorm = normal.leftRot;
+        var perpNorm = normal.rotatedLeft;
         
         for (i in 0...points.length)
         {

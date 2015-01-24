@@ -1,4 +1,5 @@
 package hxmath.math;
+import haxe.ds.Vector;
 import hxmath.math.Vector2.Vector2Shape;
 
 typedef Vector2Shape =
@@ -59,10 +60,10 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
     public var normal(get, never):Vector2;
     
     // 90 degree rotation to the left
-    public var leftRot(get, never):Vector2;
+    public var rotatedLeft(get, never):Vector2;
     
     // 90 degree rotation to the right
-    public var rightRot(get, never):Vector2;
+    public var rotatedRight(get, never):Vector2;
     
     /**
      * Constructor.
@@ -265,7 +266,9 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
      */
     public static inline function lerp(a:Vector2, b:Vector2, t:Float):Vector2
     {
-        return (1.0 - t)*a + t*b;
+        return new Vector2(
+            (1.0 - t) * a.x + t * b.x,
+            (1.0 - t) * a.y + t * b.y);
     }
     
     /**
@@ -555,6 +558,38 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
         return self;
     }
     
+    /**
+     * Rotate this vector by 90 degrees to the left/counterclockwise.
+     * 
+     * @return  The modified object. (-y, x)
+     */
+    public inline function rotateLeft():Vector2
+    {
+        var self:Vector2 = this;
+        
+        var newX = -self.y;
+        self.y = self.x;
+        self.x = newX;
+        
+        return self;
+    }
+    
+    /**
+     * Rotate this vector by 90 degrees to the right/clockwise.
+     * 
+     * @return  The modified object. (y, -x)
+     */
+    public inline function rotateRight():Vector2
+    {
+        var self:Vector2 = this;
+        
+        var newX = self.y;
+        self.y = -self.x;
+        self.x = newX;
+        
+        return self;
+    }
+    
     private static inline function get_zero():Vector2
     {
         return new Vector2(0.0, 0.0);
@@ -600,16 +635,18 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
             .normalize();
     }
     
-    private inline function get_leftRot():Vector2
+    private inline function get_rotatedLeft():Vector2
     {
         var self:Vector2 = this;
-        return new Vector2(-self.y, self.x);
+        return self.clone()
+            .rotateLeft();
     }
     
-    private inline function get_rightRot():Vector2
+    private inline function get_rotatedRight():Vector2
     {
         var self:Vector2 = this;
-        return new Vector2(self.y, -self.x);
+        return self.clone()
+            .rotateRight();
     }
 }
 

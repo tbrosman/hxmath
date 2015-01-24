@@ -68,8 +68,8 @@ class Test2D extends MathTestCase
     
     public function testNorms()
     {
-        assertTrue(Vector2.yAxis.normal.leftRot * new Vector2(-1, 0) > 0.0);
-        assertTrue(Vector2.yAxis.normal.rightRot * new Vector2(-1, 0) < 0.0);
+        assertTrue(Vector2.yAxis.normal.rotatedLeft * new Vector2(-1, 0) > 0.0);
+        assertTrue(Vector2.yAxis.normal.rotatedRight * new Vector2(-1, 0) < 0.0);
     }
     
     public function testNormalizeTo()
