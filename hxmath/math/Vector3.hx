@@ -1,5 +1,4 @@
 package hxmath.math;
-import hxmath.math.Vector3.Vector3Default;
 
 typedef Vector3Shape =
 {
@@ -25,11 +24,7 @@ class Vector3Default
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef Vector3Type = Vector3Shape;
-#else
 typedef Vector3Type = Vector3Default;
-#end
 
 /**
  * A 3D vector.

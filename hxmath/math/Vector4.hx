@@ -27,8 +27,8 @@ class Vector4Default
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef Vector4Type = Vector4Shape;
+#if HXMATH_USE_OPENFL_STRUCTURES
+typedef Vector4Type = flash.geom.Vector3D;
 #else
 typedef Vector4Type = Vector4Default;
 #end
@@ -37,7 +37,7 @@ typedef Vector4Type = Vector4Default;
  * A 4D vector (used with homogenous/projection matrices in 3D).
  */
 @:forward(x, y, z, w)
-abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
+abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 4;
@@ -73,7 +73,11 @@ abstract Vector4(Vector4Shape) from Vector4Shape to Vector4Shape
      */
     public inline function new(x:Float, y:Float, z:Float, w:Float)
     {
+        #if HXMATH_USE_OPENFL_STRUCTURES
+        this = new flash.geom.Vector3D(x, y, z, w);
+        #else
         this = new Vector4Default(x, y, z, w);
+        #end
     }
     
     /**

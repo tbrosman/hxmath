@@ -35,11 +35,7 @@ class Matrix2x2Default
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef Matrix2x2Type = Matrix2x2Shape;
-#else
 typedef Matrix2x2Type = Matrix2x2Default;
-#end
 
 /**
  * 2x2 matrix for linear operations defined over a shape matching the 2x2 linear sub-matrix in flash.geom.Matrix.

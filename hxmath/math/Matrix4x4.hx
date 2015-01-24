@@ -1,5 +1,4 @@
 package hxmath.math;
-import hxmath.math.Matrix4x4.Matrix4x4Default;
 
 // Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix4x4Shape = 
@@ -78,11 +77,7 @@ class Matrix4x4Default
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef Matrix4x4Type = Matrix4x4Shape;
-#else
 typedef Matrix4x4Type = Matrix4x4Default;
-#end
 
 /**
  * 4x4 matrix for homogenous/projection transformations in 3D.

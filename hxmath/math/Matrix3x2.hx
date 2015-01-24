@@ -44,8 +44,8 @@ class Matrix3x2Default
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef Matrix3x2Type = Matrix3x2Shape;
+#if HXMATH_USE_OPENFL_STRUCTURES
+typedef Matrix3x2Type = flash.geom.Matrix;
 #else
 typedef Matrix3x2Type = Matrix3x2Default;
 #end
@@ -88,7 +88,11 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
      */
     public inline function new(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float)
     {
+        #if HXMATH_USE_OPENFL_STRUCTURES
+        this = new flash.geom.Matrix(a, b, c, d, tx, ty);
+        #else
         this = new Matrix3x2Default(a, b, c, d, tx, ty);
+        #end
     }
     
     /**

@@ -1,6 +1,4 @@
 package hxmath.math;
-import haxe.ds.Vector;
-import hxmath.math.Vector2.Vector2Shape;
 
 typedef Vector2Shape =
 {
@@ -23,8 +21,8 @@ class Vector2Default
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef Vector2Type = Vector2Shape;
+#if HXMATH_USE_OPENFL_STRUCTURES
+typedef Vector2Type = flash.geom.Point;
 #else
 typedef Vector2Type = Vector2Default;
 #end
@@ -33,7 +31,7 @@ typedef Vector2Type = Vector2Default;
  * A 2D vector.
  */
 @:forward(x, y)
-abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
+abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 2;
@@ -73,7 +71,11 @@ abstract Vector2(Vector2Default) from Vector2Default to Vector2Default
      */
     public inline function new(x:Float, y:Float)
     {
+        #if HXMATH_USE_OPENFL_STRUCTURES
+        this = new flash.geom.Point(x, y);
+        #else
         this = new Vector2Default(x, y);
+        #end
     }
     
     /**

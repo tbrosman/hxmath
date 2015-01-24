@@ -1,5 +1,4 @@
 package hxmath.math;
-import hxmath.math.IntVector2.IntVector2Default;
 
 /**
  * The default underlying type.

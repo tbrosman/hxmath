@@ -52,11 +52,7 @@ class Matrix3x3Default
     }
 }
 
-#if HXMATH_USE_DYNAMIC_STRUCTURES
-typedef Matrix3x3Type = Matrix3x3Shape;
-#else
 typedef Matrix3x3Type = Matrix3x3Default;
-#end
 
 /**
  * 3x3 matrix for linear transformations in 3D.

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <!-- NMML reference: https://gist.github.com/1763850 -->
+  
+  <!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
+  <meta title="hxmath-openfl" package="com.hxmath.test" version="1.0.0" company="tbrosman" />
+  
+  <!-- output -->
+  <app main="test.openfl.Main" file="hxmath-openfl" path="bin" />
+  
+  <window background="#000000" fps="60" />
+  <window width="800" height="600" unless="mobile" />
+  <window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
+   
+  <set name="BUILD_DIR" value="Export" />
+  
+  <set name="SWF_VERSION" value="11.8" />
+  
+  <haxedef name="HXMATH_USE_OPENFL_STRUCTURES" />
+
+  <!--<setenv name="no_console" value="1" />-->
+
+  <classpath name="hxmath" />
+  
+  <haxelib name="openfl"/>
+</project>
