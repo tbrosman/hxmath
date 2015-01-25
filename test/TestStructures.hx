@@ -407,6 +407,33 @@ class TestStructures extends MathTestCase
         }
     }
     
+    public function testVectorMinMax()
+    {
+        var v2Axes = [Vector2.xAxis, Vector2.yAxis];
+        var v2AxesMax = Lambda.fold(v2Axes, Vector2.max, Vector2.xAxis);
+        var v2AxesMin = Lambda.fold(v2Axes, Vector2.min, Vector2.xAxis);
+        var v2AxesSum = Lambda.fold(v2Axes, Vector2.add, Vector2.zero);
+            
+        assertTrue(v2AxesMax == v2AxesSum);
+        assertTrue(v2AxesMin == Vector2.zero);
+        
+        var v3Axes = [Vector3.xAxis, Vector3.yAxis, Vector3.zAxis];
+        var v3AxesMax = Lambda.fold(v3Axes, Vector3.max, Vector3.xAxis);
+        var v3AxesMin = Lambda.fold(v3Axes, Vector3.min, Vector3.xAxis);
+        var v3AxesSum = Lambda.fold(v3Axes, Vector3.add, Vector3.zero);
+            
+        assertTrue(v3AxesMax == v3AxesSum);
+        assertTrue(v3AxesMin == Vector3.zero);
+        
+        var v4Axes = [Vector4.xAxis, Vector4.yAxis, Vector4.zAxis, Vector4.wAxis];
+        var v4AxesMax = Lambda.fold(v4Axes, Vector4.max, Vector4.xAxis);
+        var v4AxesMin = Lambda.fold(v4Axes, Vector4.min, Vector4.xAxis);
+        var v4AxesSum = Lambda.fold(v4Axes, Vector4.add, Vector4.zero);
+        
+        assertTrue(v4AxesMax == v4AxesSum);
+        assertTrue(v4AxesMin == Vector4.zero);
+    }
+    
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
     {
         // No type-preserving abstract casts if using the Default underlying types

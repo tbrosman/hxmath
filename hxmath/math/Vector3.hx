@@ -249,6 +249,32 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Returns a vector built from the componentwise max of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      max(a_i, b_i)
+     */
+    public static inline function max(a:Vector3, b:Vector3):Vector3
+    {
+        return a.clone()
+            .maxWith(b);
+    }
+    
+    /**
+     * Returns a vector built from the componentwise min of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      min(a_i, b_i)
+     */
+    public static inline function min(a:Vector3, b:Vector3):Vector3
+    {
+        return a.clone()
+            .minWith(b);
+    }
+    
+    /**
      * Cross product in place. The resulting vector (this) is orthogonal to the plane defined by the input vectors.
      * Note: %= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
@@ -338,6 +364,42 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
         self.x -= a.x;
         self.y -= a.y;
         self.z -= a.z;
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector built from the componentwise max of this vector and another.
+     * 
+     * @param a
+     * @param b
+     * @return      self_i = max(self_i, a_i)
+     */
+    public inline function maxWith(a:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x = Math.max(self.x, a.x);
+        self.y = Math.max(self.y, a.y);
+        self.z = Math.max(self.z, a.z);
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector built from the componentwise min of this vector and another.
+     * 
+     * @param a
+     * @param b
+     * @return      self_i = min(self_i, a_i)
+     */
+    public inline function minWith(a:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x = Math.min(self.x, a.x);
+        self.y = Math.min(self.y, a.y);
+        self.z = Math.min(self.z, a.z);
         
         return self;
     }

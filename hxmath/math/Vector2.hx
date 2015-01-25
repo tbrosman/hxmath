@@ -279,6 +279,32 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     }
     
     /**
+     * Returns a vector built from the componentwise max of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      max(a_i, b_i)
+     */
+    public static inline function max(a:Vector2, b:Vector2):Vector2
+    {
+        return a.clone()
+            .maxWith(b);
+    }
+    
+    /**
+     * Returns a vector built from the componentwise min of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      min(a_i, b_i)
+     */
+    public static inline function min(a:Vector2, b:Vector2):Vector2
+    {
+        return a.clone()
+            .minWith(b);
+    }
+    
+    /**
      * Multiply a vector with a scalar in place.
      * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
@@ -342,6 +368,40 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
         
         self.x -= a.x;
         self.y -= a.y;
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector built from the componentwise max of this vector and another.
+     * 
+     * @param a
+     * @param b
+     * @return      self_i = max(self_i, a_i)
+     */
+    public inline function maxWith(a:Vector2):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x = Math.max(self.x, a.x);
+        self.y = Math.max(self.y, a.y);
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector built from the componentwise min of this vector and another.
+     * 
+     * @param a
+     * @param b
+     * @return      self_i = min(self_i, a_i)
+     */
+    public inline function minWith(a:Vector2):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x = Math.min(self.x, a.x);
+        self.y = Math.min(self.y, a.y);
         
         return self;
     }

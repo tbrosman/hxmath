@@ -246,7 +246,37 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
      */
     public static inline function lerp(a:Vector4, b:Vector4, t:Float):Vector4
     {
-        return (1.0 - t)*a + t*b;
+        return new Vector4(
+            (1.0 - t) * a.x + t * b.x,
+            (1.0 - t) * a.y + t * b.y,
+            (1.0 - t) * a.z + t * b.z,
+            (1.0 - t) * a.w + t * b.w);
+    }
+    
+    /**
+     * Returns a vector built from the componentwise max of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      max(a_i, b_i)
+     */
+    public static inline function max(a:Vector4, b:Vector4):Vector4
+    {
+        return a.clone()
+            .maxWith(b);
+    }
+    
+    /**
+     * Returns a vector built from the componentwise min of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      min(a_i, b_i)
+     */
+    public static inline function min(a:Vector4, b:Vector4):Vector4
+    {
+        return a.clone()
+            .minWith(b);
     }
     
     /**
@@ -321,6 +351,44 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
         self.y -= a.y;
         self.z -= a.z;
         self.w -= a.w;
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector built from the componentwise max of this vector and another.
+     * 
+     * @param a
+     * @param b
+     * @return      self_i = max(self_i, a_i)
+     */
+    public inline function maxWith(a:Vector4):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.x = Math.max(self.x, a.x);
+        self.y = Math.max(self.y, a.y);
+        self.z = Math.max(self.z, a.z);
+        self.w = Math.max(self.w, a.w);
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector built from the componentwise min of this vector and another.
+     * 
+     * @param a
+     * @param b
+     * @return      self_i = min(self_i, a_i)
+     */
+    public inline function minWith(a:Vector4):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.x = Math.min(self.x, a.x);
+        self.y = Math.min(self.y, a.y);
+        self.z = Math.min(self.z, a.z);
+        self.w = Math.min(self.w, a.w);
         
         return self;
     }
