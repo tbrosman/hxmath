@@ -19,6 +19,11 @@ class Vector2Default
         this.x = x;
         this.y = y;
     }
+    
+    public function toString():String
+    {
+        return '($x, $y)';
+    }
 }
 
 #if HXMATH_USE_OPENFL_STRUCTURES

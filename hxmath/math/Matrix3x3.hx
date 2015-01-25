@@ -50,6 +50,11 @@ class Matrix3x3Default
         this.m12 = m12;
         this.m22 = m22;
     }
+    
+    public function toString():String
+    {
+        return '[[$m00, $m10, $m20], [$m01, $m11, $m21], [$m02, $m12, $m22]]';
+    }
 }
 
 typedef Matrix3x3Type = Matrix3x3Default;

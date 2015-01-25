@@ -33,6 +33,11 @@ class Matrix2x2Default
         this.c = c;
         this.d = d;
     }
+    
+    public function toString():String
+    {
+        return '[a: $a, b: $b, c: $c, d: $d]';
+    }
 }
 
 typedef Matrix2x2Type = Matrix2x2Default;

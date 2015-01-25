@@ -22,6 +22,11 @@ class Vector3Default
         this.y = y;
         this.z = z;
     }
+    
+    public function toString():String
+    {
+        return '($x, $y, $z)';
+    }
 }
 
 typedef Vector3Type = Vector3Default;

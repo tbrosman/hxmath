@@ -75,6 +75,11 @@ class Matrix4x4Default
         this.m23 = m23;
         this.m33 = m33;
     }
+    
+    public function toString():String
+    {
+        return '[[$m00, $m10, $m20, $m30], [$m01, $m11, $m21, $m31], [$m02, $m12, $m22, $m32], [$m03, $m13, $m23, $m33]]';
+    }
 }
 
 typedef Matrix4x4Type = Matrix4x4Default;

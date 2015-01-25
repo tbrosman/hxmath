@@ -13,6 +13,11 @@ class IntVector2Default
         this.x = x;
         this.y = y;
     }
+    
+    public function toString():String
+    {
+        return '($x, $y)';
+    }
 }
 
 /**

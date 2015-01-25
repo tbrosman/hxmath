@@ -1,4 +1,5 @@
 package test;
+import hxmath.math.IntVector2;
 import hxmath.math.Matrix2x2;
 import hxmath.math.Matrix3x2;
 import hxmath.math.Matrix3x3;
@@ -381,6 +382,29 @@ class TestStructures extends MathTestCase
         assertTrue(Matrix3x3.zero != null);
         assertTrue(Matrix4x4.zero != null);
         assertTrue(Quaternion.zero != null);
+    }
+    
+    public function testHasToString()
+    {
+        var structures:Array<Dynamic> = [
+            new Vector2(0, 23),
+            new Vector3(0, 23, 0),
+            new Vector4(0, 23, 0, 0),
+            new Matrix2x2(0, 0, 23, 0),
+            new Matrix3x2(0, 0, 23, 0, 0, 0),
+            new Matrix3x3(0, 0, 23, 0, 0, 0, 0, 0, 0),
+            new Matrix4x4(0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+            new Quaternion(1, new Vector3(0, 23, 0)),
+            new IntVector2(0, 23)];
+        
+        for (x in structures)
+        {
+            if ('$x'.indexOf("23") == -1)
+            {
+                trace(x);
+                assertTrue(false);
+            }
+        }
     }
     
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)

@@ -42,6 +42,11 @@ class Matrix3x2Default
         this.tx = tx;
         this.ty = ty;
     }
+    
+    public function toString():String
+    {
+        return '[a: $a, b: $b, c: $c, d: $d, tx: $tx, ty: $ty]';
+    }
 }
 
 #if HXMATH_USE_OPENFL_STRUCTURES

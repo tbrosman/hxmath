@@ -25,6 +25,11 @@ class Vector4Default
         this.z = z;
         this.w = w;
     }
+    
+    public function toString():String
+    {
+        return '($x, $y, $z, $w)';
+    }
 }
 
 #if HXMATH_USE_OPENFL_STRUCTURES

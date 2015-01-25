@@ -13,6 +13,11 @@ class QuaternionDefault
         this.s = s;
         this.v = v;
     }
+    
+    public function toString():String
+    {
+        return '[$s, $v]';
+    }
 }
 
 typedef QuaternionType = QuaternionDefault;
