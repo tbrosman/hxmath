@@ -280,6 +280,19 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
     }
     
     /**
+     * Returns a vector resulting from this vector projected onto the specified vector.
+     * 
+     * @param a
+     * @param b
+     * @return      (dot(self, a) / dot(a, a)) * a
+     */
+    public static inline function project(a:Vector4, b:Vector4):Vector4
+    {
+        return a.clone()
+            .projectOnto(b);
+    }
+    
+    /**
      * Multiply a vector with a scalar in place.
      * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
@@ -389,6 +402,25 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
         self.y = Math.min(self.y, a.y);
         self.z = Math.min(self.z, a.z);
         self.w = Math.min(self.w, a.w);
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector resulting from this vector projected onto the specified vector.
+     * 
+     * @param a
+     * @return      self = (dot(self, a) / dot(a, a)) * a
+     */
+    public inline function projectOnto(a:Vector4):Vector4
+    {
+        var self:Vector4 = this;
+        
+        var s:Float = (self * a) / (a * a);
+        
+        // Set self = s * a without allocating
+        a.copyTo(self);
+        self.multiplyWith(s);
         
         return self;
     }

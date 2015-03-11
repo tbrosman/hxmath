@@ -275,6 +275,19 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Returns a vector resulting from this vector projected onto the specified vector.
+     * 
+     * @param a
+     * @param b
+     * @return      (dot(self, a) / dot(a, a)) * a
+     */
+    public static inline function project(a:Vector3, b:Vector3):Vector3
+    {
+        return a.clone()
+            .projectOnto(b);
+    }
+    
+    /**
      * Cross product in place. The resulting vector (this) is orthogonal to the plane defined by the input vectors.
      * Note: %= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
@@ -400,6 +413,25 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
         self.x = Math.min(self.x, a.x);
         self.y = Math.min(self.y, a.y);
         self.z = Math.min(self.z, a.z);
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector resulting from this vector projected onto the specified vector.
+     * 
+     * @param a
+     * @return      self = (dot(self, a) / dot(a, a)) * a
+     */
+    public inline function projectOnto(a:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        var s:Float = (self * a) / (a * a);
+        
+        // Set self = s * a without allocating
+        a.copyTo(self);
+        self.multiplyWith(s);
         
         return self;
     }

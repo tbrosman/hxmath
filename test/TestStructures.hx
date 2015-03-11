@@ -434,6 +434,65 @@ class TestStructures extends MathTestCase
         assertTrue(v4AxesMin == Vector4.zero);
     }
     
+    public function testVectorProj()
+    {
+        var v2AxesProj1 = Vector2.project(Vector2.xAxis, Vector2.yAxis);
+        
+        assertTrue(v2AxesProj1 == Vector2.zero);
+        
+        var v2Mid = new Vector2(0.5, 0.5);
+        var v2Axes = [Vector2.xAxis, Vector2.yAxis];
+        var v2MidProjOntoAxes = Lambda.map(v2Axes, function(a) return Vector2.project(v2Mid, a));
+        
+        for (v in v2MidProjOntoAxes)
+        {
+            assertApproxEquals(0.5, v.length);
+        }
+        
+        var v3AxesProj = [
+            Vector3.project(Vector3.xAxis, Vector3.yAxis),
+            Vector3.project(Vector3.xAxis, Vector3.zAxis),
+            Vector3.project(Vector3.yAxis, Vector3.zAxis)
+        ];
+        
+        for (v in v3AxesProj)
+        {
+            assertTrue(v == Vector3.zero);
+        }
+        
+        var v3Mid = new Vector3(0.5, 0.5, 0.5);
+        var v3Axes = [Vector3.xAxis, Vector3.yAxis, Vector3.zAxis];
+        var v3MidProjOntoAxes = Lambda.map(v3Axes, function(a) return Vector3.project(v3Mid, a));
+        
+        for (v in v3MidProjOntoAxes)
+        {
+            assertApproxEquals(0.5, v.length);
+        }
+        
+        var v4AxesProj = [
+            Vector4.project(Vector4.xAxis, Vector4.yAxis),
+            Vector4.project(Vector4.xAxis, Vector4.zAxis),
+            Vector4.project(Vector4.xAxis, Vector4.wAxis),
+            Vector4.project(Vector4.yAxis, Vector4.zAxis),
+            Vector4.project(Vector4.yAxis, Vector4.wAxis),
+            Vector4.project(Vector4.zAxis, Vector4.wAxis)
+        ];
+        
+        for (v in v4AxesProj)
+        {
+            assertTrue(v == Vector4.zero);
+        }
+        
+        var v4Mid = new Vector4(0.5, 0.5, 0.5, 0.5);
+        var v4Axes = [Vector4.xAxis, Vector4.yAxis, Vector4.zAxis, Vector4.wAxis];
+        var v4MidProjOntoAxes = Lambda.map(v4Axes, function(a) return Vector4.project(v4Mid, a));
+        
+        for (v in v4MidProjOntoAxes)
+        {
+            assertApproxEquals(0.5, v.length);
+        }
+    }
+    
     private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
     {
         // No type-preserving abstract casts if using the Default underlying types
