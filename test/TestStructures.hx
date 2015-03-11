@@ -151,17 +151,6 @@ class TestStructures extends MathTestCase
         }
     }
     
-    public function testAddSubInPlace()
-    {
-        assertObjectIsSameAfter(
-            Vector2.xAxis,
-            function(original)
-            {
-                var vec2:Vector2 = original;
-                return vec2.addWith(Vector2.xAxis);
-            });
-    }
-    
     public function testArrayAccess()
     {
         var vec2 = Vector2.zero;
@@ -491,15 +480,5 @@ class TestStructures extends MathTestCase
         {
             assertApproxEquals(0.5, v.length);
         }
-    }
-    
-    private function assertObjectIsSameAfter(original:Dynamic, transform:Dynamic->Dynamic)
-    {
-        // No type-preserving abstract casts if using the Default underlying types
-        #if HXMATH_USE_DYNAMIC_STRUCTURES
-        original.tag = "original";
-        var after:Dynamic = transform(original);
-        assertEquals(original, after);
-        #end
     }
 }
