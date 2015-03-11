@@ -503,7 +503,7 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     {
         var self:Vector3 = this;
         
-        for (i in 0...3)
+        for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
         }

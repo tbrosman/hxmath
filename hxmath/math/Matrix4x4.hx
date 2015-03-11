@@ -656,7 +656,7 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     {
         var self:Matrix4x4 = this;
         
-        for (i in 0...16)
+        for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
         }

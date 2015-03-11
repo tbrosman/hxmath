@@ -500,7 +500,7 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     {
         var self:Vector2 = this;
         
-        for (i in 0...2)
+        for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
         }

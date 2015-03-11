@@ -558,7 +558,7 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
     {
         var self:Matrix3x2 = this;
         
-        for (i in 0...6)
+        for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
         }

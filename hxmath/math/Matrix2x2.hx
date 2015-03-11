@@ -496,7 +496,7 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     {
         var self:Matrix2x2 = this;
         
-        for (i in 0...4)
+        for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
         }

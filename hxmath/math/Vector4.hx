@@ -480,7 +480,7 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
     {
         var self:Vector4 = this;
         
-        for (i in 0...4)
+        for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
         }

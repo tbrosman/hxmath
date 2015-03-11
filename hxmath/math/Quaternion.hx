@@ -356,7 +356,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     {
         var self:Quaternion = this;
         
-        for (i in 0...4)
+        for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
         }
