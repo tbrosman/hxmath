@@ -547,4 +547,11 @@ class TestStructures extends MathTestCase
             assertTrue(clamped.length <= upperBound + 1e-6);
         }
     }
+    
+    public function testDistanceTo()
+    {
+        assertApproxEquals(1.0, Vector2.zero.distanceTo(Vector2.xAxis));
+        assertApproxEquals(1.0, Vector3.zero.distanceTo(Vector3.xAxis));
+        assertApproxEquals(1.0, Vector4.zero.distanceTo(Vector4.xAxis));
+    }
 }

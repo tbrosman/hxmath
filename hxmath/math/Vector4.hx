@@ -521,6 +521,19 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
     }
     
     /**
+     * Get the distance between this vector and another.
+     * 
+     * @param b
+     * @return      |self - b|
+     */
+    public inline function distanceTo(b:Vector4):Float
+    {
+        var self:Vector4 = this;
+        
+        return (self - b).length;
+    }
+    
+    /**
      * Normalize this vector.
      * 
      * @return  The modified object.
