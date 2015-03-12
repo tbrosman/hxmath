@@ -275,7 +275,7 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
-     * Returns a vector resulting from this vector projected onto the specified vector.
+     * Returns a vector resulting from a vector projected onto the specified vector.
      * 
      * @param a
      * @param b
@@ -285,6 +285,19 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     {
         return a.clone()
             .projectOnto(b);
+    }
+    
+    /**
+     * Returns a vector resulting from reflecting a vector around the specified normal.
+     * 
+     * @param a
+     * @param b
+     * @return       v - 2.0 * proj(v, normal)
+     */
+    public static inline function reflect(v:Vector3, normal:Vector3):Vector3
+    {
+        return v.clone()
+            .reflectBy(normal);
     }
     
     /**
@@ -451,6 +464,39 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
         // Set self = s * a without allocating
         a.copyTo(self);
         self.multiplyWith(s);
+        
+        return self;
+    }
+    
+    /**
+     * Returns this vector projected into the plane defined by the specified normal.
+     * 
+     * @param normal    The normal to the plane.
+     * @return          self = self - proj(self, normal)
+     */
+    public inline function projectOntoPlane(normal:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.subtractWith(Vector3.project(self, normal));
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector resulting from reflecting this vector around the specified normal.
+     * 
+     * @param normal
+     * @return          self = self - 2.0 * proj(self, normal)
+     */
+    public inline function reflectBy(normal:Vector3):Vector3
+    {
+        var self:Vector3 = this;
+        
+        var projected:Vector3 = Vector3.project(self, normal);
+        projected.multiplyWith(2.0);
+        
+        self.subtractWith(projected);
         
         return self;
     }

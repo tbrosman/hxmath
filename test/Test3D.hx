@@ -171,4 +171,30 @@ class Test3D extends MathTestCase
         assertApproxEquals(Vector3.xAxis.angleWith(Vector3.zAxis), Math.PI / 2.0);
         assertApproxEquals(Vector3.yAxis.angleWith(Vector3.zAxis), Math.PI / 2.0);
     }
+    
+    public function testReflect()
+    {
+        for (i in 0...10)
+        {
+            var u = randomVector3();
+            var v = Vector3.reflect(u, Vector3.zAxis);
+            
+            assertEquals(u.x, v.x);
+            assertEquals(u.y, v.y);
+            assertEquals(-u.z, v.z);
+        }
+    }
+    
+    public function testProjectOntoPlane()
+    {
+        for (i in 0...10)
+        {
+            var u = randomVector3();
+            var normal = randomVector3();
+            
+            u.projectOntoPlane(normal);
+            
+            assertApproxEquals(0.0, u * normal);
+        }
+    }
 }

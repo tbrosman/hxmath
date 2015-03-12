@@ -151,4 +151,16 @@ class Test2D extends MathTestCase
             assertApproxEquals(0.0, u * v);
         }
     }
+    
+    public function testReflect()
+    {
+        for (i in 0...10)
+        {
+            var u = randomVector2();
+            var v = Vector2.reflect(u, Vector2.yAxis);
+            
+            assertEquals(u.x, v.x);
+            assertEquals(-u.y, v.y);
+        }
+    }
 }

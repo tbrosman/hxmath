@@ -318,6 +318,19 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     }
     
     /**
+     * Returns a vector resulting from reflecting a vector around the specified normal.
+     * 
+     * @param a
+     * @param b
+     * @return       v - 2.0 * proj(v, normal)
+     */
+    public static inline function reflect(v:Vector2, normal:Vector2):Vector2
+    {
+        return v.clone()
+            .reflectBy(normal);
+    }
+    
+    /**
      * Ortho-normalize a set of vectors in place using the Gram-Schmidt process.
      * 
      * @param u
@@ -448,6 +461,24 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
         // Set self = s * a without allocating
         a.copyTo(self);
         self.multiplyWith(s);
+        
+        return self;
+    }
+    
+    /**
+     * Returns a vector resulting from reflecting this vector around the specified normal.
+     * 
+     * @param normal
+     * @return          self = self - 2.0 * proj(self, normal)
+     */
+    public inline function reflectBy(normal:Vector2):Vector2
+    {
+        var self:Vector2 = this;
+        
+        var projected:Vector2 = Vector2.project(self, normal);
+        projected.multiplyWith(2.0);
+        
+        self.subtractWith(projected);
         
         return self;
     }
