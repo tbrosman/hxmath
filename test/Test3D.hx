@@ -197,4 +197,59 @@ class Test3D extends MathTestCase
             assertApproxEquals(0.0, u * normal);
         }
     }
+    
+    public function testSlerpMidpointAngle()
+    {
+        var qA = Quaternion.fromAxisAngle(0, Vector3.zAxis);
+        var qB = Quaternion.fromAxisAngle(90, Vector3.zAxis);
+        var qC = Quaternion.slerp(qA, qB, 0.5);
+        
+        var angleAC = qA.angleWith(qC) * 180.0 / Math.PI;
+        var angleCB = qC.angleWith(qB) * 180.0 / Math.PI;
+        assertApproxEquals(45.0, angleAC);
+        assertApproxEquals(45.0, angleCB);
+    }
+    
+    public function testSlerpMonotonicity()
+    {
+        for (i in 0...10)
+        {
+            var qA = randomQuaternion().normalize();
+            var qB = randomQuaternion().normalize();
+            
+            var lastAC = Math.NEGATIVE_INFINITY;
+            var lastCB = Math.POSITIVE_INFINITY;
+            
+            for (step in 0...12)
+            {
+                var t = step / 12;
+                var qC = Quaternion.slerp(qA, qB, t);
+                var angleAC = qA.angleWith(qC) * 180.0 / Math.PI;
+                var angleCB = qC.angleWith(qB) * 180.0 / Math.PI;
+                
+                assertTrue(angleAC > lastAC);
+                assertTrue(angleCB < lastCB);
+                lastAC = angleAC;
+                lastCB = angleCB;
+            }
+        }
+    }
+    
+    public function testSlerpLargeAngleStability()
+    {
+        var qA = Quaternion.fromAxisAngle(0, Vector3.zAxis);
+        var qB = Quaternion.fromAxisAngle(180, Vector3.zAxis);
+        var qC = Quaternion.slerp(qA, qB, 0.5);
+        
+        assertApproxEquals(90, qC.angleWith(qA) * 180.0 / Math.PI);
+    }
+    
+    public function testSlerpSmallAngleStability()
+    {
+        var qA = Quaternion.fromAxisAngle(0, Vector3.zAxis);
+        var qB = Quaternion.fromAxisAngle(1e-2, Vector3.zAxis);
+        var qC = Quaternion.slerp(qA, qB, 0.5);
+        
+        assertTrue(qA.angleWith(qC) <= 1e-2);
+    }
 }

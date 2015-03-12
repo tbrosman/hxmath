@@ -211,6 +211,39 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         return (1.0 - t)*a + t*b;
     }
     
+    public static inline function slerp(a:Quaternion, b:Quaternion, t:Float):Quaternion
+    {
+        var cosHalfTheta = Quaternion.dot(a, b);
+        
+        // If the two quaternions are nearly the same return the first one
+        if (Math.abs(cosHalfTheta) >= 1.0)
+        {
+            return a;
+        }
+        
+        var halfTheta = Math.acos(cosHalfTheta);
+        var sinHalfTheta = Math.sqrt(1.0 - cosHalfTheta * cosHalfTheta);
+        
+        // Do not slerp if the result is ill-defined (a large angle near 180 degrees)
+        if (Math.abs(sinHalfTheta) < 1e-3)
+        {
+            return Quaternion.lerp(a, b, t)
+                .normalize();
+        }
+        
+        var ta = Math.sin((1 - t) * halfTheta) / sinHalfTheta;
+        var tb = Math.sin(t * halfTheta) / sinHalfTheta;
+        
+        var result:Quaternion = Quaternion.get_zero();
+        
+        result.v.x = a.v.x * ta + b.v.x * tb;
+        result.v.y = a.v.y * ta + b.v.y * tb;
+        result.v.z = a.v.z * ta + b.v.z * tb;
+        result.s = a.s * ta + b.s * tb;
+        
+        return result;
+    }
+    
     /**
      * Dot product.
      * 
@@ -236,6 +269,23 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     }
     
     /**
+     * Multiply a quaternion with a scalar in place.
+     * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
+     * 
+     * @param a
+     * @return      self_i *= s
+     */
+    public inline function multiplyWithScalar(s:Float):Quaternion
+    {
+        var self:Quaternion = this;
+        
+        self.s *= s;
+        self.v.multiplyWith(s);
+        
+        return self;
+    }
+    
+    /**
      * Add a quaternion in place.
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
@@ -247,7 +297,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         
         self.s += a.s;
-        self.v += a.v;
+        self.v.addWith(a.v);
         
         return self;
     }
@@ -264,7 +314,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         
         self.s -= a.s;
-        self.v -= a.v;
+        self.v.subtractWith(a.v);
         
         return self;
     }
@@ -426,11 +476,23 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     }
     
     /**
+     * Find the arccosine of the angle between two quaternions.
+     * 
+     * @param b     The other quaternion.
+     * @return      The arccosine angle between this vector and the other in radians.
+     */
+    public inline function angleWith(b:Quaternion):Float
+    {
+        var self:Quaternion = this;
+        return 2.0 * Math.acos(Quaternion.dot(self, b) / (self.length * b.length));
+    }
+    
+    /**
      * Normalize the quaternion in-place.
      * 
      * @return  The modified object.
      */
-    public inline function applyNormalize():Quaternion
+    public inline function normalize():Quaternion
     {
         var self:Quaternion = this;
         var length = self.length;
@@ -469,7 +531,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         
         return self.applyConjugate()
-            .applyNormalize();
+            .normalize();
     }
     
     private static inline function get_zero():Quaternion
