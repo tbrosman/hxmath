@@ -563,6 +563,18 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Find the arccosine of the angle between two vectors.
+     * 
+     * @param b     The other vector.
+     * @return      The arccosine angle between this vector and the other in radians.
+     */
+    public inline function angleWith(b:Vector3):Float
+    {
+        var self:Vector3 = this;
+        return Math.acos((self * b) / (self.length * b.length));
+    }
+    
+    /**
      * Normalize this vector.
      * 
      * @return  The modified object.

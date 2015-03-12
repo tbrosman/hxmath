@@ -164,4 +164,11 @@ class Test3D extends MathTestCase
             assertApproxEquals(0.0, ((u % v) % w).length);
         }
     }
+    
+    public function testAngles()
+    {
+        assertApproxEquals(Vector3.xAxis.angleWith(Vector3.yAxis), Math.PI / 2.0);
+        assertApproxEquals(Vector3.xAxis.angleWith(Vector3.zAxis), Math.PI / 2.0);
+        assertApproxEquals(Vector3.yAxis.angleWith(Vector3.zAxis), Math.PI / 2.0);
+    }
 }
