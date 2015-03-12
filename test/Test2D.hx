@@ -72,32 +72,6 @@ class Test2D extends MathTestCase
         assertTrue(Vector2.yAxis.normal.rotatedRight * new Vector2(-1, 0) < 0.0);
     }
     
-    public function testNormalizeTo()
-    {
-        for (i in 0...30)
-        {
-            var v = randomVector2();
-            var newLength = Math.abs(randomFloat());
-            assertApproxEquals(newLength, v.normalizeTo(newLength).length);
-        }
-    }
-    
-    public function testClamp()
-    {
-        for (i in 0...30)
-        {
-            var v = 10.0 * randomVector2();
-            
-            var lowerBound = 3.0;
-            var upperBound = 7.0;
-            
-            var clamped = v.clamp(lowerBound, upperBound);
-            
-            assertTrue(clamped.length >= lowerBound - 1e-6);
-            assertTrue(clamped.length <= upperBound + 1e-6);
-        }
-    }
-    
     public function testAngles()
     {
         assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)), Math.PI / 4.0);
@@ -160,6 +134,21 @@ class Test2D extends MathTestCase
             assertApproxEquals(0.0, (invFrameMatrix * homogenous0 - frameMatrixInv * homogenous0).lengthSq);
             assertApproxEquals(0.0, (invFrameMatrix * homogenousX - frameMatrixInv * homogenousX).lengthSq);
             assertApproxEquals(0.0, (invFrameMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
+        }
+    }
+    
+    public function testOrthoNormalize()
+    {
+        for (i in 0...10)
+        {
+            var u = randomVector2();
+            var v = randomVector2();
+            
+            Vector2.orthoNormalize(u, v);
+            
+            assertApproxEquals(1.0, u.length);
+            assertApproxEquals(1.0, v.length);
+            assertApproxEquals(0.0, u * v);
         }
     }
 }

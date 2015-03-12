@@ -481,4 +481,70 @@ class TestStructures extends MathTestCase
             assertApproxEquals(0.5, v.length);
         }
     }
+    
+    public function testNormalizeTo()
+    {
+        for (i in 0...30)
+        {
+            var v = randomVector2();
+            var newLength = Math.abs(randomFloat());
+            assertApproxEquals(newLength, v.normalizeTo(newLength).length);
+        }
+        
+        for (i in 0...30)
+        {
+            var v = randomVector3();
+            var newLength = Math.abs(randomFloat());
+            assertApproxEquals(newLength, v.normalizeTo(newLength).length);
+        }
+        
+        for (i in 0...30)
+        {
+            var v = randomVector4();
+            var newLength = Math.abs(randomFloat());
+            assertApproxEquals(newLength, v.normalizeTo(newLength).length);
+        }
+    }
+    
+    public function testClamp()
+    {
+        for (i in 0...30)
+        {
+            var v = 10.0 * randomVector2();
+            
+            var lowerBound = 3.0;
+            var upperBound = 7.0;
+            
+            var clamped = v.clamp(lowerBound, upperBound);
+            
+            assertTrue(clamped.length >= lowerBound - 1e-6);
+            assertTrue(clamped.length <= upperBound + 1e-6);
+        }
+        
+        for (i in 0...30)
+        {
+            var v = 10.0 * randomVector3();
+            
+            var lowerBound = 3.0;
+            var upperBound = 7.0;
+            
+            var clamped = v.clamp(lowerBound, upperBound);
+            
+            assertTrue(clamped.length >= lowerBound - 1e-6);
+            assertTrue(clamped.length <= upperBound + 1e-6);
+        }
+        
+        for (i in 0...30)
+        {
+            var v = 10.0 * randomVector4();
+            
+            var lowerBound = 3.0;
+            var upperBound = 7.0;
+            
+            var clamped = v.clamp(lowerBound, upperBound);
+            
+            assertTrue(clamped.length >= lowerBound - 1e-6);
+            assertTrue(clamped.length <= upperBound + 1e-6);
+        }
+    }
 }

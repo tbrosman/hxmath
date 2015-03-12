@@ -520,6 +520,66 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
         return self;
     }
     
+    /**
+     * Normalize this vector.
+     * 
+     * @return  The modified object.
+     */
+    public inline function normalize():Vector4
+    {
+        var self:Vector4 = this;
+        
+        var length = self.length;
+        
+        if (length > 0.0)
+        {
+            self.divideWith(length);
+        }
+        
+        return self;
+    }
+    
+    /**
+     * Normalize this vector and scale it to the specified length.
+     * 
+     * @param newLength     The new length to normalize to.
+     * @return              The modified object.
+     */
+    public inline function normalizeTo(newLength:Float):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.normalize();
+        self.multiplyWith(newLength);
+        
+        return self;
+    }
+    
+    /**
+     * Clamp this vector's length to the specified range.
+     * 
+     * @param min   The min length.
+     * @param max   The max length.
+     * @return      The modified object.
+     */
+    public inline function clamp(min:Float, max:Float):Vector4
+    {
+        var self:Vector4 = this;
+        
+        var length = self.length;
+        
+        if (length < min)
+        {
+            self.normalizeTo(min);
+        }
+        else if (length > max)
+        {
+            self.normalizeTo(max);
+        }
+        
+        return self;
+    }
+    
     private inline function get_length():Float
     {
         var self:Vector4 = this;

@@ -143,4 +143,25 @@ class Test3D extends MathTestCase
             assertApproxEquals(0.0, p.v.length);
         }
     }
+    
+    public function testOrthoNormalize()
+    {
+        for (i in 0...10)
+        {
+            var u = randomVector3();
+            var v = randomVector3();
+            var w = randomVector3();
+            
+            Vector3.orthoNormalize(u, v, w);
+            
+            assertApproxEquals(1.0, u.length);
+            assertApproxEquals(1.0, v.length);
+            assertApproxEquals(1.0, w.length);
+            assertApproxEquals(0.0, u * v);
+            assertApproxEquals(0.0, u * w);
+            assertApproxEquals(0.0, v * w);
+            
+            assertApproxEquals(0.0, ((u % v) % w).length);
+        }
+    }
 }

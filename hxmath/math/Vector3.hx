@@ -288,6 +288,25 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Ortho-normalize a set of vectors in place using the Gram-Schmidt process.
+     * 
+     * @param u
+     * @param v
+     * @param w
+     */
+    public static inline function orthoNormalize(u:Vector3, v:Vector3, w:Vector3):Void
+    {
+        u.normalize();
+        
+        v.subtractWith(Vector3.project(v, u));
+        v.normalize();
+        
+        w.subtractWith(Vector3.project(w, u));
+        w.subtractWith(Vector3.project(w, v));
+        w.normalize();
+    }
+    
+    /**
      * Cross product in place. The resulting vector (this) is orthogonal to the plane defined by the input vectors.
      * Note: %= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
@@ -538,6 +557,66 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
         for (i in 0...elementCount)
         {
             self[i] = func(self[i]);
+        }
+        
+        return self;
+    }
+    
+    /**
+     * Normalize this vector.
+     * 
+     * @return  The modified object.
+     */
+    public inline function normalize():Vector3
+    {
+        var self:Vector3 = this;
+        
+        var length = self.length;
+        
+        if (length > 0.0)
+        {
+            self.divideWith(length);
+        }
+        
+        return self;
+    }
+    
+    /**
+     * Normalize this vector and scale it to the specified length.
+     * 
+     * @param newLength     The new length to normalize to.
+     * @return              The modified object.
+     */
+    public inline function normalizeTo(newLength:Float):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.normalize();
+        self.multiplyWith(newLength);
+        
+        return self;
+    }
+    
+    /**
+     * Clamp this vector's length to the specified range.
+     * 
+     * @param min   The min length.
+     * @param max   The max length.
+     * @return      The modified object.
+     */
+    public inline function clamp(min:Float, max:Float):Vector3
+    {
+        var self:Vector3 = this;
+        
+        var length = self.length;
+        
+        if (length < min)
+        {
+            self.normalizeTo(min);
+        }
+        else if (length > max)
+        {
+            self.normalizeTo(max);
         }
         
         return self;

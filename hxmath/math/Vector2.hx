@@ -318,6 +318,20 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     }
     
     /**
+     * Ortho-normalize a set of vectors in place using the Gram-Schmidt process.
+     * 
+     * @param u
+     * @param v
+     */
+    public static inline function orthoNormalize(u:Vector2, v:Vector2):Void
+    {
+        u.normalize();
+        
+        v.subtractWith(Vector2.project(v, u));
+        v.normalize();
+    }
+    
+    /**
      * Multiply a vector with a scalar in place.
      * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
