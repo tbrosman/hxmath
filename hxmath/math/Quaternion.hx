@@ -6,17 +6,21 @@ package hxmath.math;
 class QuaternionDefault
 {
     public var s:Float;
-    public var v:Vector3;
+    public var x:Float;
+    public var y:Float;
+    public var z:Float;
     
-    public function new(s:Float, v:Vector3)
+    public function new(s:Float, x:Float, y:Float, z:Float)
     {
         this.s = s;
-        this.v = v;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
     
     public function toString():String
     {
-        return '[$s, $v]';
+        return '[$s, ($x, $y, $z)]';
     }
 }
 
@@ -25,7 +29,7 @@ typedef QuaternionType = QuaternionDefault;
 /**
  * Quaternion for rotation in 3D.
  */
-@:forward(s, v)
+@:forward(s, x, y, z)
 abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
 {
     // The number of elements in this structure
@@ -53,11 +57,13 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      * Constructor.
      * 
      * @param s     Scalar (real) part.
-     * @param v     Vector (complex) part.
+     * @param x     Vector (complex) part x component.
+     * @param y     Vector (complex) part y component.
+     * @param z     Vector (complex) part z component
      */
-    public inline function new(s:Float, v:Vector3) 
+    public inline function new(s:Float, x:Float, y:Float, z:Float) 
     {
-        this = new QuaternionDefault(s, v);
+        this = new QuaternionDefault(s, x, y, z);
     }
     
     /**
@@ -73,7 +79,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             throw "Invalid rawData.";
         }
         
-        return new Quaternion(rawData[0], new Vector3(rawData[1], rawData[2], rawData[3]));
+        return new Quaternion(rawData[0], rawData[1], rawData[2], rawData[3]);
     }
     
     /**
@@ -86,7 +92,14 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     public static inline function fromAxisAngle(angleDegrees:Float, axis:Vector3):Quaternion
     {
         var angleRadians = MathUtil.degToRad(angleDegrees);
-        return new Quaternion(Math.cos(angleRadians / 2.0), Math.sin(angleRadians / 2.0) * axis);
+        var cosHalfAngle = Math.cos(angleRadians / 2.0);
+        var sinHalfAngle = Math.sin(angleRadians / 2.0);
+        
+        return new Quaternion(
+            cosHalfAngle,
+            sinHalfAngle * axis.x,
+            sinHalfAngle * axis.y,
+            sinHalfAngle * axis.z);
     }
     
     /**
@@ -99,7 +112,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     @:op(A * B)
     public static inline function scalarMultiply(s:Float, a:Quaternion):Quaternion
     {
-        return new Quaternion(s * a.s, s * a.v);
+        return new Quaternion(
+            s * a.s,
+            s * a.x,
+            s * a.y,
+            s * a.z);
     }
     
     /**
@@ -112,7 +129,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     @:op(A * B)
     public static inline function multiply(a:Quaternion, b:Quaternion):Quaternion
     {
-        return new Quaternion(a.s * b.s - a.v * b.v, a.s * b.v + b.s * a.v + a.v % b.v);
+        return new Quaternion(
+            a.s * b.s - a.x * b.x - a.y * b.y - a.z * b.z,
+            a.s * b.x + b.s * a.x + a.y * b.z - a.z * b.y,
+            a.s * b.y + b.s * a.y + a.z * b.x - a.x * b.z,
+            a.s * b.z + b.s * a.z + a.x * b.y - a.y * b.x);
     }
     
     /**
@@ -152,7 +173,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     @:op(~A)
     public static inline function conjugate(a:Quaternion):Quaternion
     {
-        return new Quaternion(a.s, -a.v);
+        return new Quaternion(a.s, -a.x, -a.y, -a.z);
     }
     
     /**
@@ -164,7 +185,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     @:op(-A)
     public static inline function negate(a:Quaternion):Quaternion
     {
-        return new Quaternion(-a.s, -a.v);
+        return new Quaternion(-a.s, -a.x, -a.y, -a.z);
     }
     
     /**
@@ -182,7 +203,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             a != null &&
             b != null &&
             a.s == b.s &&
-            a.v == b.v;
+            a.x == b.x &&
+            a.y == b.y &&
+            a.z == b.z;
     }
     
     /**
@@ -236,9 +259,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         
         var result:Quaternion = Quaternion.get_zero();
         
-        result.v.x = a.v.x * ta + b.v.x * tb;
-        result.v.y = a.v.y * ta + b.v.y * tb;
-        result.v.z = a.v.z * ta + b.v.z * tb;
+        result.x = a.x * ta + b.x * tb;
+        result.y = a.y * ta + b.y * tb;
+        result.z = a.z * ta + b.z * tb;
         result.s = a.s * ta + b.s * tb;
         
         return result;
@@ -252,7 +275,10 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      */
     public static inline function dot(a:Quaternion, b:Quaternion):Float
     {
-        return a.s * b.s + a.v * b.v;
+        return a.s * b.s +
+            a.x * b.x +
+            a.y * b.y +
+            a.z * b.z;
     }
     
     /**
@@ -280,7 +306,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         
         self.s *= s;
-        self.v.multiplyWith(s);
+        self.x *= s;
+        self.y *= s;
+        self.z *= s;
         
         return self;
     }
@@ -297,7 +325,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         
         self.s += a.s;
-        self.v.addWith(a.v);
+        self.x += a.x;
+        self.y += a.y;
+        self.z += a.z;
         
         return self;
     }
@@ -314,7 +344,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         
         self.s -= a.s;
-        self.v.subtractWith(a.v);
+        self.x -= a.x;
+        self.y -= a.y;
+        self.z -= a.z;
         
         return self;
     }
@@ -342,7 +374,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     public inline function clone():Quaternion
     {
         var self:Quaternion = this;
-        return new Quaternion(self.s, self.v.clone());
+        return new Quaternion(self.s, self.x, self.y, self.z);
     }
     
     /**
@@ -360,11 +392,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             case 0:
                 return self.s;
             case 1:
-                return self.v.x;
+                return self.x;
             case 2:
-                return self.v.y;
+                return self.y;
             case 3:
-                return self.v.z;
+                return self.z;
             default:
                 throw "Invalid element";
         }
@@ -386,11 +418,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             case 0:
                 return self.s = value;
             case 1:
-                return self.v.x = value;
+                return self.x = value;
             case 2:
-                return self.v.y = value;
+                return self.y = value;
             case 3:
-                return self.v.z = value;
+                return self.z = value;
             default:
                 throw "Invalid element";
         }
@@ -428,7 +460,8 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         // Avoid division by zero
         if (sinTheta > 0.0)
         {
-            return new Quaternion(0.0, (theta / sinTheta) * self.v);
+            var k = theta / sinTheta;
+            return new Quaternion(0.0, k * self.x, k * self.y, k * self.z);
         }
         else
         {
@@ -444,19 +477,18 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     public inline function exp():Quaternion
     {
         var self:Quaternion = this;
-        var theta = self.v.length;
+        var theta = Math.sqrt(self.x * self.x + self.y * self.y + self.z * self.z);
         var sinTheta = Math.sin(theta);
         var cosTheta = Math.cos(theta);
 
         // Avoid division by zero
         if(theta > 0.0)
         {
-            var u = (sinTheta / theta) * self.v;
-            return new Quaternion(cosTheta, u);
+            return new Quaternion(cosTheta, sinTheta * self.x, sinTheta * self.y, sinTheta * self.z);
         }
         else
         {
-            return new Quaternion(cosTheta, Vector3.zero);
+            return new Quaternion(cosTheta, 0, 0, 0);
         }
     }
     
@@ -470,9 +502,15 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     {
         // Calculate qvq'
         var self:Quaternion = this;
-        return 2.0 * (self.v * u) * self.v +
-            (self.s * self.s - self.v * self.v) * u +
-            2 * self.s * (self.v % u);
+        
+        var a = 2.0 * (self.x * u.x + self.y * u.y + self.z * u.z);
+        var b = self.s * self.s - self.x * self.x - self.y * self.y - self.z * self.z;
+        var c = 2.0 * self.s;
+        
+        return new Vector3(
+            a * self.x + b * u.x + c * (self.y * u.z - self.z * u.y),
+            a * self.y + b * u.y + c * (self.z * u.x - self.x * u.z),
+            a * self.z + b * u.z + c * (self.x * u.y - self.y * u.x));
     }
     
     /**
@@ -500,8 +538,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         if (length > 0.0)
         {
             var k = 1.0 / length;
-            self.s *= k;
-            self.v.multiplyWith(k);
+            self.multiplyWithScalar(k);
         }
         
         return self;
@@ -516,7 +553,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     {
         var self:Quaternion = this;
         
-        self.v.applyNegate();
+        self.x = -self.x;
+        self.y = -self.y;
+        self.z = -self.z;
         
         return self;
     }
@@ -536,32 +575,24 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     
     private static inline function get_zero():Quaternion
     {
-        return new Quaternion(0.0, Vector3.zero);
+        return new Quaternion(0, 0, 0, 0);
     }
     
     private static inline function get_identity():Quaternion
     {
-        return new Quaternion(1.0, Vector3.zero);
+        return new Quaternion(1, 0, 0, 0);
     }
     
     private inline function get_length():Float
     {
         var self:Quaternion = this;
-        return Math.sqrt(
-            self.s   * self.s   +
-            self.v.x * self.v.x +
-            self.v.y * self.v.y +
-            self.v.z * self.v.z);
+        return Math.sqrt(self.dot(self));
     }
     
     private inline function get_lengthSq():Float
     {
         var self:Quaternion = this;
-        return
-            self.s   * self.s   +
-            self.v.x * self.v.x +
-            self.v.y * self.v.y +
-            self.v.z * self.v.z;
+        return self.dot(self);
     }
     
     private inline function get_matrix():Matrix3x3
@@ -569,9 +600,9 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
       
         var s = self.s;
-        var x = self.v.x;
-        var y = self.v.y;
-        var z = self.v.z;
+        var x = self.x;
+        var y = self.y;
+        var z = self.z;
         
         var m = new Matrix3x3(
             1 - 2 * (y * y + z * z), 2 * (x * y - s * z), 2 * (s * y + x * z),
@@ -584,9 +615,6 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     private inline function get_normal():Quaternion
     {
         var self:Quaternion = this;
-        
-        var r2 = self.s * self.s + self.v * self.v;
-        var r = Math.sqrt(r2);
-        return (1.0 / r) * self;
+        return (1.0 / self.length) * self;
     }
 }

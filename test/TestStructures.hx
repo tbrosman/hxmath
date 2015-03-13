@@ -1,4 +1,5 @@
 package test;
+import haxe.rtti.Meta;
 import hxmath.math.IntVector2;
 import hxmath.math.Matrix2x2;
 import hxmath.math.Matrix3x2;
@@ -194,7 +195,7 @@ class TestStructures extends MathTestCase
         
         var quat = Quaternion.zero;
         quat[2] = 1.0;
-        assertEquals(1.0, quat.v.y);
+        assertEquals(1.0, quat.y);
         assertEquals(1.0, quat[2]);
     }
     
@@ -383,7 +384,7 @@ class TestStructures extends MathTestCase
             new Matrix3x2(0, 0, 23, 0, 0, 0),
             new Matrix3x3(0, 0, 23, 0, 0, 0, 0, 0, 0),
             new Matrix4x4(0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-            new Quaternion(1, new Vector3(0, 23, 0)),
+            new Quaternion(1, 0, 23, 0),
             new IntVector2(0, 23)];
         
         for (x in structures)

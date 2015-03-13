@@ -410,9 +410,9 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
         var self:Matrix4x4 = this;
         
         var s = q.s;
-        var x = q.v.x;
-        var y = q.v.y;
-        var z = q.v.z;
+        var x = q.x;
+        var y = q.y;
+        var z = q.z;
         
         self.m00 = 1 - 2 * (y * y + z * z);
         self.m10 = 2 * (x * y - s * z);

@@ -140,7 +140,7 @@ class Test3D extends MathTestCase
             var p = q * qInv;
             
             assertApproxEquals(1.0, p.s);
-            assertApproxEquals(0.0, p.v.length);
+            assertApproxEquals(0.0, new Vector3(p.x, p.y, p.z).length);
         }
     }
     
