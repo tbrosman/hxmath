@@ -105,18 +105,16 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     /**
      * Multiply a (real) scalar with a quaternion.
      * 
-     * @param s
      * @param a
+     * @param s
      * @return      s * a
      */
     @:op(A * B)
-    public static inline function scalarMultiply(s:Float, a:Quaternion):Quaternion
+    @:commutative
+    public static inline function multiplyScalar(a:Quaternion, s:Float):Quaternion
     {
-        return new Quaternion(
-            s * a.s,
-            s * a.x,
-            s * a.y,
-            s * a.z);
+        return a.clone()
+            .multiplyWithScalar(s);
     }
     
     /**
