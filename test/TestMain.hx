@@ -24,6 +24,7 @@ class TestMain
             runner.add(new TestFrames());
             runner.add(new TestIntMath());
             runner.add(new TestGeom());
+            runner.add(new TestDataStructures());
         }
         
         if (doStressTests)
