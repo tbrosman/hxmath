@@ -6,74 +6,18 @@ import hxmath.math.IntVector2;
  * Sparse 2D array stored using a Map.
  */
 class SparseArray2<T> implements IArray2<T>
-{
-    // The max number of bits that can be used for x or y
-    public static inline var bitsPerField = 15;
-    
-    // The inclusive max for either the x or y field
-    public static inline var fieldMax:Int = 0x7fff;
-    
+{   
     // The iterator for the packed keys
-    public var packedKeys(get, never):Iterator<Int>;
+    public var packedKeys(get, never):Iterator<SparseArray2Index>;
     
-    private var hash:Map<Int, T>;
+    private var hash:Map<SparseArray2Index, T>;
     
     /**
      * Constructor.
      */
     public function new() 
     {
-        this.hash = new Map<Int, T>();
-    }
-    
-    /**
-     * Unpack X.
-     * 
-     * @param index     The index to unpack from.
-     * @return          The unpacked field.
-     */
-    public static inline function unpackX(index:Int):Int
-    {
-        return index & fieldMax;
-    }
-    
-    /**
-     * Unpack Y.
-     * 
-     * @param index     The index to unpack from.
-     * @return          The unpacked field.
-     */
-    public static inline function unpackY(index:Int):Int
-    {
-        return (index >> bitsPerField) & fieldMax;
-    }
-    
-    /**
-     * Pack (x, y) coordinates into a single int. Throws if x or y exceeds the maximum size.
-     * 
-     * @param x
-     * @param y
-     * @return      The packed index.
-     */
-    private static inline function packIndex(x:Int, y:Int):Int
-    {
-        if (!indexInBounds(x, y))
-        {
-            throw 'Specified (x=$x, y=$y) fields not in the range [0, $fieldMax]';
-        }
-        
-        return (y << bitsPerField) | x;
-    }
-    
-    /**
-     * Check whether the specified index can be stored in a SparseArray2.
-     * 
-     * @param x
-     * @param y
-     */
-    public inline static function indexInBounds(x:Int, y:Int)
-    {
-        return x >= 0 && y >= 0 && x <= fieldMax && y <= fieldMax;
+        this.hash = new Map<SparseArray2Index, T>();
     }
     
     /**
@@ -95,7 +39,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function inBounds(x:Int, y:Int):Bool
     {
-        return indexInBounds(x, y);
+        return SparseArray2Index.indexInBounds(x, y);
     }
     
     /**
@@ -107,7 +51,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function get(x:Int, y:Int):T
     {
-        return hash.get(packIndex(x, y));
+        return hash.get(SparseArray2Index.packIndex(x, y));
     }
     
     /**
@@ -119,7 +63,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function set(x:Int, y:Int, item:T):Void
     {
-        hash.set(packIndex(x, y), item);
+        hash.set(SparseArray2Index.packIndex(x, y), item);
     }
     
     /**
@@ -131,7 +75,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function exists(x:Int, y:Int):Bool
     {
-        return hash.exists(packIndex(x, y));
+        return hash.exists(SparseArray2Index.packIndex(x, y));
     }
     
     /**
@@ -142,7 +86,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function remove(x:Int, y:Int)
     {
-        return hash.remove(packIndex(x, y));
+        return hash.remove(SparseArray2Index.packIndex(x, y));
     }
     
     /**
@@ -176,8 +120,8 @@ class SparseArray2<T> implements IArray2<T>
         // Find the max bounds for the array
         for (key in hash.keys())
         {
-            var x = unpackX(key);
-            var y = unpackY(key);
+            var x = key.x;
+            var y = key.y;
             
             if (x > maxX)
             {
@@ -195,13 +139,13 @@ class SparseArray2<T> implements IArray2<T>
         
         for (key in hash.keys())
         {
-            denseCopy.set(unpackX(key), unpackY(key), hash.get(key));
+            denseCopy.set(key.x, key.y, hash.get(key));
         }
         
         return denseCopy;
     }
     
-    private inline function get_packedKeys():Iterator<Int>
+    private inline function get_packedKeys():Iterator<SparseArray2Index>
     {
         return hash.keys();
     }

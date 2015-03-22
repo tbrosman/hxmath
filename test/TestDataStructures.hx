@@ -2,6 +2,7 @@ package test;
 import hxmath.ds.DenseArray2;
 import hxmath.ds.IArray2;
 import hxmath.ds.SparseArray2;
+import hxmath.ds.SparseArray2Index;
 
 /**
  * ...
@@ -73,7 +74,7 @@ class TestDataStructures extends MathTestCase
         
         var sparseSum2 = Lambda.fold(
             packedKeysIterable,
-            function(a:Int, b:Int) return sparse.get(SparseArray2.unpackX(a), SparseArray2.unpackY(a)) + b,
+            function(a:Int, b:Int) return sparse.get(cast(a, SparseArray2Index).x, cast(a, SparseArray2Index).y) + b,
             0);
         
         assertEquals(sparseSum1, sparseSum2);
