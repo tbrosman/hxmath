@@ -6,10 +6,10 @@ package hxmath.ds;
 abstract SparseArray2Index(Int) from Int to Int
 {
     // The max number of bits that can be used for x or y
-    public static inline var bitsPerField = 15;
+    public static inline var bitsPerField = 16;
     
     // The inclusive max for either the x or y field
-    public static inline var fieldMax:Int = 0x7fff;
+    public static inline var fieldMax:Int = 0xffff;
     
     // Get/set the X portion of the index
     public var x(get, set):Int;

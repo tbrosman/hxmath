@@ -131,6 +131,17 @@ class TestDataStructures extends MathTestCase
         }
     }
     
+    public function testSparseArray2IndexBounds()
+    {
+        var min:SparseArray2Index = SparseArray2Index.packIndex(0, 0);
+        assertEquals(0, min.x);
+        assertEquals(0, min.y);
+        
+        var max:SparseArray2Index = SparseArray2Index.packIndex(SparseArray2Index.fieldMax, SparseArray2Index.fieldMax);
+        assertEquals(SparseArray2Index.fieldMax, max.x);
+        assertEquals(SparseArray2Index.fieldMax, max.y);
+    }
+    
     private function setPrimesSquare(array:IArray2<Int>)
     {
         array.set(0, 0, 3);
