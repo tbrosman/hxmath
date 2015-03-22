@@ -220,7 +220,7 @@ class Test3D extends MathTestCase
             var lastAC = Math.NEGATIVE_INFINITY;
             var lastCB = Math.POSITIVE_INFINITY;
             
-            for (step in 0...12)
+            for (step in 1...12)
             {
                 var t = step / 12;
                 var qC = Quaternion.slerp(qA, qB, t);
