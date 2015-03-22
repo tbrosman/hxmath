@@ -10,14 +10,15 @@ class SparseArray2<T> implements IArray2<T>
     // The iterator for the packed keys
     public var packedKeys(get, never):Iterator<SparseArray2Index>;
     
-    private var hash:Map<SparseArray2Index, T>;
+    // Left as an IntMap instead of keying using the packed index abstract due to compilation issues in the C++ backend (Haxe 3.1.x)
+    private var hash:Map<Int, T>;
     
     /**
      * Constructor.
      */
     public function new() 
     {
-        this.hash = new Map<SparseArray2Index, T>();
+        this.hash = new Map<Int, T>();
     }
     
     /**
@@ -118,7 +119,7 @@ class SparseArray2<T> implements IArray2<T>
         var maxY:Int = -1;
         
         // Find the max bounds for the array
-        for (key in hash.keys())
+        for (key in packedKeys)
         {
             var x = key.x;
             var y = key.y;
@@ -137,7 +138,7 @@ class SparseArray2<T> implements IArray2<T>
         // In the case of an empty source array a target array of size (0, 0) will be allocated
         var denseCopy:DenseArray2<T> = new DenseArray2<T>(maxX + 1, maxY + 1);
         
-        for (key in hash.keys())
+        for (key in packedKeys)
         {
             denseCopy.set(key.x, key.y, hash.get(key));
         }
