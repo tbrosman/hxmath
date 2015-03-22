@@ -3,6 +3,7 @@ import hxmath.ds.DenseArray2;
 import hxmath.ds.IArray2;
 import hxmath.ds.SparseArray2;
 import hxmath.ds.SparseArray2Index;
+import hxmath.math.IntVector2;
 
 /**
  * ...
@@ -80,11 +81,83 @@ class TestDataStructures extends MathTestCase
         assertEquals(sparseSum1, sparseSum2);
     }
     
+    public function testBlit()
+    {
+        var sourceWidth = 3;
+        var sourceHeight = 3;
+        var source = new DenseArray2<Int>(sourceWidth, sourceHeight);
+        fill(source, 1);
+        
+        // Target:
+        //
+        // A * * * B
+        // * * * * *
+        // * * * * *
+        // * * * * *
+        // C * * * D
+        //
+        
+        var centerOverlap = 9;
+        var cornerOverlap = 4;
+        var edgeOverlap = 6;
+        
+        var blitCases:Map<String, Dynamic> = [
+            "Center" => { pos: new IntVector2(1, 1), overlap: centerOverlap },
+            "A" => { pos: new IntVector2(-1, -1), overlap: cornerOverlap },
+            "B" => { pos: new IntVector2(3, -1), overlap: cornerOverlap },
+            "C" => { pos: new IntVector2(-1, 3), overlap: cornerOverlap },
+            "D" => { pos: new IntVector2(3, 3), overlap: cornerOverlap },
+            "AB" => { pos: new IntVector2(1, -1), overlap: edgeOverlap },
+            "BD" => { pos: new IntVector2(3, 1), overlap: edgeOverlap },
+            "AC" => { pos: new IntVector2(-1, 1), overlap: edgeOverlap },
+            "CD" => { pos: new IntVector2(1, 3), overlap: edgeOverlap }
+        ];
+        
+        for (key in blitCases.keys())
+        {
+            var blitCase = blitCases[key];
+            
+            var target = new DenseArray2<Int>(5, 5);
+            fill(target, 0);
+            target.clippedBlit(blitCase.pos.x, blitCase.pos.y, source, 0, 0, sourceWidth, sourceHeight);
+            
+            var actualOverlap = sum(target);
+            
+            if (actualOverlap != blitCase.overlap)
+            {
+                trace('Broken on case $key: expected overlap = ${blitCase.overlap}, actual overlap = $actualOverlap');
+                assertFalse(true);
+            }
+        }
+    }
+    
     private function setPrimesSquare(array:IArray2<Int>)
     {
         array.set(0, 0, 3);
         array.set(1, 0, 5);
         array.set(0, 1, 7);
         array.set(1, 1, 11);
+    }
+    
+    private function fill(array:DenseArray2<Int>, value:Int)
+    {
+        for (y in 0...array.width)
+        {
+            for (x in 0...array.height)
+            {
+                array.set(x, y, value);
+            }
+        }
+    }
+    
+    private function sum(array:IArray2<Int>)
+    {
+        var sum:Int = 0;
+        for (value in array)
+        {
+            sum += value;
+        }
+        
+        return sum;
     }
 }
