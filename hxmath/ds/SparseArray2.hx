@@ -1,6 +1,7 @@
 package hxmath.ds;
 
 import hxmath.math.IntVector2;
+import hxmath.math.ShortVector2;
 
 /**
  * Sparse 2D array stored using a Map.
@@ -8,7 +9,7 @@ import hxmath.math.IntVector2;
 class SparseArray2<T> implements IArray2<T>
 {   
     // The iterator for the packed keys
-    public var packedKeys(get, never):Iterator<SparseArray2Index>;
+    public var packedKeys(get, never):Iterator<ShortVector2>;
     
     // Left as an IntMap instead of keying using the packed index abstract due to compilation issues in the C++ backend (Haxe 3.1.x)
     private var hash:Map<Int, T>;
@@ -40,7 +41,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function inBounds(x:Int, y:Int):Bool
     {
-        return SparseArray2Index.indexInBounds(x, y);
+        return ShortVector2.indexInBounds(x, y);
     }
     
     /**
@@ -52,7 +53,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function get(x:Int, y:Int):T
     {
-        return hash.get(SparseArray2Index.packIndex(x, y));
+        return hash.get(new ShortVector2(x, y));
     }
     
     /**
@@ -64,7 +65,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function set(x:Int, y:Int, item:T):Void
     {
-        hash.set(SparseArray2Index.packIndex(x, y), item);
+        hash.set(new ShortVector2(x, y), item);
     }
     
     /**
@@ -76,7 +77,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function exists(x:Int, y:Int):Bool
     {
-        return hash.exists(SparseArray2Index.packIndex(x, y));
+        return hash.exists(new ShortVector2(x, y));
     }
     
     /**
@@ -87,7 +88,7 @@ class SparseArray2<T> implements IArray2<T>
      */
     public inline function remove(x:Int, y:Int)
     {
-        return hash.remove(SparseArray2Index.packIndex(x, y));
+        return hash.remove(new ShortVector2(x, y));
     }
     
     /**
@@ -146,7 +147,7 @@ class SparseArray2<T> implements IArray2<T>
         return denseCopy;
     }
     
-    private inline function get_packedKeys():Iterator<SparseArray2Index>
+    private inline function get_packedKeys():Iterator<ShortVector2>
     {
         return hash.keys();
     }

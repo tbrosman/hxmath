@@ -2,7 +2,7 @@ package test;
 import hxmath.ds.DenseArray2;
 import hxmath.ds.IArray2;
 import hxmath.ds.SparseArray2;
-import hxmath.ds.SparseArray2Index;
+import hxmath.math.ShortVector2;
 import hxmath.math.IntVector2;
 
 /**
@@ -75,7 +75,7 @@ class TestDataStructures extends MathTestCase
         
         var sparseSum2 = Lambda.fold(
             packedKeysIterable,
-            function(a:Int, b:Int) return sparse.get(cast(a, SparseArray2Index).x, cast(a, SparseArray2Index).y) + b,
+            function(a:Int, b:Int) return sparse.get(cast(a, ShortVector2).x, cast(a, ShortVector2).y) + b,
             0);
         
         assertEquals(sparseSum1, sparseSum2);
@@ -133,13 +133,13 @@ class TestDataStructures extends MathTestCase
     
     public function testSparseArray2IndexBounds()
     {
-        var min:SparseArray2Index = SparseArray2Index.packIndex(0, 0);
+        var min:ShortVector2 = new ShortVector2(0, 0);
         assertEquals(0, min.x);
         assertEquals(0, min.y);
         
-        var max:SparseArray2Index = SparseArray2Index.packIndex(SparseArray2Index.fieldMax, SparseArray2Index.fieldMax);
-        assertEquals(SparseArray2Index.fieldMax, max.x);
-        assertEquals(SparseArray2Index.fieldMax, max.y);
+        var max:ShortVector2 = new ShortVector2(ShortVector2.fieldMax, ShortVector2.fieldMax);
+        assertEquals(ShortVector2.fieldMax, max.x);
+        assertEquals(ShortVector2.fieldMax, max.y);
     }
     
     private function setPrimesSquare(array:IArray2<Int>)
