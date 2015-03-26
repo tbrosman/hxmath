@@ -386,17 +386,78 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     
     /**
      * Copy the contents of this structure to another.
+     * Faster than copyToShape for static platforms (C++, etc) but requires the target to have the exact same inner type.
      * 
-     * @param other     The target structure.
+     * @param target    The target structure.
      */
-    public inline function copyTo(other:Matrix4x4):Void
+    public inline function copyTo(target:Matrix4x4):Void
     {
         var self:Matrix4x4 = this;
         
         for (i in 0...Matrix4x4.elementCount)
         {
-            other[i] = self[i];
+            target[i] = self[i];
         }
+    }
+    
+    /**
+     * Copy the contents of this structure to another (shape-similar) instance.
+     * 
+     * @param target    The target structure.
+     */
+    public inline function copyToShape(target:Matrix4x4Shape):Void
+    {
+        var self:Matrix4x4 = this;
+        
+        target.m00 = self.m00;
+        target.m01 = self.m01;
+        target.m02 = self.m02;
+        target.m03 = self.m03;
+        
+        target.m10 = self.m10;
+        target.m11 = self.m11;
+        target.m12 = self.m12;
+        target.m13 = self.m13;
+        
+        target.m20 = self.m20;
+        target.m21 = self.m21;
+        target.m22 = self.m22;
+        target.m23 = self.m23;
+        
+        target.m30 = self.m30;
+        target.m31 = self.m31;
+        target.m32 = self.m32;
+        target.m33 = self.m33;
+    }
+    
+    /**
+     * Copy the contents of another (shape-similar) instance to this structure.
+     * 
+     * @param source    The source structure.
+     */
+    public inline function copyFromShape(source:Matrix4x4Shape):Void
+    {
+        var self:Matrix4x4 = this;
+        
+        self.m00 = source.m00;
+        self.m01 = source.m01;
+        self.m02 = source.m02;
+        self.m03 = source.m03;
+        
+        self.m10 = source.m10;
+        self.m11 = source.m11;
+        self.m12 = source.m12;
+        self.m13 = source.m13;
+        
+        self.m20 = source.m20;
+        self.m21 = source.m21;
+        self.m22 = source.m22;
+        self.m23 = source.m23;
+        
+        self.m30 = source.m30;
+        self.m31 = source.m31;
+        self.m32 = source.m32;
+        self.m33 = source.m33;
     }
     
     /**

@@ -395,17 +395,62 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     
     /**
      * Copy the contents of this structure to another.
+     * Faster than copyToShape for static platforms (C++, etc) but requires the target to have the exact same inner type.
      * 
-     * @param other     The target structure.
+     * @param target    The target structure.
      */
-    public inline function copyTo(other:Matrix3x3):Void
+    public inline function copyTo(target:Matrix3x3):Void
     {
         var self:Matrix3x3 = this;
         
         for (i in 0...Matrix3x3.elementCount)
         {
-            other[i] = self[i];
+            target[i] = self[i];
         }
+    }
+    
+    /**
+     * Copy the contents of this structure to another (shape-similar) instance.
+     * 
+     * @param target    The target structure.
+     */
+    public inline function copyToShape(target:Matrix3x3Shape):Void
+    {
+        var self:Matrix3x3 = this;
+        
+        target.m00 = self.m00;
+        target.m01 = self.m01;
+        target.m02 = self.m02;
+        
+        target.m10 = self.m10;
+        target.m11 = self.m11;
+        target.m12 = self.m12;
+        
+        target.m20 = self.m20;
+        target.m21 = self.m21;
+        target.m22 = self.m22;
+    }
+    
+    /**
+     * Copy the contents of another (shape-similar) instance to this structure.
+     * 
+     * @param source    The source structure.
+     */
+    public inline function copyFromShape(source:Matrix3x3Shape):Void
+    {
+        var self:Matrix3x3 = this;
+        
+        self.m00 = source.m00;
+        self.m01 = source.m01;
+        self.m02 = source.m02;
+        
+        self.m10 = source.m10;
+        self.m11 = source.m11;
+        self.m12 = source.m12;
+        
+        self.m20 = source.m20;
+        self.m21 = source.m21;
+        self.m22 = source.m22;
     }
     
     /**

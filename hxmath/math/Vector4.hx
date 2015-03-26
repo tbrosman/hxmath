@@ -425,19 +425,50 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
         return self;
     }
     
-    /**
+/**
      * Copy the contents of this structure to another.
+     * Faster than copyToShape for static platforms (C++, etc) but requires the target to have the exact same inner type.
      * 
-     * @param other     The target structure.
+     * @param target    The target structure.
      */
-    public inline function copyTo(other:Vector4):Void
+    public inline function copyTo(target:Vector4):Void
     {
         var self:Vector4 = this;
         
         for (i in 0...Vector4.elementCount)
         {
-            other[i] = self[i];
+            target[i] = self[i];
         }
+    }
+    
+    /**
+     * Copy the contents of this structure to another (shape-similar) instance.
+     * 
+     * @param target    The target structure.
+     */
+    public inline function copyToShape(target:Vector4Shape):Void
+    {
+        var self:Vector4 = this;
+        
+        target.x = self.x;
+        target.y = self.y;
+        target.z = self.z;
+        target.w = self.w;
+    }
+    
+    /**
+     * Copy the contents of another (shape-similar) instance to this structure.
+     * 
+     * @param source    The source structure.
+     */
+    public inline function copyFromShape(source:Vector4Shape):Void
+    {
+        var self:Vector4 = this;
+        
+        self.x = source.x;
+        self.y = source.y;
+        self.z = source.z;
+        self.w = source.w;
     }
     
     /**

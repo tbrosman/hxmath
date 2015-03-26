@@ -318,17 +318,48 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     
     /**
      * Copy the contents of this structure to another.
+     * Faster than copyToShape for static platforms (C++, etc) but requires the target to have the exact same inner type.
      * 
-     * @param other     The target structure.
+     * @param target    The target structure.
      */
-    public inline function copyTo(other:Matrix2x2):Void
+    public inline function copyTo(target:Matrix2x2):Void
     {
         var self:Matrix2x2 = this;
         
         for (i in 0...Matrix2x2.elementCount)
         {
-            other[i] = self[i];
+            target[i] = self[i];
         }
+    }
+    
+    /**
+     * Copy the contents of this structure to another (shape-similar) instance.
+     * 
+     * @param target    The target structure.
+     */
+    public inline function copyToShape(target:Matrix2x2Shape):Void
+    {
+        var self:Matrix2x2 = this;
+        
+        target.a = self.a;
+        target.b = self.b;
+        target.c = self.c;
+        target.d = self.d;
+    }
+    
+    /**
+     * Copy the contents of another (shape-similar) instance to this structure.
+     * 
+     * @param source    The source structure.
+     */
+    public inline function copyFromShape(source:Matrix2x2Shape):Void
+    {
+        var self:Matrix2x2 = this;
+        
+        self.a = source.a;
+        self.b = source.b;
+        self.c = source.c;
+        self.d = source.d;
     }
     
     /**

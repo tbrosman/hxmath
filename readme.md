@@ -8,7 +8,7 @@ API documentation: http://tbrosman.github.io/hxmath
 
 ## What it is
 
-A game-oriented math library for the Haxe language using abstracts instead of classes to take advantage of Haxe's structural subtyping and maximize compatibility with existing libraries. Specifically, (most of) the abstracts are compatible with OpenFL's existing math structures: just cast to the abstract type, no copying necessary!
+A game-oriented math library for the Haxe language using abstracts instead of classes to allow for more expressive code while still using OpenFL's math types internally. Specifically, the 2D math abstracts use OpenFL types like flash.geom.Point and flash.geom.Matrix when `HXMATH_USE_OPENFL_STRUCTURES` is defined at compile time.
 
 ## Project Status
 
@@ -16,9 +16,10 @@ A game-oriented math library for the Haxe language using abstracts instead of cl
 
 ## Features
 
-* Lightweight and unencumbered: just math, nothing else. Use with your libraries of choice without including ten tons of redundant infrastructure (memory management, etc).
+### Lightweight and unencumbered
+Just math, nothing else. Use with your libraries of choice without including ten tons of redundant infrastructure (memory management, etc).
 
-* Operator overloads!
+### Operator overloads!
 
 Why write this:
 
@@ -34,10 +35,13 @@ when you can write this:
 
 ('%' chosen due to operator precedence)
 
-* Shape-compatible with (most of) the existing OpenFL math structures.
-  * Note that the abstracts can no longer be cast from shape-similar structures without copying as of 0.7.0 (see issue #16). This is actually faster (especially on statically-typed platforms) due to the way abstracts over typedefs are implemented.
+### Consistency across platforms
 
-Specifically, you can cast both openfl.Vector to a Vector2 without copying, manually construct another Vector2 from FlxPoint (which has a different getter/setter signature for x/y), then use them together:
+Abstracts allow consistency regardless of which implementation type is used.
+
+Using OpenFL? Add `-D HXMATH_USE_OPENFL_STRUCTURES` to your build parameters and you can use OpenFL math types seamlessly with hxmath.
+
+For example, since openfl.geom.Point will be the inner type, you can cast to a Vector2 without copying:
 ```haxe
         var pointA = new flixel.util.FlxPoint(3.0, 2.0);
         var pointACast:Vector2 = new Vector2(pointA.x, pointA.y);
@@ -46,12 +50,15 @@ Specifically, you can cast both openfl.Vector to a Vector2 without copying, manu
         trace(pointACast * pointBCast);
 ```
 
-* 2D and 3D math (both affine and linear structures)
+Not using OpenFL? hxmath can run without it, falling back on its default inner types.
+
+### 2D and 3D math
+Both affine and linear structures:
   * Vector2, Vector3, Vector4
   * Matrix2x2, Matrix3x2, Matrix3x3, Matrix4x4
   * Quaternion
 
-* Coordinate frames
+### Coordinate frames
 
 More expressive than matrices with intuitive to/from notation. Example: say your character has an `armFrame` and a `bodyFrame`, with the `armFrame` oriented at a 90 degree angle to the `bodyFrame` and offset by 10 units up, 4 units right:
 
@@ -81,8 +88,6 @@ If the `bodyFrame` is defined in the `worldFrame`, to create a combined transfor
     var armInWorldFrame = bodyFrame.concat(armFrame);
 ```
 
-* More to come
-
 ## Conventions
 
 ### Basic functions/properties
@@ -92,6 +97,8 @@ If the `bodyFrame` is defined in the `worldFrame`, to create a combined transfor
 
 * `clone`, `copyTo`
   * `copyTo` is like clone, but without re-allocating.
+  
+* `copyToShape` and `copyFromShape` allow you to copy to/from shape-compatible types without writing custom conversion functions.
 
 * Array access (read/write) for linear structures
 
@@ -112,7 +119,7 @@ If the `bodyFrame` is defined in the `worldFrame`, to create a combined transfor
 
 ## The Future
 
-* Int-math types
+* More int-math types
  * Useful for tilemaps, voxel intersection, etc.
 * Geometry
  * Polygon intersection (no collision processing, just the intersection portion), volume calculations, etc

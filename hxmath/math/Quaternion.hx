@@ -1,5 +1,13 @@
 package hxmath.math;
 
+typedef QuaternionShape = 
+{
+    public var s:Float;
+    public var x:Float;
+    public var y:Float;
+    public var z:Float;
+}
+
 /**
  * The default underlying type.
  */
@@ -351,17 +359,48 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     
     /**
      * Copy the contents of this structure to another.
+     * Faster than copyToShape for static platforms (C++, etc) but requires the target to have the exact same inner type.
      * 
-     * @param other     The target structure.
+     * @param target    The target structure.
      */
-    public inline function copyTo(other:Quaternion):Void
+    public inline function copyTo(target:Quaternion):Void
     {
         var self:Quaternion = this;
         
         for (i in 0...Quaternion.elementCount)
         {
-            other[i] = self[i];
+            target[i] = self[i];
         }
+    }
+    
+    /**
+     * Copy the contents of this structure to another (shape-similar) instance.
+     * 
+     * @param target    The target structure.
+     */
+    public inline function copyToShape(target:QuaternionShape):Void
+    {
+        var self:Quaternion = this;
+        
+        target.s = self.s;
+        target.x = self.x;
+        target.y = self.y;
+        target.z = self.z;
+    }
+    
+    /**
+     * Copy the contents of another (shape-similar) instance to this structure.
+     * 
+     * @param source    The source structure.
+     */
+    public inline function copyFromShape(source:QuaternionShape):Void
+    {
+        var self:Quaternion = this;
+        
+        self.s = source.s;
+        self.x = source.x;
+        self.y = source.y;
+        self.z = source.z;
     }
     
     /**
