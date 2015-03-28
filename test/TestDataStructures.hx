@@ -71,7 +71,7 @@ class TestDataStructures extends MathTestCase
             function(a, b) return a + b,
             0);
        
-        var packedKeysIterable:Dynamic = { iterator: function():Iterator<Int> { return sparse.packedKeys; } };
+        var packedKeysIterable:Dynamic = { iterator: function():Iterator<Int> { return sparse.keys; } };
         
         var sparseSum2 = Lambda.fold(
             packedKeysIterable,

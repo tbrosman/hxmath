@@ -1,6 +1,5 @@
 package hxmath.ds;
 
-import hxmath.math.IntVector2;
 import hxmath.math.ShortVector2;
 
 /**
@@ -9,7 +8,7 @@ import hxmath.math.ShortVector2;
 class SparseArray2<T> implements IArray2<T>
 {   
     // The iterator for the packed keys
-    public var packedKeys(get, never):Iterator<ShortVector2>;
+    public var keys(get, never):Iterator<ShortVector2>;
     
     // Left as an IntMap instead of keying using the packed index abstract due to compilation issues in the C++ backend (Haxe 3.1.x)
     private var hash:Map<Int, T>;
@@ -120,7 +119,7 @@ class SparseArray2<T> implements IArray2<T>
         var maxY:Int = -1;
         
         // Find the max bounds for the array
-        for (key in packedKeys)
+        for (key in keys)
         {
             var x = key.x;
             var y = key.y;
@@ -139,7 +138,7 @@ class SparseArray2<T> implements IArray2<T>
         // In the case of an empty source array a target array of size (0, 0) will be allocated
         var denseCopy:DenseArray2<T> = new DenseArray2<T>(maxX + 1, maxY + 1);
         
-        for (key in packedKeys)
+        for (key in keys)
         {
             denseCopy.set(key.x, key.y, hash.get(key));
         }
@@ -147,7 +146,7 @@ class SparseArray2<T> implements IArray2<T>
         return denseCopy;
     }
     
-    private inline function get_packedKeys():Iterator<ShortVector2>
+    private inline function get_keys():Iterator<ShortVector2>
     {
         return hash.keys();
     }
