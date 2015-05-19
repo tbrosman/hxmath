@@ -260,7 +260,7 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     @:op(A != B)
     public static inline function notEquals(a:Vector2, b:Vector2):Bool
     {
-        return !(a == b);
+        return !equals(a, b);
     }
     
     /**
