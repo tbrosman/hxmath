@@ -224,19 +224,6 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
     }
     
     /**
-     * Test inequality between two vectors.
-     * 
-     * @param a
-     * @param b
-     * @return      !(a_i == b_i)
-     */
-    @:op(A != B)
-    public static inline function notEquals(a:Vector4, b:Vector4):Bool
-    {
-        return !(a == b);
-    }
-    
-    /**
      * Linear interpolation between two vectors.
      * 
      * @param a     The value at t = 0

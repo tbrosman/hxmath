@@ -98,7 +98,7 @@ abstract Frame2(IFrame2) from IFrame2
     public inline function transformFrom(p:Vector2):Vector2
     {
         var self:Frame2 = this;
-        return self.matrix.transform(p);
+        return self.matrix * p;
     }
     
     /**

@@ -2,4 +2,7 @@
 -main Test
 -lib nanotest
 -cpp bin/cpp
+-debug
+-D HXCPP_DEBUGGER
+-dce no
 -D EXIT_ON_FINISH

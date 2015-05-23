@@ -215,19 +215,6 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     }
     
     /**
-     * Test inequality between two quaternions.
-     * 
-     * @param a
-     * @param b
-     * @return      !(a_i == b_i)
-     */
-    @:op(A != B)
-    public static inline function notEquals(a:Quaternion, b:Quaternion):Bool
-    {
-        return !(a == b);
-    }
-    
-    /**
      * Linear interpolation between two quaternions.
      * 
      * @param a     The value at t = 0
@@ -623,13 +610,13 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     private inline function get_length():Float
     {
         var self:Quaternion = this;
-        return Math.sqrt(self.dot(self));
+        return Math.sqrt(Quaternion.dot(self, self));
     }
     
     private inline function get_lengthSq():Float
     {
         var self:Quaternion = this;
-        return self.dot(self);
+        return Quaternion.dot(self, self);
     }
     
     private inline function get_matrix():Matrix3x3

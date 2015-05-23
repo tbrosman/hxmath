@@ -220,19 +220,6 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
-     * Test inequality between two vectors.
-     * 
-     * @param a
-     * @param b
-     * @return      !(a_i == b_i)
-     */
-    @:op(A != B)
-    public static inline function notEquals(a:Vector3, b:Vector3):Bool
-    {
-        return !(a == b);
-    }
-    
-    /**
      * Linear interpolation between two vectors.
      * 
      * @param a     The value at t = 0

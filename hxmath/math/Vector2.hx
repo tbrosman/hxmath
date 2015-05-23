@@ -251,19 +251,6 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     }
     
     /**
-     * Test inequality between two vectors.
-     * 
-     * @param a
-     * @param b
-     * @return      !(a_i == b_i)
-     */
-    @:op(A != B)
-    public static inline function notEquals(a:Vector2, b:Vector2):Bool
-    {
-        return !(a == b);
-    }
-    
-    /**
      * Linear interpolation between two vectors.
      * 
      * @param a     The value at t = 0

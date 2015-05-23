@@ -218,19 +218,6 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     }
     
     /**
-     * Test inequality between two matrices.
-     * 
-     * @param m
-     * @param n
-     * @return      !(m_ij == n_ij)
-     */
-    @:op(A != B)
-    public static inline function notEquals(m:Matrix2x2, n:Matrix2x2):Bool
-    {
-        return !(m == n);
-    }
-    
-    /**
      * Counter-clockwise rotation.
      * 
      * @param angle     The angle to rotate (in radians).

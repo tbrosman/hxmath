@@ -310,19 +310,6 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     }
     
     /**
-     * Test inequality between two matrices.
-     * 
-     * @param a
-     * @param b
-     * @return      !(a_ij == b_ij)
-     */
-    @:op(A != B)
-    public static inline function notEquals(a:Matrix4x4, b:Matrix4x4):Bool
-    {
-        return !(a == b);
-    }
-    
-    /**
      * Add a matrix in place.
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

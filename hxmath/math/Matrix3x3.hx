@@ -266,19 +266,6 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
     }
     
     /**
-     * Test inequality between two matrices.
-     * 
-     * @param a
-     * @param b
-     * @return      !(a_ij == b_ij)
-     */
-    @:op(A != B)
-    public static inline function notEquals(a:Matrix3x3, b:Matrix3x3):Bool
-    {
-        return !(a == b);
-    }
-    
-    /**
      * Counter-clockwise rotation around the X axis.
      * 
      * @param angle     The angle to rotate (in degrees).

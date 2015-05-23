@@ -248,19 +248,6 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
     }
     
     /**
-     * Test inequality between two matrices.
-     * 
-     * @param m
-     * @param n
-     * @return      !(m_ij == n_ij)
-     */
-    @:op(A != B)
-    public static inline function notEquals(m:Matrix3x2, n:Matrix3x2):Bool
-    {
-        return !(m == n);
-    }
-    
-    /**
      * Rotate by a given angle.
      * 
      * @param angle     The angle to rotate by (ccw).
