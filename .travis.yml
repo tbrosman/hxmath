@@ -27,6 +27,8 @@ install: # setup the target
 
 script:
   - cd $TRAVIS_BUILD_DIR
+  # Install dependencies
+  - haxelib install nanotest
   # build the target. This will call haxe with the HXFLAGS and HXFLAGS_EXTRA environment variables
   - HXFLAGS="-cp src -main test.TestAll -lib nanotest -D EXIT_ON_FINISH" ~/travis-hx/build.sh
   # run the tests

@@ -5,7 +5,7 @@ import nanotest.NanoTestRunner;
  * ...
  * @author TABIV
  */
-class TestMain
+class TestAll
 {
     public static function main():Bool
     {
