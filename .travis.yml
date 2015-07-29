@@ -1,21 +1,33 @@
-language: java
+# https://github.com/waneck/travis-hx/blob/master/travis-example.yml
+language: c # change this to objective-c to test on a mac machine
 
-env: 
-  - TARGET=neko
+env:
+  # HAXE_VER:
+  #  - unset/empty or "latest": get latest from hxbuilds
+  #  - 3.1.3 or 3.1.2: get them from hxbuilds
+  #  - other: build from git
+  global:
+    - HAXE_VER=3.2.0
+  matrix:
+    - TARGET=neko 
+      # optional: FILENAME
+    - TARGET=cpp
+      # optional: FILENAME
 
-before_install:
-  - sudo add-apt-repository ppa:eyecreate/haxe -y
-  - sudo apt-get update
-  - sudo apt-get install gcc-multilib g++-multilib -y
-  - sudo apt-get install haxe -y
-  - sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch
-  - mkdir ~/haxelib
-  - haxelib -notimeout setup ~/haxelib
-  - haxelib -notimeout install nanotest
-  - haxelib -notimeout install hxcpp
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: SOME_ENV_HERE=some_opt
+
+before_install: # clone travis-hx repo
+  - travis_retry git clone --depth=50 --branch=master git://github.com/waneck/travis-hx.git ~/travis-hx
+
+install: # setup the target
+  - ~/travis-hx/setup.sh
 
 script:
-  - haxe test_neko.hxml
-  - neko bin/neko/Test.n
-  - haxe test_cpp.hxml
-#  - bin/cpp/Test
+  - cd $TRAVIS_BUILD_DIR
+  # build the target. This will call haxe with the HXFLAGS and HXFLAGS_EXTRA environment variables
+  - HXFLAGS="-cp src -main test.TestAll -lib nanotest -D EXIT_ON_FINISH" ~/travis-hx/build.sh
+  # run the tests
+  - ~/travis-hx/runtests.sh $FILENAME # this will set the $FILENAME defined on the environment variable to run the tests
