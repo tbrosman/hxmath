@@ -1,4 +1,54 @@
 package hxmath.ds;
+import hxmath.math.MathUtil;
+import hxmath.math.ShortVector2;
+
+/**
+ * An iterator allowing key iteration similar to SparseArray2.
+ */
+private class DenseArray2KeysIterator<T>
+{
+    private var array:DenseArray2<T>;
+    private var currentX:Int = 0;
+    private var currentY:Int = 0;
+    
+    public function new(array:DenseArray2<T>)
+    {
+        this.array = array;
+    }
+    
+    public function hasNext():Bool
+    {
+        return currentX < array.width &&
+            currentY < array.height;
+    }
+    
+    public function next():ShortVector2
+    {
+        var currentKey = new ShortVector2(currentX, currentY);
+        
+        // Advance one cell in the current row
+        if (currentX + 1 < array.width)
+        {
+            currentX++;
+        }
+        
+        // Advance one row
+        else if (currentY + 1 < array.height)
+        {
+            currentX = 0;
+            currentY++;
+        }
+        
+        // End of the array
+        else
+        {
+            currentX = array.width;
+            currentY = array.height;
+        }
+        
+        return currentKey;
+    }
+}
 
 /**
  * Dense 2D array stored using a 1D array.
@@ -10,6 +60,9 @@ class DenseArray2<T> implements IArray2<T>
     
     // The height of the array in cells
     public var height(default, null):Int;
+    
+    // The iterator for the packed keys
+    public var keys(get, never):Iterator<ShortVector2>;
     
     private var array:Array<T>;
     
@@ -24,6 +77,38 @@ class DenseArray2<T> implements IArray2<T>
         array = new Array<T>();
         this.width = width;
         this.height = height;
+    }
+    
+    /**
+     * Create a DenseArray2 from a jagged array in row-major order.
+     * 
+     * @param source    The source array, possibly non-rectangular.
+     * @return          The resulting rectangular (dense) array.
+     */
+    public static inline function fromNestedArray<T>(source:Array<Array<T>>):DenseArray2<T>
+    {
+        var longestRowLength:Int = 0;
+        
+        for (row in source)
+        {
+            longestRowLength = MathUtil.intMax(longestRowLength, row.length);
+        }
+        
+        var target:DenseArray2<T> = new DenseArray2<T>(longestRowLength, source.length);
+        
+        for (y in 0...target.height)
+        {
+            for (x in 0...target.width)
+            {
+                // If out of bounds ignore
+                if (x < source[y].length)
+                {
+                    target.set(x, y, source[y][x]);
+                }
+            }
+        }
+        
+        return target;
     }
     
     /**
@@ -62,6 +147,17 @@ class DenseArray2<T> implements IArray2<T>
     }
     
     /**
+     * Get a single cell by (x, y) key.
+     * 
+     * @param key   The packed (x, y) key.
+     * @return      The cell at that location.
+     */
+    public inline function getByKey(key:ShortVector2):T
+    {
+        return array[key.x + key.y * width];
+    }
+    
+    /**
      * Set a single cell to the specified value.
      * 
      * @param x
@@ -72,6 +168,22 @@ class DenseArray2<T> implements IArray2<T>
     {
         checkBounds(x, y);
         array[x + y * width] = item;
+    }
+    
+    /**
+     * Overwrite all cells in the array with the specified item.
+     * 
+     * @param item
+     */
+    public inline function fill(item:T):Void
+    {
+        for (y in 0...height)
+        {
+            for (x in 0...width)
+            {
+                array[x + y * width] = item;
+            }
+        }
     }
     
     /**
@@ -208,11 +320,57 @@ class DenseArray2<T> implements IArray2<T>
         return blitCount;
     }
     
+    /**
+     * Clone.
+     * 
+     * @return  A shallow copy of this object.
+     */
+    public inline function clone():DenseArray2<T>
+    {
+        var copy = new DenseArray2<T>(width, height);
+        
+        for (y in 0...height)
+        {
+            for (x in 0...width)
+            {
+                copy.set(x, y, get(x, y));
+            }
+        }
+        
+        return copy;
+    }
+    
+        
+    /**
+     * Create SparseArray2 copy of the data in this array.
+     * 
+     * @return  A DenseArray2 copy.
+     */
+    public function toSparseArray():SparseArray2<T>
+    {
+        var sparseCopy:SparseArray2<T> = new SparseArray2<T>();
+        
+        for (y in 0...height)
+        {
+            for (x in 0...width)
+            {
+                sparseCopy.set(x, y, get(x, y));
+            }
+        }
+        
+        return sparseCopy;
+    }
+    
     private inline function checkBounds(x:Int, y:Int)
     {
         if (!inBounds(x, y))
         {
             throw 'Specified (x=$x, y=$y) fields not in the ranges x: [0, $width) y: [0, $height)';
         }
+    }
+    
+    private inline function get_keys():Iterator<ShortVector2>
+    {
+        return new DenseArray2KeysIterator(this);
     }
 }

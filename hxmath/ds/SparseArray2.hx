@@ -56,6 +56,17 @@ class SparseArray2<T> implements IArray2<T>
     }
     
     /**
+     * Get a single cell by (x, y) key.
+     * 
+     * @param key   The packed (x, y) key.
+     * @return      The cell at that location.
+     */
+    public inline function getByKey(key:ShortVector2):T
+    {
+        return hash.get(key);
+    }
+    
+    /**
      * Set a single cell to the specified value.
      * 
      * @param x
@@ -112,7 +123,7 @@ class SparseArray2<T> implements IArray2<T>
      * 
      * @return  A DenseArray2 copy.
      */
-    public inline function toDenseArray():DenseArray2<T>
+    public function toDenseArray():DenseArray2<T>
     {
         // To keep indices consistent, only consider the max bounds
         var maxX:Int = -1;

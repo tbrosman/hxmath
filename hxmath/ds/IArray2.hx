@@ -1,10 +1,14 @@
 package hxmath.ds;
+import hxmath.math.ShortVector2;
 
 /**
  * Common functionality for sparse and dense 2D arrays.
  */
 interface IArray2<T>
 {
+    // The iterator for the packed keys
+    var keys(get, never):Iterator<ShortVector2>;
+    
     /**
      * Get the iterator for the underlying object.
      * 
@@ -29,6 +33,14 @@ interface IArray2<T>
      * @return      The value.
      */
     function get(x:Int, y:Int):T;
+    
+    /**
+     * Get a single cell by (x, y) key.
+     * 
+     * @param key   The packed (x, y) key.
+     * @return      The cell at that location.
+     */
+    function getByKey(key:ShortVector2):T;
     
     /**
      * Set a single cell to the specified value.

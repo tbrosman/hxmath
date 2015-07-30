@@ -13,6 +13,30 @@ class MathUtil
     public static inline var eps = 1e-6;
     
     /**
+     * Int max.
+     * 
+     * @param a
+     * @param b
+     * @return  max(a, b)
+     */
+    public static inline function intMax(a:Int, b:Int):Int
+    {
+        return b > a ? b : a;
+    }
+    
+    /**
+     * Int min.
+     * 
+     * @param a
+     * @param b
+     * @return  min(a, b)
+     */
+    public static inline function intMin(a:Int, b:Int):Int
+    {
+        return b < a ? b : a;
+    }
+    
+    /**
      * Linear inteprolation for a cyclic coordinate.
      * 
      * @param a     The value at t = 0

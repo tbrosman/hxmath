@@ -86,7 +86,7 @@ class TestDataStructures extends MathTestCase
         var sourceWidth = 3;
         var sourceHeight = 3;
         var source = new DenseArray2<Int>(sourceWidth, sourceHeight);
-        fill(source, 1);
+        source.fill(1);
         
         // Target:
         //
@@ -118,7 +118,7 @@ class TestDataStructures extends MathTestCase
             var blitCase = blitCases[key];
             
             var target = new DenseArray2<Int>(5, 5);
-            fill(target, 0);
+            target.fill(0);
             target.clippedBlit(blitCase.pos.x, blitCase.pos.y, source, 0, 0, sourceWidth, sourceHeight);
             
             var actualOverlap = sum(target);
@@ -142,23 +142,110 @@ class TestDataStructures extends MathTestCase
         assertEquals(ShortVector2.fieldMax, max.y);
     }
     
+    public function testDenseArray2FromNestedRectangularArray()
+    {
+        var rectangularArray = [
+            [0, 1, 2],
+            [3, 4, 5]
+        ];
+        
+        var result = DenseArray2.fromNestedArray(rectangularArray);
+        assertEquals(3, result.width);
+        assertEquals(2, result.height);
+        assertEquals(5, result.get(2, 1));
+    }
+    
+    public function testGetByKey()
+    {
+        var denseArray = new DenseArray2<Int>(3, 3);
+        denseArray.set(1, 2, 3);
+        assertEquals(3, denseArray.getByKey(new ShortVector2(1, 2)));
+        
+        var sparseArray = new SparseArray2<Int>();
+        sparseArray.set(1, 2, 3);
+        assertEquals(3, sparseArray.getByKey(new ShortVector2(1, 2)));
+    }
+    
+    public function testDenseKeysIterator()
+    {
+        var initialArray = [
+            [0, 1, 2],
+            [3, 4, 5]
+        ];
+        
+        var denseArray = DenseArray2.fromNestedArray(initialArray);
+        
+        for (key in denseArray.keys)
+        {
+            var sourceElement = initialArray[key.y][key.x];
+            var targetElement = denseArray.getByKey(key);
+            assertEquals(sourceElement, targetElement);
+        }
+    }
+    
+    /**
+     * The following relationships should hold:
+     *
+     * DenseArray2  A ---to---> SparseArray2 B =>
+     *      (for all (x, y) in A.keys) AND
+     *      (for all (x, y) in B.keys))
+     *          . A[x,y] == B[x,y]
+     * That is, the domain (source) and the codomain (target) have the same elements
+     * 
+     * SparseArray2 C ---to---> DenseArray2  D =>
+     *      for all (x, y) in C.keys
+     *          . C[x,y] == D[x,y]
+     * That is, the domain (source) is a subset of the codomain (target)
+     */
+    public function testCloneAndConvert()
+    {
+        var initialArray = [
+            [0, 1, 2],
+            [3, 4, 5]
+        ];
+        
+        // Build a rectangular array and create a sparse copy
+        var denseA = DenseArray2.fromNestedArray(initialArray);
+        var sparseB = denseA.toSparseArray();
+        
+        // If A is an improper subset of B and B is an improper subset of A, A == B
+        
+        // Dense -> Sparse: Domain is a (potentially improper) subset of codomain
+        for (key in denseA.keys)
+        {
+            assertEquals(denseA.getByKey(key), sparseB.getByKey(key));
+        }
+        
+        // Dense -> Sparse: Codomain is a (potentially improper) subset of domain
+        for (key in sparseB.keys)
+        {
+            assertEquals(sparseB.getByKey(key), denseA.getByKey(key));
+        }
+        
+        // Build a non-rectangular sparse array
+        // A simple example showing that the Sparse -> Dense mapping can result in a codomain being a superset of the domain:
+        // - In the sparse (source) array: 3 elements
+        // - In the dense (target) array:  4 elements
+        var sparseC = new SparseArray2<Int>();
+        sparseC.set(0, 0, 2);
+        sparseC.set(1, 0, 5);
+        sparseC.set(1, 1, 3);
+        
+        var denseD = sparseC.toDenseArray();
+        
+        // Sparse -> Dense: Domain is a (potentially improper) subset of codomain
+        for (key in sparseC.keys)
+        {
+            assertEquals(sparseC.getByKey(key), denseD.getByKey(key));
+        }
+    }
+    
     private function setPrimesSquare(array:IArray2<Int>)
     {
         array.set(0, 0, 3);
         array.set(1, 0, 5);
         array.set(0, 1, 7);
         array.set(1, 1, 11);
-    }
-    
-    private function fill(array:DenseArray2<Int>, value:Int)
-    {
-        for (y in 0...array.width)
-        {
-            for (x in 0...array.height)
-            {
-                array.set(x, y, value);
-            }
-        }
     }
     
     private function sum(array:IArray2<Int>)
