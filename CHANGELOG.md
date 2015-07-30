@@ -1,3 +1,6 @@
+## 0.12.0 (07/29/2015)
+* Haxe 3.2.0 support
+
 ## 0.11.0 (03/23/2015)
 ### Performance improvements
 * Added in-place operators wherever possible to Vector classes to reduce new allocations (issue #23)
