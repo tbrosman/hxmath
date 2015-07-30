@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
-  "version": "0.12.0",
-  "releasenote": "- Haxe 3.2.0 support",
+  "version": "0.13.0",
+  "releasenote": "",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
