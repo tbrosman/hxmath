@@ -6,6 +6,7 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
 import hxmath.math.Quaternion;
+import hxmath.math.ShortVector2;
 import hxmath.math.Vector2;
 import hxmath.math.Vector3;
 import hxmath.math.Vector4;
@@ -39,6 +40,9 @@ class TestStructures extends MathTestCase
         
         assertTrue(IntVector2.yAxis == IntVector2.yAxis);
         assertTrue(IntVector2.yAxis != IntVector2.xAxis);
+        
+        assertTrue(ShortVector2.yAxis == ShortVector2.yAxis);
+        assertTrue(ShortVector2.yAxis != ShortVector2.xAxis);
     }
     
     public function testClone()
@@ -130,6 +134,14 @@ class TestStructures extends MathTestCase
         assertTrue(intVec2 - IntVector2.xAxis == IntVector2.zero);
         intVec2 -= IntVector2.xAxis;
         assertTrue(intVec2 == IntVector2.zero);
+        
+        var shortVec2 = ShortVector2.zero;
+        assertTrue(shortVec2 + ShortVector2.xAxis == ShortVector2.xAxis);
+        shortVec2 += ShortVector2.xAxis;
+        assertTrue(shortVec2 == ShortVector2.xAxis);
+        assertTrue(shortVec2 - ShortVector2.xAxis == ShortVector2.zero);
+        shortVec2 -= ShortVector2.xAxis;
+        assertTrue(shortVec2 == ShortVector2.zero);
     }
     
     public function testDeterminant()
@@ -215,6 +227,11 @@ class TestStructures extends MathTestCase
         intVec2[1] = 1;
         assertEquals(1, intVec2.y);
         assertEquals(1, intVec2[1]);
+        
+        // Read-only access
+        var shortVec2 = new ShortVector2(0, 1);
+        assertEquals(1, shortVec2.y);
+        assertEquals(1, shortVec2[1]);
     }
     
     public function testApplyScalarFunc()
@@ -480,6 +497,14 @@ class TestStructures extends MathTestCase
             
         assertTrue(v2iAxesMax == v2iAxesSum);
         assertTrue(v2iAxesMin == IntVector2.zero);
+        
+        var v2sAxes = [ShortVector2.xAxis, ShortVector2.yAxis];
+        var v2sAxesMax = Lambda.fold(v2sAxes, ShortVector2.max, ShortVector2.xAxis);
+        var v2sAxesMin = Lambda.fold(v2sAxes, ShortVector2.min, ShortVector2.xAxis);
+        var v2sAxesSum = Lambda.fold(v2sAxes, ShortVector2.add, ShortVector2.zero);
+        
+        assertTrue(v2sAxesMax == v2sAxesSum);
+        assertTrue(v2sAxesMin == ShortVector2.zero);
     }
     
     public function testVectorProj()

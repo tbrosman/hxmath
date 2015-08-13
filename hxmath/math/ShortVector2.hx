@@ -1,10 +1,20 @@
 package hxmath.math ;
 
 /**
- *  A 2D vector with 16-bit integer values. Uses the underlying native Int type of the target platform and requires no memory allocation.
+ * A 2D vector with 16-bit integer values. Uses the underlying native Int type of the target platform and requires no memory allocation.
+ * 
+ * Differences from IntVector2:
+ * - Extremely fast: no heap allocation, lives on the stack like a value type.
+ * - Maximum value for X and Y fields is 2^16 - 1 instead of 2^32 - 1.
+ * - Clone semantics are the same as any other value type: clone is degenerate, can't be modified by reference, etc.
+ * - No functions modifying object state (e.g. addWith, subtractWith, array element set, etc).
+ * - Equality operator comes from the underlying type.
  */
 abstract ShortVector2(Int) from Int to Int
 {
+    // The number of (implicit) elements in this structure
+    public static inline var elementCount:Int = 2;
+    
     // The max number of bits that can be used for x or y
     public static inline var bitsPerField = 16;
     
@@ -13,6 +23,21 @@ abstract ShortVector2(Int) from Int to Int
     
     // Zero vector (v + 0 = v)
     public static var zero(get, never):ShortVector2;
+    
+    // X axis (1, 0)
+    public static var xAxis(get, never):ShortVector2;
+    
+    // Y axis (0, 1)
+    public static var yAxis(get, never):ShortVector2;
+    
+    // Vector dotted with itself
+    public var lengthSq(get, never):Int;
+    
+    // 90 degree rotation to the left
+    public var rotatedLeft(get, never):ShortVector2;
+    
+    // 90 degree rotation to the right
+    public var rotatedRight(get, never):ShortVector2;
     
     // Get/set the X portion of the index
     public var x(get, set):Int;
@@ -34,6 +59,146 @@ abstract ShortVector2(Int) from Int to Int
         }
         
         this = (y << bitsPerField) | x;
+    }
+    
+    /**
+     * Construct a ShortVector2 from an array.
+     * 
+     * @param rawData   The input array.
+     * @return          The constructed structure.
+     */
+    public static inline function fromArray(rawData:Array<Int>):ShortVector2
+    {
+        if (rawData.length != ShortVector2.elementCount)
+        {
+            throw "Invalid rawData.";
+        }
+        
+        return new ShortVector2(rawData[0], rawData[1]);
+    }
+    
+    /**
+     * Dot product.
+     * 
+     * @param a
+     * @param b
+     * @return      sum_i (a_i * b_i)
+     */
+    @:op(A * B)
+    public static inline function dot(a:ShortVector2, b:ShortVector2):Int
+    {
+        return
+            a.x * b.x +
+            a.y * b.y;
+    }
+    
+    /**
+     * Multiply a scalar with a vector.
+     * 
+     * @param a
+     * @param s
+     * @return      s * a
+     */
+    @:op(A * B)
+    @:commutative
+    public static inline function multiply(a:ShortVector2, s:Int):ShortVector2
+    {
+        return new ShortVector2(
+            s * a.x,
+            s * a.y);
+    }
+    
+    /**
+     * Add two vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      a + b
+     */
+    @:op(A + B)
+    public static inline function add(a:ShortVector2, b:ShortVector2):ShortVector2
+    {
+        return new ShortVector2(
+            a.x + b.x,
+            a.y + b.y);
+    }
+    
+    /**
+     * Subtract one vector from another.
+     * 
+     * @param a
+     * @param b
+     * @return      a - b
+     */
+    @:op(A - B)
+    public static inline function subtract(a:ShortVector2, b:ShortVector2):ShortVector2
+    {
+        return new ShortVector2(
+            a.x - b.x,
+            a.y - b.y);
+    }
+    
+    /**
+     * Create a negated copy of a vector.
+     * 
+     * @param a
+     * @return      -a
+     */
+    @:op(-A)
+    public static inline function negate(a:ShortVector2):ShortVector2
+    {
+        return new ShortVector2(
+            -a.x,
+            -a.y);
+    }
+    
+    /**
+     * Returns a vector built from the componentwise max of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      max(a_i, b_i)
+     */
+    public static inline function max(a:ShortVector2, b:ShortVector2):ShortVector2
+    {
+        return new ShortVector2(
+            MathUtil.intMax(a.x, b.x),
+            MathUtil.intMax(a.y, b.y));
+    }
+    
+    /**
+     * Returns a vector built from the componentwise min of the input vectors.
+     * 
+     * @param a
+     * @param b
+     * @return      min(a_i, b_i)
+     */
+    public static inline function min(a:ShortVector2, b:ShortVector2):ShortVector2
+    {
+        return new ShortVector2(
+            MathUtil.intMin(a.x, b.x),
+            MathUtil.intMin(a.y, b.y));
+    }
+    
+    /**
+     * Get an element by position.
+     * 
+     * @param i         The element index.
+     * @return          The element.
+     */
+    @:arrayAccess
+    public inline function getArrayElement(i:Int):Int
+    {
+        var self:ShortVector2 = this;
+        switch (i)
+        {
+            case 0:
+                return self.x;
+            case 1:
+                return self.y;
+            default:
+                throw "Invalid element";
+        }
     }
     
     /**
@@ -64,6 +229,16 @@ abstract ShortVector2(Int) from Int to Int
         return new ShortVector2(0, 0);
     }
     
+    private static inline function get_xAxis():ShortVector2
+    {
+        return new ShortVector2(1, 0);
+    }
+    
+    private static inline function get_yAxis():ShortVector2
+    {
+        return new ShortVector2(0, 1);
+    }
+    
     private inline function get_x():Int
     {
         return this & fieldMax;
@@ -86,5 +261,25 @@ abstract ShortVector2(Int) from Int to Int
         var self:ShortVector2 = this;
         self = new ShortVector2(self.x, y);
         return y;
+    }
+    
+    private inline function get_lengthSq():Int
+    {
+        var self:ShortVector2 = this;
+        return
+            self.x * self.x +
+            self.y * self.y;
+    }
+    
+    private inline function get_rotatedLeft():ShortVector2
+    {
+        var self:ShortVector2 = this;
+        return new ShortVector2(-y, x);
+    }
+    
+    private inline function get_rotatedRight():ShortVector2
+    {
+        var self:ShortVector2 = this;
+        return new ShortVector2(y, -x);
     }
 }

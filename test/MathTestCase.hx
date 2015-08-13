@@ -8,6 +8,7 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
 import hxmath.math.Quaternion;
+import hxmath.math.ShortVector2;
 import hxmath.math.Vector2;
 import hxmath.math.Vector3;
 import hxmath.math.Vector4;
@@ -26,6 +27,11 @@ class MathTestCase extends NanoTestCase
         
         // Round the the specified precision
         return Math.floor(x / precision) * precision;
+    }
+    
+    private function randomInt():Int
+    {
+        return Math.floor(Math.random() * 10);
     }
     
     private function randomArray(size:Int, distribution:Distribution=null):Array<Float>
@@ -111,7 +117,12 @@ class MathTestCase extends NanoTestCase
     
     private function randomIntVector2():IntVector2
     {
-        return new IntVector2(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10));
+        return new IntVector2(randomInt(), randomInt());
+    }
+    
+    private function randomShortVector2():ShortVector2
+    {
+        return new ShortVector2(randomInt(), randomInt());
     }
     
     private function randomFrame2(precision:Float = 1e-4):Frame2
