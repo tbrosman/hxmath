@@ -2,6 +2,7 @@ package test;
 import haxe.PosInfos;
 import hxmath.frames.Frame2;
 import hxmath.frames.Frame3;
+import hxmath.math.IntVector2;
 import hxmath.math.Matrix2x2;
 import hxmath.math.Matrix3x2;
 import hxmath.math.Matrix3x3;
@@ -106,6 +107,11 @@ class MathTestCase extends NanoTestCase
         var distribution = new Distribution();
         distribution.precision = precision;
         return Quaternion.fromArray(randomArray(Quaternion.elementCount, distribution));
+    }
+    
+    private function randomIntVector2():IntVector2
+    {
+        return new IntVector2(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10));
     }
     
     private function randomFrame2(precision:Float = 1e-4):Frame2

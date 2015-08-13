@@ -36,6 +36,9 @@ class TestStructures extends MathTestCase
         
         assertTrue(Quaternion.identity == Quaternion.identity);
         assertTrue(Quaternion.identity != Quaternion.zero);
+        
+        assertTrue(IntVector2.yAxis == IntVector2.yAxis);
+        assertTrue(IntVector2.yAxis != IntVector2.xAxis);
     }
     
     public function testClone()
@@ -50,6 +53,8 @@ class TestStructures extends MathTestCase
         assertTrue(Vector4.zero.clone() == Vector4.zero);
         
         assertTrue(Quaternion.identity.clone() == Quaternion.identity);
+        
+        assertTrue(IntVector2.zero.clone() == IntVector2.zero);
     }
     
     public function testAddSub()
@@ -117,6 +122,14 @@ class TestStructures extends MathTestCase
         assertTrue(q - Quaternion.identity == Quaternion.zero);
         q -= Quaternion.identity;
         assertTrue(q == Quaternion.zero);
+        
+        var intVec2 = IntVector2.zero;
+        assertTrue(intVec2 + IntVector2.xAxis == IntVector2.xAxis);
+        intVec2 += IntVector2.xAxis;
+        assertTrue(intVec2 == IntVector2.xAxis);
+        assertTrue(intVec2 - IntVector2.xAxis == IntVector2.zero);
+        intVec2 -= IntVector2.xAxis;
+        assertTrue(intVec2 == IntVector2.zero);
     }
     
     public function testDeterminant()
@@ -197,6 +210,11 @@ class TestStructures extends MathTestCase
         quat[2] = 1.0;
         assertEquals(1.0, quat.y);
         assertEquals(1.0, quat[2]);
+        
+        var intVec2 = IntVector2.zero;
+        intVec2[1] = 1;
+        assertEquals(1, intVec2.y);
+        assertEquals(1, intVec2[1]);
     }
     
     public function testApplyScalarFunc()
@@ -273,10 +291,36 @@ class TestStructures extends MathTestCase
             
             assertEquals(1.0, sum);
         }
-        
     }
     
-    private function testCopyToFrom()
+    public function testIntApplyScalarFunc()
+    {
+        var testData:Array<Dynamic> = [
+            {
+                f:     IntVector2.applyScalarFunc,
+                zero:  IntVector2.zero,
+                count: IntVector2.elementCount,
+                get:   IntVector2.getArrayElement,
+                set:   IntVector2.setArrayElement
+            }];
+            
+        for (data in testData)
+        {
+            var v = data.zero;
+            data.set(v, 1, 1);
+            data.f(v, function(x:Int):Int return 2*x);
+            
+            var sum:Int = 0;
+            for (i in 0...data.count)
+            {
+                sum += data.get(v, i);
+            }
+            
+            assertEquals(2, sum);
+        }
+    }
+    
+    public function testCopyToFrom()
     {
         var vec2a = randomVector2();
         var vec2b = Vector2.zero;
@@ -317,6 +361,11 @@ class TestStructures extends MathTestCase
         var quatB = Quaternion.zero;
         quatA.copyTo(quatB);
         assertTrue(quatA == quatB);
+        
+        var intVec2a = randomIntVector2();
+        var intVec2b = IntVector2.zero;
+        intVec2a.copyTo(intVec2b);
+        assertTrue(intVec2a == intVec2b);
     }
     
     public function testRowColAccessors()
@@ -372,6 +421,7 @@ class TestStructures extends MathTestCase
         assertTrue(Matrix3x3.zero != null);
         assertTrue(Matrix4x4.zero != null);
         assertTrue(Quaternion.zero != null);
+        assertTrue(IntVector2.zero != null);
     }
     
     public function testHasToString()
@@ -422,6 +472,14 @@ class TestStructures extends MathTestCase
         
         assertTrue(v4AxesMax == v4AxesSum);
         assertTrue(v4AxesMin == Vector4.zero);
+        
+        var v2iAxes = [IntVector2.xAxis, IntVector2.yAxis];
+        var v2iAxesMax = Lambda.fold(v2iAxes, IntVector2.max, IntVector2.xAxis);
+        var v2iAxesMin = Lambda.fold(v2iAxes, IntVector2.min, IntVector2.xAxis);
+        var v2iAxesSum = Lambda.fold(v2iAxes, IntVector2.add, IntVector2.zero);
+            
+        assertTrue(v2iAxesMax == v2iAxesSum);
+        assertTrue(v2iAxesMin == IntVector2.zero);
     }
     
     public function testVectorProj()

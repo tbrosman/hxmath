@@ -1,6 +1,7 @@
 package test;
 
 import haxe.ds.Vector;
+import hxmath.math.IntVector2;
 import hxmath.math.Matrix2x2;
 import hxmath.math.Matrix3x2;
 import hxmath.math.Vector2;
@@ -12,6 +13,9 @@ class Test2D extends MathTestCase
     {
         assertTrue(Vector2.xAxis * Vector2.yAxis == 0.0);
         assertTrue(0.0 * Vector2.xAxis == Vector2.zero);
+        
+        assertTrue(IntVector2.xAxis * IntVector2.yAxis == 0);
+        assertTrue(0 * IntVector2.xAxis == IntVector2.zero);
     }
     
     public function testDeterminant()
