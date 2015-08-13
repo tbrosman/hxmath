@@ -1,3 +1,5 @@
+## 0.14.0
+
 ## 0.13.0 (08/12/2015)
 * Added all appropriate Vector2 functions to IntVector2 and ShortVector2.
 * Lookup by packed key, iteration by key for DenseArray2.

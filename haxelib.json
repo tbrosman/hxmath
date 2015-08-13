@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
-  "version": "0.13.0",
-  "releasenote": "Added all appropriate Vector2 functions to IntVector2/ShortVector2. Improvements to the Array2 classes. See changelog for details.",
+  "version": "0.14.0",
+  "releasenote": "",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
