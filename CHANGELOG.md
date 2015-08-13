@@ -1,3 +1,10 @@
+## 0.13.0 (08/12/2015)
+* Added all appropriate Vector2 functions to IntVector2 and ShortVector2.
+* Lookup by packed key, iteration by key for DenseArray2.
+* Completed conversion/clone functions for DenseArray2 and SparseArray2.
+* fill for DenseArray2.
+* intMin/Max now in MathUtil.
+
 ## 0.12.0 (07/29/2015)
 * Haxe 3.2.0 support
 
