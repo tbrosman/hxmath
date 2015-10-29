@@ -177,7 +177,16 @@ class MathUtil
      */
     public static inline function wrap(x:Float, n:Float):Float
     {
-        return ((x % n) + n) % n;
+        if (x < 0)
+        {
+            // To avoid ambiguity with modulo sign conventions (some use the divisor's sign, others
+            // use dividend's, etc) force the dividend to be positive.
+            return n - (-x % n);
+        }
+        else
+        {
+            return x % n;
+        }
     }
     
     /**
