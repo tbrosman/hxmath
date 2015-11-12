@@ -1,10 +1,11 @@
 package hxmath.math;
 
-enum Orient2DResult
+@:enum
+abstract Orient2DResult(Int)
 {
-    Left;
-    Colinear;
-    Right;
+    var Left = 1;
+    var Colinear = 0;
+    var Right = -1;
 }
 
 class MathUtil
