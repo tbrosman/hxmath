@@ -13,7 +13,7 @@ class TestIntMath extends MathTestCase
     {
         // IntVector2 => Vector2 conversion
         var v = new IntVector2(1, 2);
-        var u:Vector2 = v;
+        var u:Vector2 = v.toVector2();
         var expectedU = new Vector2(1.0, 2.0);
         assertApproxEquals(0.0, (u - expectedU).length);
         
@@ -22,8 +22,8 @@ class TestIntMath extends MathTestCase
         var one = new Vector2(1.0, 1.0);
         var flooredVec = (u + eps).toIntVector2();
         var cieldVec = (u + eps).toIntVector2(Math.ceil);
-        assertApproxEquals((flooredVec - u).length, 0.0);
-        assertApproxEquals((cieldVec - (u + one)).length, 0.0);
+        assertApproxEquals((flooredVec.toVector2() - u).length, 0.0);
+        assertApproxEquals((cieldVec.toVector2() - (u + one)).length, 0.0);
         
         // ShortVector2 => Vector2 conversion
         var vi = new ShortVector2(1, 2);

@@ -79,7 +79,6 @@ abstract IntVector2(IntVector2Default) from IntVector2Default to IntVector2Defau
      * 
      * @return  The equivalent IntVector2.
      */
-    @:to
     public inline function toVector2():Vector2 
     {
         var self:IntVector2 = this;
