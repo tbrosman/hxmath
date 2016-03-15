@@ -27,7 +27,7 @@ class TestDataStructures extends MathTestCase
         var dense = new DenseArray2<Int>(2, 2);
         setPrimesSquare(dense);
         
-        dense.resize(4, 2);
+        dense.resize(4, 2, 0);
         
         assertEquals(4, dense.width);
         assertEquals(2, dense.height);
@@ -37,7 +37,10 @@ class TestDataStructures extends MathTestCase
         assertEquals(7, dense.get(0, 1));
         assertEquals(11, dense.get(1, 1));
         
-        dense.resize(2, 3);
+        // The value at the border should match the default provided to resize
+        assertEquals(0, dense.get(3, 1));
+        
+        dense.resize(2, 3, 0);
         
         assertEquals(2, dense.width);
         assertEquals(3, dense.height);

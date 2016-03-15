@@ -192,22 +192,27 @@ class DenseArray2<T> implements IArray2<T>
      * @param newWidth      The new width.
      * @param newHeight     The new height.
      */
-    public function resize(newWidth:Int, newHeight:Int)
+    public function resize(newWidth:Int, newHeight:Int, defaultValue:T)
     {
         var newArray = new Array<T>();
         
-        // Pick the smaller width/height for the write stride
-        var strideWidth = height < newHeight ? height : newHeight;
-        var strideHeight = width < newWidth ? width : newWidth;
+        // Pick the larger width/height for the write stride
+        var strideY = height > newHeight ? height : newHeight;
+        var strideX = width > newWidth ? width : newWidth;
         
         // Write to the end of the array first to avoid excessive array resizing
-        for (reverseY in 0...strideHeight)
+        for (reverseY in 0...strideY)
         {
-            var y = strideHeight - 1 - reverseY;
-            for (reverseX in 0...strideWidth)
+            var y = strideY - 1 - reverseY;
+            for (reverseX in 0...strideX)
             {
-                var x = strideWidth - 1 - reverseX;
-                newArray[x + y * newWidth] = array[x + y * width];
+                var x = strideX - 1 - reverseX;
+                
+                // Are we in the intersection of the old bounds and new bounds?
+                var copyOld = x < width && x < newWidth && y < height && y < newHeight;
+                newArray[x + y * newWidth] = copyOld
+                    ? array[x + y * width]
+                    : defaultValue;
             }
         }
         
