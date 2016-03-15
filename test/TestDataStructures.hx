@@ -85,6 +85,30 @@ class TestDataStructures extends MathTestCase
         assertEquals(sparseSum1, sparseSum2);
     }
     
+    public function testSparseArray2OrderedKeysIterate()
+    {
+        // Create and fill a (relatively) large array
+        var sparse = new SparseArray2<Int>();
+        for (y in 0...100)
+        {
+            for (x in 0...100)
+            {
+                sparse.set(x, y, -1);
+            }
+        }
+        
+        var lastX:Int = -1;
+        var lastY:Int = -1;
+        
+        // Keys should be monotonically increasing
+        for (key in sparse.orderedKeys)
+        {
+            assertTrue(key.x > lastX || key.y > lastY);
+            lastX = key.x;
+            lastY = key.y;
+        }
+    }
+    
     public function testBlit()
     {
         var sourceWidth = 3;

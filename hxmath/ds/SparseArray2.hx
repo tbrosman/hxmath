@@ -3,12 +3,64 @@ package hxmath.ds;
 import hxmath.math.ShortVector2;
 
 /**
+ * Allows for ordered traversal of keys (with a perf tradeoff: all keys must be stored explicitly in the iterator for
+ * efficient traversal in sorted order).
+ */
+private class SparseArray2OrderedKeysIterator<T>
+{
+    private var array:SparseArray2<T>;
+    private var keys:Array<Int>;
+    private var currentIndex:Int = 0;
+    
+    public function new(array:SparseArray2<T>)
+    {
+        this.array = array;
+        
+        keys = new Array<Int>();
+        
+        // Collect and sort all the keys
+        for (key in array.keys)
+        {
+            keys.push(key);
+        }
+        
+        keys.sort(
+            function(a:Int, b:Int):Int
+            {
+                if (a < b)
+                {
+                    return -1;
+                }
+                else if (a > b)
+                {
+                    return 1;
+                }
+                
+                return 0;
+            });
+    }
+    
+    public function hasNext():Bool
+    {
+        return currentIndex < keys.length;
+    }
+    
+    public function next():ShortVector2
+    {
+        return keys[currentIndex++];
+    }
+}
+
+/**
  * Sparse 2D array stored using a Map.
  */
 class SparseArray2<T> implements IArray2<T>
 {   
     // The iterator for the packed keys
     public var keys(get, never):Iterator<ShortVector2>;
+    
+    // The iterator for the ordered packed keys (less performant than .keys but more useful/meaningful for certain types of operations)
+    public var orderedKeys(get, never):Iterator<ShortVector2>;
     
     // Left as an IntMap instead of keying using the packed index abstract due to compilation issues in the C++ backend (Haxe 3.1.x)
     private var hash:Map<Int, T>;
@@ -160,5 +212,10 @@ class SparseArray2<T> implements IArray2<T>
     private inline function get_keys():Iterator<ShortVector2>
     {
         return hash.keys();
+    }
+    
+    private inline function get_orderedKeys():Iterator<ShortVector2>
+    {
+        return new SparseArray2OrderedKeysIterator(this);
     }
 }
