@@ -1,3 +1,5 @@
+## 0.15.0
+
 ## 0.14.0 (03/16/2016)
 * Made ShortVector2's components unsettable. (issue #45)
 * Added in-place set() functions to all math structures (except ShortVector2 which is not settable in-place). (issue #43)
