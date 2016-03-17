@@ -163,4 +163,15 @@ class TestFrames extends MathTestCase
         assertApproxEquals((frameE2.offset - new Vector2(1.0 / 3.0, 2.0 / 3.0)).length, 0.0);
         assertApproxEquals(frameE2.angleDegrees, 30.0);
     }
+    
+    public function testFramesHaveToString()
+    {
+        var frame2 = new Frame2(new Vector2(23.0, 0.0), 42.0);
+        assertTrue('$frame2'.indexOf("23") != -1);
+        assertTrue('$frame2'.indexOf("42") != -1);
+        
+        var frame3 = new Frame3(new Vector3(23.0, 0.0, 0.0), new Quaternion(42.0, 0.0, 0.0, 0.0));
+        assertTrue('$frame3'.indexOf("23") != -1);
+        assertTrue('$frame3'.indexOf("42") != -1);
+    }
 }

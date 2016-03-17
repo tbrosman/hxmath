@@ -54,6 +54,11 @@ class Frame3Default implements IFrame3
         isDirty = true;
         internalMatrix = Matrix4x4.identity;
     }
+    
+    public function toString():String
+    {
+        return 'Frame3 { offset: $internalOffset, orientation: $internalOrientation }';
+    }
 
     private inline function get_matrix():Matrix4x4
     {

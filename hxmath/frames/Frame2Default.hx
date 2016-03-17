@@ -51,6 +51,11 @@ class Frame2Default implements IFrame2
         isDirty = true;
         internalMatrix = Matrix3x2.identity;
     }
+    
+    public function toString():String
+    {
+        return 'Frame2 { offset: $internalOffset, angleDegrees: $angleDegrees }';
+    }
 
     private inline function get_matrix():Matrix3x2
     {
