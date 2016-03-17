@@ -39,11 +39,11 @@ abstract ShortVector2(Int) from Int to Int
     // 90 degree rotation to the right
     public var rotatedRight(get, never):ShortVector2;
     
-    // Get/set the X portion of the index
-    public var x(get, set):Int;
+    // Get the X portion of the index
+    public var x(get, never):Int;
     
-    // Get/set the Y portion of the index
-    public var y(get, set):Int;
+    // Get the Y portion of the index
+    public var y(get, never):Int;
     
     /**
      * Constructor.
@@ -244,23 +244,9 @@ abstract ShortVector2(Int) from Int to Int
         return this & fieldMax;
     }
     
-    private inline function set_x(x:Int):Int
-    {
-        var self:ShortVector2 = this;
-        self = new ShortVector2(x, self.y);
-        return x;
-    }
-    
     private inline function get_y():Int
     {
         return (this >> bitsPerField) & fieldMax;
-    }
-    
-    private inline function set_y(y:Int):Int
-    {
-        var self:ShortVector2 = this;
-        self = new ShortVector2(self.x, y);
-        return y;
     }
     
     private inline function get_lengthSq():Int
