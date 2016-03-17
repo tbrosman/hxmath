@@ -266,6 +266,27 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     }
     
     /**
+     * Sets all the fields of this structure without allocation.
+     * 
+     * @param a
+     * @param b
+     * @param c
+     * @param d
+     * @return self
+     */
+    public inline function set(a:Float, b:Float, c:Float, d:Float):Matrix2x2
+    {
+        var self:Matrix2x2 = this;
+        
+        self.a = a;
+        self.b = b;
+        self.c = c;
+        self.d = d;
+        
+        return this;
+    }
+    
+    /**
      * Add a matrix in place.
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

@@ -332,6 +332,23 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     }
     
     /**
+     * Sets all the fields of this structure without allocation.
+     * 
+     * @param x
+     * @param y
+     * @return self
+     */
+    public inline function set(x:Float, y:Float):Vector2
+    {
+        var self:Vector2 = this;
+        
+        self.x = x;
+        self.y = y;
+        
+        return self;
+    }
+    
+    /**
      * Multiply a vector with a scalar in place.
      * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

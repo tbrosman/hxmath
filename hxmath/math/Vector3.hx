@@ -307,6 +307,25 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
     }
     
     /**
+     * Sets all the fields of this structure without allocation.
+     * 
+     * @param x
+     * @param y
+     * @param z
+     * @return self
+     */
+    public inline function set(x:Float, y:Float, z:Float):Vector3
+    {
+        var self:Vector3 = this;
+        
+        self.x = x;
+        self.y = y;
+        self.z = z;
+        
+        return self;
+    }
+    
+    /**
      * Cross product in place. The resulting vector (this) is orthogonal to the plane defined by the input vectors.
      * Note: %= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

@@ -202,6 +202,23 @@ abstract IntVector2(IntVector2Default) from IntVector2Default to IntVector2Defau
     }
     
     /**
+     * Sets all the fields of this structure without allocation.
+     * 
+     * @param x
+     * @param y
+     * @return self
+     */
+    public inline function set(x:Int, y:Int):IntVector2
+    {
+        var self:IntVector2 = this;
+        
+        self.x = x;
+        self.y = y;
+        
+        return self;
+    }
+    
+    /**
      * Multiply a vector with a scalar in place.
      * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

@@ -280,6 +280,27 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
     }
     
     /**
+     * Sets all the fields of this structure without allocation.
+     * 
+     * @param x
+     * @param y
+     * @param z
+     * @param w
+     * @return self
+     */
+    public inline function set(x:Float, y:Float, z:Float, w:Float):Vector4
+    {
+        var self:Vector4 = this;
+        
+        self.x = x;
+        self.y = y;
+        self.z = z;
+        self.w = w;
+        
+        return self;
+    }
+    
+    /**
      * Multiply a vector with a scalar in place.
      * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

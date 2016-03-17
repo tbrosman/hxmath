@@ -275,6 +275,27 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     }
     
     /**
+     * Sets all the fields of this structure without allocation.
+     * 
+     * @param s
+     * @param x
+     * @param y
+     * @param z
+     * @return self
+     */
+    public inline function set(s:Float, x:Float, y:Float, z:Float):Quaternion
+    {
+        var self:Quaternion = this;
+        
+        self.s = s;
+        self.x = x;
+        self.y = y;
+        self.z = z;
+        
+        return self;
+    }
+    
+    /**
      * Create an inverted copy.
      * 
      * @return  The inverse.

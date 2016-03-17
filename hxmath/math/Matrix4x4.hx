@@ -310,6 +310,58 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     }
     
     /**
+     * Sets all the fields of this structure without allocation.
+     * 
+     * @param m00
+     * @param m10
+     * @param m20
+     * @param m30
+     * @param m01
+     * @param m11
+     * @param m21
+     * @param m31
+     * @param m02
+     * @param m12
+     * @param m22
+     * @param m32
+     * @param m03
+     * @param m13
+     * @param m23
+     * @param m33
+     * @return self
+     */
+    public inline function set(
+        m00:Float, m10:Float, m20:Float, m30:Float,
+        m01:Float, m11:Float, m21:Float, m31:Float,
+        m02:Float, m12:Float, m22:Float, m32:Float,
+        m03:Float, m13:Float, m23:Float, m33:Float):Matrix4x4
+    {
+        var self:Matrix4x4 = this;
+        
+        self.m00 = m00;
+        self.m10 = m10;
+        self.m20 = m20;
+        self.m30 = m30;
+        
+        self.m01 = m01;
+        self.m11 = m11;
+        self.m21 = m21;
+        self.m31 = m31;
+        
+        self.m02 = m02;
+        self.m12 = m12;
+        self.m22 = m22;
+        self.m32 = m32;
+        
+        self.m03 = m03;
+        self.m13 = m13;
+        self.m23 = m23;
+        self.m33 = m33;
+        
+        return self;
+    }
+    
+    /**
      * Add a matrix in place.
      * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 

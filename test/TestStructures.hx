@@ -638,4 +638,34 @@ class TestStructures extends MathTestCase
         assertApproxEquals(1.0, Vector3.zero.distanceTo(Vector3.xAxis));
         assertApproxEquals(1.0, Vector4.zero.distanceTo(Vector4.xAxis));
     }
+    
+    public function testSetAllFields()
+    {
+        var v2 = Vector2.zero.set(23, 0);
+        assertEquals(23.0, v2.x);
+        
+        var v3 = Vector3.zero.set(23, 0, 0);
+        assertEquals(23.0, v3.x);
+        
+        var v4 = Vector4.zero.set(23, 0, 0, 0);
+        assertEquals(23.0, v4.x);
+        
+        var iv2 = IntVector2.zero.set(23, 0);
+        assertEquals(23, iv2.x);
+        
+        var q = Quaternion.zero.set(23, 0, 0, 0);
+        assertEquals(23.0, q.s);
+        
+        var m22 = Matrix2x2.zero.set(23, 0, 0, 0);
+        assertEquals(23.0, m22.a);
+        
+        var m32 = Matrix3x2.zero.set(23, 0, 0, 0, 0, 0);
+        assertEquals(23.0, m32.a);
+        
+        var m33 = Matrix3x3.zero.set(23, 0, 0, 0, 0, 0, 0, 0, 0);
+        assertEquals(23.0, m33.m00);
+        
+        var m44 = Matrix4x4.zero.set(23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        assertEquals(23.0, m44.m00);
+    }
 }
