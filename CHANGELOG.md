@@ -1,4 +1,13 @@
-## 0.14.0
+## 0.14.0 (03/16/2016)
+* Made ShortVector2's components unsettable. (issue #45)
+* Added in-place set() functions to all math structures (except ShortVector2 which is not settable in-place). (issue #43)
+* Added toString for Frame defaults. (issue #36)
+* Added ordered iteration for SparseArray2. (issue #42)
+* [breaking change] Changed DenseArray2.resize to always take a default value (issue #41).
+* Fixed DenseArray2.resize (issue #40).
+* orient2d allocates on some platforms due to use of enum. (issue #38)
+* IntVector2 should not implicitly convert to Vector2. (issue #39)
+* When wrapping angles, avoid relying on the target platform using a spcific sign convention for modulo. In the case of C++, for example, the convention isn't even specified in the standard.
 
 ## 0.13.0 (08/12/2015)
 * Added all appropriate Vector2 functions to IntVector2 and ShortVector2.

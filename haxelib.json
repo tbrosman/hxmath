@@ -5,7 +5,7 @@
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
   "version": "0.14.0",
-  "releasenote": "",
+  "releasenote": "Bugfixes and enhancements for DenseArray2. Ordered iteration for SparseArray2. Misc fixes for other structures. See CHANGELOG for details.",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
