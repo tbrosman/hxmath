@@ -201,7 +201,7 @@ class TestDataStructures extends MathTestCase
             [3, 4, 5]
         ];
         
-        var denseArray = DenseArray2.fromNestedArray(initialArray);
+        var denseArray = DenseArray2.fromNestedArray(initialArray, -1);
         
         for (key in denseArray.keys)
         {

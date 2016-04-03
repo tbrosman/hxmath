@@ -66,26 +66,37 @@ class DenseArray2<T> implements IArray2<T>
     
     private var array:Array<T>;
     
+    // The default value used to construct this array (needed for copying due to constructor signature)
+    private var defaultValue:T;
+    
     /**
-     * Constructor.
+     * Constructor. The underlying array will always be width*height in size and will always contain valid data.
      * 
      * @param width
      * @param height
+     * @param defaultValue  Used to fill in the array initially.
      */
-    public function new(width:Int, height:Int)
+    public function new(width:Int, height:Int, ?defaultValue:T)
     {
         array = new Array<T>();
         this.width = width;
         this.height = height;
+        this.defaultValue = defaultValue;
+        
+        for (i in 0...(width * height))
+        {
+            array[i] = defaultValue;
+        }
     }
     
     /**
      * Create a DenseArray2 from a jagged array in row-major order.
      * 
-     * @param source    The source array, possibly non-rectangular.
-     * @return          The resulting rectangular (dense) array.
+     * @param source        The source array, possibly non-rectangular.
+     * @param defaultValue  The default value to fill parts of the DenseArray2 not overlapped by the source (jagged) array.
+     * @return              The resulting rectangular (dense) array.
      */
-    public static inline function fromNestedArray<T>(source:Array<Array<T>>):DenseArray2<T>
+    public static inline function fromNestedArray<T>(source:Array<Array<T>>, ?defaultValue:T):DenseArray2<T>
     {
         var longestRowLength:Int = 0;
         
@@ -94,7 +105,7 @@ class DenseArray2<T> implements IArray2<T>
             longestRowLength = MathUtil.intMax(longestRowLength, row.length);
         }
         
-        var target:DenseArray2<T> = new DenseArray2<T>(longestRowLength, source.length);
+        var target:DenseArray2<T> = new DenseArray2<T>(longestRowLength, source.length, defaultValue);
         
         for (y in 0...target.height)
         {
@@ -191,8 +202,9 @@ class DenseArray2<T> implements IArray2<T>
      * 
      * @param newWidth      The new width.
      * @param newHeight     The new height.
+     * @param defaultValue  The default value to fill into non-overlapping empty space.
      */
-    public function resize(newWidth:Int, newHeight:Int, defaultValue:T)
+    public function resize(newWidth:Int, newHeight:Int, ?defaultValue:T)
     {
         var newArray = new Array<T>();
         
@@ -332,7 +344,7 @@ class DenseArray2<T> implements IArray2<T>
      */
     public inline function clone():DenseArray2<T>
     {
-        var copy = new DenseArray2<T>(width, height);
+        var copy = new DenseArray2<T>(width, height, defaultValue);
         
         for (y in 0...height)
         {
