@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["math", "cross"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
-  "version": "0.15.0",
-  "releasenote": "Fixed the DenseArray2 constructor so that it takes a default value. (issue #46)",
+  "version": "0.16.0",
+  "releasenote": "",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
