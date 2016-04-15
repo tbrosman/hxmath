@@ -1,4 +1,5 @@
-## 0.15.0
+## 0.15.0 (04/14/2016)
+* Fixed the DenseArray2 constructor so that it takes a default value. (issue #46)
 
 ## 0.14.0 (03/16/2016)
 * Made ShortVector2's components unsettable. (issue #45)
