@@ -763,6 +763,65 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
         
         return self;
     }
+	
+	public inline function multiplyScalar(value:Float):Void
+	{
+		this.m00 *= value;
+		this.m01 *= value;
+		this.m02 *= value;
+		this.m03 *= value;
+		this.m10 *= value;
+		this.m11 *= value;
+		this.m12 *= value;
+		this.m13 *= value;
+		this.m20 *= value;
+		this.m21 *= value;
+		this.m22 *= value;
+		this.m23 *= value;
+		this.m30 *= value;
+		this.m31 *= value;
+		this.m32 *= value;
+		this.m33 *= value;
+	}
+	
+	public inline function invert():Matrix4x4
+	{
+        var self:Matrix4x4 = this;
+		// based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
+		
+		var n11 = self.m00, n12 = self.m01, n13 = self.m02, n14 = self.m03;
+		var n21 = self.m10, n22 = self.m11, n23 = self.m12, n24 = self.m13;
+		var n31 = self.m20, n32 = self.m21, n33 = self.m22, n34 = self.m23;
+		var n41 = self.m30, n42 = self.m31, n43 = self.m32, n44 = self.m33;
+		
+		self.m00 = n23 * n34 * n42 - n24 * n33 * n42 + n24 * n32 * n43 - n22 * n34 * n43 - n23 * n32 * n44 + n22 * n33 * n44;
+		self.m01 = n14 * n33 * n42 - n13 * n34 * n42 - n14 * n32 * n43 + n12 * n34 * n43 + n13 * n32 * n44 - n12 * n33 * n44;
+		self.m02 = n13 * n24 * n42 - n14 * n23 * n42 + n14 * n22 * n43 - n12 * n24 * n43 - n13 * n22 * n44 + n12 * n23 * n44;
+		self.m03 = n14 * n23 * n32 - n13 * n24 * n32 - n14 * n22 * n33 + n12 * n24 * n33 + n13 * n22 * n34 - n12 * n23 * n34;
+		self.m10 = n24 * n33 * n41 - n23 * n34 * n41 - n24 * n31 * n43 + n21 * n34 * n43 + n23 * n31 * n44 - n21 * n33 * n44;
+		self.m11 = n13 * n34 * n41 - n14 * n33 * n41 + n14 * n31 * n43 - n11 * n34 * n43 - n13 * n31 * n44 + n11 * n33 * n44;
+		self.m12 = n14 * n23 * n41 - n13 * n24 * n41 - n14 * n21 * n43 + n11 * n24 * n43 + n13 * n21 * n44 - n11 * n23 * n44;
+		self.m13 = n13 * n24 * n31 - n14 * n23 * n31 + n14 * n21 * n33 - n11 * n24 * n33 - n13 * n21 * n34 + n11 * n23 * n34;
+		self.m20 = n22 * n34 * n41 - n24 * n32 * n41 + n24 * n31 * n42 - n21 * n34 * n42 - n22 * n31 * n44 + n21 * n32 * n44;
+		self.m21 = n14 * n32 * n41 - n12 * n34 * n41 - n14 * n31 * n42 + n11 * n34 * n42 + n12 * n31 * n44 - n11 * n32 * n44;
+		self.m22 = n12 * n24 * n41 - n14 * n22 * n41 + n14 * n21 * n42 - n11 * n24 * n42 - n12 * n21 * n44 + n11 * n22 * n44;
+		self.m23 = n14 * n22 * n31 - n12 * n24 * n31 - n14 * n21 * n32 + n11 * n24 * n32 + n12 * n21 * n34 - n11 * n22 * n34;
+		self.m30 = n23 * n32 * n41 - n22 * n33 * n41 - n23 * n31 * n42 + n21 * n33 * n42 + n22 * n31 * n43 - n21 * n32 * n43;
+		self.m31 = n12 * n33 * n41 - n13 * n32 * n41 + n13 * n31 * n42 - n11 * n33 * n42 - n12 * n31 * n43 + n11 * n32 * n43;
+		self.m32 = n13 * n22 * n41 - n12 * n23 * n41 - n13 * n21 * n42 + n11 * n23 * n42 + n12 * n21 * n43 - n11 * n22 * n43;
+		self.m33 = n12 * n23 * n31 - n13 * n22 * n31 + n13 * n21 * n32 - n11 * n23 * n32 - n12 * n21 * n33 + n11 * n22 * n33;
+		
+		var det = n11 * self.m00 + n21 * self.m01 + n31 * self.m02 + n41 * self.m03;
+		if (det == 0)
+		{
+			self = Matrix4x4.identity;
+			return this;
+		}
+		
+		self.multiplyScalar(1 / det);
+		
+		return this;
+	}
     
     /**
      * Transpose the upper 3x3 block (the linear sub-matrix in a homogenous matrix).
