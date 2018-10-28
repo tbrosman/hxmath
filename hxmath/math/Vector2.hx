@@ -140,7 +140,10 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
         
         if (func == null)
         {
-            func = Std.int;
+            func = function (x:Float):Int
+            { 
+                return Std.int(x);
+            };
         }
         
         return new IntVector2(func(self.x), func(self.y));
