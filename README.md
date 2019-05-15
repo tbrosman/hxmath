@@ -24,16 +24,16 @@ Just math, nothing else. Use with your libraries of choice without including ten
 Why write this:
 
 ```haxe
-    a.subtract(b).dot(c.cross(d))
+a.subtract(b).dot(c.cross(d))
 ```
 
 when you can write this:
 
 ```haxe
-    (a - b) * (c % d)
+(a - b) * (c % d)
 ```
 
-('%' chosen due to operator precedence)
+(`%` chosen due to operator precedence)
 
 ### Consistency across platforms
 
@@ -43,11 +43,11 @@ Using OpenFL? Add `-D HXMATH_USE_OPENFL_STRUCTURES` to your build parameters and
 
 For example, since openfl.geom.Point will be the inner type, you can cast to a Vector2 without copying:
 ```haxe
-        var pointA = new flixel.util.FlxPoint(3.0, 2.0);
-        var pointACast:Vector2 = new Vector2(pointA.x, pointA.y);
-        var pointBCast:Vector2 = new flash.geom.Point(2.0, 1.0);
-        
-        trace(pointACast * pointBCast);
+var pointA = new flixel.util.FlxPoint(3.0, 2.0);
+var pointACast:Vector2 = new Vector2(pointA.x, pointA.y);
+var pointBCast:Vector2 = new flash.geom.Point(2.0, 1.0);
+
+trace(pointACast * pointBCast);
 ```
 
 Not using OpenFL? hxmath can run without it, falling back on its default inner types.
@@ -63,29 +63,29 @@ Both affine and linear structures:
 More expressive than matrices with intuitive to/from notation. Example: say your character has an `armFrame` and a `bodyFrame`, with the `armFrame` oriented at a 90 degree angle to the `bodyFrame` and offset by 10 units up, 4 units right:
 
 ```haxe
-    var armFrame = new Frame2(new Vector2(4.0, 10.0), 90);
+var armFrame = new Frame2(new Vector2(4.0, 10.0), 90);
 ```
 
 To get a point defined in the `armFrame` into the `bodyFrame you would write:
 
 ```haxe
-    var bodyPoint = armFrame.transformFrom(armPoint);
+var bodyPoint = armFrame.transformFrom(armPoint);
 ```
 
 Similarly, to get a point from the `bodyFrame` to the `armFrame`:
 
 ```haxe
-    var armPoint = armFrame.transformTo(bodyPoint);
+var armPoint = armFrame.transformTo(bodyPoint);
 ```
 
 If the `bodyFrame` is defined in the `worldFrame`, to create a combined transformation from the `armFrame` to `worldFrame`:
 
 ```haxe
-    // In the from direction: apply armFrame.from followed by bodyFrame.from
-	//   (bodyFrame.matrix * armFrame.matrix)
-	// In the to direction:   apply bodyFrame.to  followed by armFrame.to   
-	//   (armFrame.inverse().matrix * bodyFrame.inverse().matrix) == (bodyFrame * armFrame).inverse().matrix
-    var armInWorldFrame = bodyFrame.concat(armFrame);
+// In the from direction: apply armFrame.from followed by bodyFrame.from
+//   (bodyFrame.matrix * armFrame.matrix)
+// In the to direction:   apply bodyFrame.to  followed by armFrame.to   
+//   (armFrame.inverse().matrix * bodyFrame.inverse().matrix) == (bodyFrame * armFrame).inverse().matrix
+var armInWorldFrame = bodyFrame.concat(armFrame);
 ```
 
 ## Conventions
