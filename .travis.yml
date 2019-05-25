@@ -6,11 +6,13 @@ dist: trusty
 language: haxe
 
 haxe:
+ - "3.4.7"
  - "4.0.0-rc.2"
  - "development"
 
 install:
  - haxelib dev hxmath .
+ - haxelib install hxcpp
  - haxelib install nanotest
 
 script:
