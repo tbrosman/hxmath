@@ -1,4 +1,5 @@
-## 0.16.0
+## 0.16.0 (5/25/2019)
+* Haxe 4 support
 
 ## 0.15.0 (04/14/2016)
 * Fixed the DenseArray2 constructor so that it takes a default value. (issue #46)
