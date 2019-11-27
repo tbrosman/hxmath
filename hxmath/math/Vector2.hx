@@ -28,6 +28,8 @@ class Vector2Default
 
 #if HXMATH_USE_OPENFL_STRUCTURES
 typedef Vector2Type = flash.geom.Point;
+#elseif HXMATH_USE_HEAPS_STRUCTURES
+typedef Vector2Type = h2d.col.Point;
 #else
 typedef Vector2Type = Vector2Default;
 #end
@@ -78,6 +80,8 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     {
         #if HXMATH_USE_OPENFL_STRUCTURES
         this = new flash.geom.Point(x, y);
+        #elseif HXMATH_USE_HEAPS_STRUCTURES
+        this = new h2d.col.Point(x, y);
         #else
         this = new Vector2Default(x, y);
         #end

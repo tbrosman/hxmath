@@ -34,6 +34,8 @@ class Vector4Default
 
 #if HXMATH_USE_OPENFL_STRUCTURES
 typedef Vector4Type = flash.geom.Vector3D;
+#elseif HXMATH_USE_HEAPS_STRUCTURES
+typedef Vector4Type = h3d.Vector;
 #else
 typedef Vector4Type = Vector4Default;
 #end
@@ -80,6 +82,8 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
     {
         #if HXMATH_USE_OPENFL_STRUCTURES
         this = new flash.geom.Vector3D(x, y, z, w);
+        #elseif HXMATH_USE_HEAPS_STRUCTURES
+        this = new h3d.Vector(x, y, z, w);
         #else
         this = new Vector4Default(x, y, z, w);
         #end

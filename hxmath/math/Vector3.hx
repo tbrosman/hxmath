@@ -29,7 +29,11 @@ class Vector3Default
     }
 }
 
+#if HXMATH_USE_HEAPS_STRUCTURES
+typedef Vector3Type = h3d.col.Point;
+#else
 typedef Vector3Type = Vector3Default;
+#end
 
 /**
  * A 3D vector.
@@ -67,7 +71,11 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
      */
     public inline function new(x:Float, y:Float, z:Float)
     {
+        #if HXMATH_USE_HEAPS_STRUCTURES
+        this = new h3d.col.Point(x, y, z);
+        #else
         this = new Vector3Default(x, y, z);
+        #end
     }
     
     /**

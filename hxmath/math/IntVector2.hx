@@ -20,11 +20,17 @@ class IntVector2Default
     }
 }
 
+#if HXMATH_USE_HEAPS_STRUCTURES
+typedef IntVector2Type = h2d.col.IPoint;
+#else
+typedef IntVector2Type = IntVector2Default;
+#end
+
 /**
  * A 2D vector with integer values. Used primarily for indexing into 2D grids.
  */
 @:forward(x, y)
-abstract IntVector2(IntVector2Default) from IntVector2Default to IntVector2Default
+abstract IntVector2(IntVector2Type) from IntVector2Type to IntVector2Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 2;
@@ -55,7 +61,11 @@ abstract IntVector2(IntVector2Default) from IntVector2Default to IntVector2Defau
      */
     public function new(x:Int, y:Int)
     {
+        #if HXMATH_USE_HEAPS_STRUCTURES
+        this = new h2d.col.IPoint(x, y);
+        #else
         this = new IntVector2Default(x, y);
+        #end
     }
     
     /**
