@@ -50,7 +50,9 @@ var pointBCast:Vector2 = new flash.geom.Point(2.0, 1.0);
 trace(pointACast * pointBCast);
 ```
 
-Not using OpenFL? hxmath can run without it, falling back on its default inner types.
+Using Heaps? Adding `-D HXMATH_USE_HEAPS_STRUCTURES` to your build parameters to use Heaps math types with hxmath instead.
+
+Not using either? hxmath can run without them, falling back on its default inner types.
 
 ### 2D and 3D math
 Both affine and linear structures:
