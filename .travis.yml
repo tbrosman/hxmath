@@ -7,7 +7,7 @@ language: haxe
 
 haxe:
  - "3.4.7"
- - "4.0.0-rc.2"
+ - "4.0.5"
 
 install:
  - haxelib dev hxmath .
@@ -17,3 +17,4 @@ install:
 script:
  - haxe test_cpp.hxml
  - haxe test_neko.hxml
+ - haxe test_hashlink.hxml
