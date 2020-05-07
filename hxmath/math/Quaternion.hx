@@ -119,7 +119,8 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      * @return            The quaternion.
      **/
     public static inline
-    function fromYawPitchRoll( yaw: Float, pitch: Float, roll: Float ):Quaternion{
+    function fromYawPitchRoll( yaw: Float, pitch: Float, roll: Float ):Quaternion
+    {
         var n9 = roll * 0.5;
         var n6 = Math.sin( n9 );
         var n5 = Math.cos( n9 );
@@ -134,6 +135,38 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
                               , ((n2 * n3) * n5) - ((n1 * n4) * n6)
                               , ((n1 * n3) * n6) - ((n2 * n4) * n5)
                               );
+    }
+    
+    /**
+     * input/output euler as rotation angles around x, y, z axis ( as faux Quaternion ), 
+     * but set /gets internally as the Quaternion value
+     * 
+     **/
+    public var euler( get, set ): Quaternion;
+    private inline
+    function set_euler( a: Quaternion ):Quaternion {
+        var x5 = a.x*.5;
+        var y5 = a.y*.5;
+        var z5 = a.z*.5;
+        var cx = Math.cos( x5 );
+        var sx = Math.sin( x5 );
+        var cy = Math.cos( y5 );
+        var sy = Math.sin( y5 );
+        var cz = Math.cos( z5 );
+        var sz = Math.sin( z5 );
+        this.s = cx*cy*cz + sx*sy*sz;
+        this.x = sx*cy*cz - cx*sy*sz;
+        this.y = cx*sy*cz + sx*cy*sz;
+        this.z = cx*cy*sz - sx*sy*cz;
+        return this;
+    }
+    private inline
+    function get_euler(): Quaternion {
+        return new Quaternion( 1.
+                             , Math.atan2( 2*(this.s*this.x + this.y*this.z), 1 - 2*(this.x*this.x + this.y*this.y))
+                             , Math.asin(2*(this.s*this.y - this.z*this.x))
+                             , Math.atan2(2*(this.s*this.z + this.x*this.y), 1 - 2*(this.y*this.y + this.z*this.z))
+                             );
     }
     
     /**
