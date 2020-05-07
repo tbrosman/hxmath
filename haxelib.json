@@ -6,7 +6,7 @@
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL).",
   "version": "0.16.0",
   "releasenote": "Haxe 4 support.",
-  "contributors": ["tbrosman"],
+  "contributors": ["tbrosman","nanjizal"],
   "dependencies": {
   }
 }

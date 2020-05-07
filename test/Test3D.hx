@@ -1,5 +1,5 @@
 package test;
-
+import hxmath.math.DualQuaternion;
 import hxmath.frames.Frame3;
 import hxmath.math.MathUtil;
 import hxmath.math.Matrix3x3;

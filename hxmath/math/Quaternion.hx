@@ -618,6 +618,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             .normalize();
     }
     
+    public static inline function scalarReal( s: Float ): Quaternion 
+    {
+        return new Quaternion( Math.sqrt( s ), 0, 0, 0 );
+    }
+    
     private static inline function get_zero():Quaternion
     {
         return new Quaternion(0, 0, 0, 0);
@@ -662,4 +667,5 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         return (1.0 / self.length) * self;
     }
+    
 }
