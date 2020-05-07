@@ -1,9 +1,17 @@
+-cmd echo 'js test'
+-cmd haxe test_js.hxml
+-cmd node "bin/javascript/test.js" 
+#1>bin/javascript/report/js.txt
+-D EXIT_ON_FINISH
+--next
+-cmd echo 'neko test'
 -cmd haxe test_neko.hxml
 -cmd cd bin
 -cmd cd neko/
 -cmd neko Test.n
 -D EXIT_ON_FINISH
 --next
+-cmd echo 'cppia test'
 -cmd cd ../../
 -cmd haxe test_cppia.hxml
 -cmd cd bin
@@ -11,10 +19,12 @@
 -cmd haxelib run hxcpp test.cppia
 -D EXIT_ON_FINISH
 --next
+-cmd echo 'eval test'
 -cmd cd ../../
 -cmd haxe test_eval.hxml
 -D EXIT_ON_FINISH
 --next
+-cmd echo 'cpp test'
 -cmd cd ../../
 -cmd haxe test_cpp.hxml
 -cmd cd bin

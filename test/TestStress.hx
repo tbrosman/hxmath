@@ -3,7 +3,7 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
 import hxmath.math.Vector2;
-
+#if !js
 class TestStress extends MathTestCase
 {
     public function testDotProduct()
@@ -209,3 +209,4 @@ class TestStress extends MathTestCase
         trace('abstracts / direct = ${abstractTime / classTime}');
     }
 }
+#end

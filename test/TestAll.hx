@@ -29,7 +29,9 @@ class TestAll
         
         if (doStressTests)
         {
+            #if !js
             runner.add(new TestStress());
+            #end
         }
         
         return runner.run();
