@@ -130,7 +130,7 @@ class Test3D extends MathTestCase
         }
     }
     
-    public function testMatrixFrameDualQuaternionInverse()
+    public function testInverseMatrixFrameDualQuaternionInverse()
     {
         for (i in 0...10)
         {
@@ -167,6 +167,33 @@ class Test3D extends MathTestCase
             assertApproxEquals(0.0, (invDualQMatrix * homogenousX - frameMatrixInv * homogenousX).lengthSq);
             assertApproxEquals(0.0, (invDualQMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
             assertApproxEquals(0.0, (invDualQMatrix * homogenousZ - frameMatrixInv * homogenousZ).lengthSq);
+        }
+    }
+    
+    public function testMatrixFrameDualQuaternionInverse()
+    {
+        for (i in 0...10)
+        {
+            // Create a non-degenerate frame
+            var dualQ_Frame3 = randomDualQuaternionAndFrame3();
+            var frame = dualQ_Frame3.frame3;
+            var dualQ = dualQ_Frame3.dualQ;
+            
+            var frameMatrix = frame.matrix;
+            var frameDualQ = dualQ.matrix;
+            
+            // A unit tetrahedron in 3D using homogenous points
+            var homogenous0 = new Vector4(0.0, 0.0, 0.0, 1.0);
+            var homogenousX = new Vector4(1.0, 0.0, 0.0, 1.0);
+            var homogenousY = new Vector4(0.0, 1.0, 0.0, 1.0);
+            var homogenousZ = new Vector4(0.0, 0.0, 1.0, 1.0);
+            
+            // The tetrahedron should be transformed identically by both matrices
+            
+            assertApproxEquals(0.0, (frameMatrix * homogenous0 - frameDualQ * homogenous0).lengthSq);
+            assertApproxEquals(0.0, (frameMatrix * homogenousX - frameDualQ * homogenousX).lengthSq);
+            assertApproxEquals(0.0, (frameMatrix * homogenousY - frameDualQ * homogenousY).lengthSq);
+            assertApproxEquals(0.0, (frameMatrix * homogenousZ - frameDualQ * homogenousZ).lengthSq);
         }
     }
     
