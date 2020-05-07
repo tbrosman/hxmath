@@ -5,10 +5,10 @@ typedef Matrix3x2Shape =
     // m00
     public var a:Float;
     
-    // m10
+    // m01
     public var b:Float;
     
-    // m01
+    // m10
     public var c:Float;
     
     // m11
@@ -85,8 +85,8 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
      * Note: the linear portion (a, b, c, d) is row-major, but the affine portion (tx, ty) is column-major.
      * 
      * @param a     m00
-     * @param b     m10
-     * @param c     m01
+     * @param b     m01
+     * @param c     m10
      * @param d     m11
      * @param tx    m20
      * @param ty    m21
@@ -354,8 +354,8 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
         var c = Math.cos(angle);
         
         self.a = c;
-        self.b = -s;
-        self.c = s;
+        self.b = s;
+        self.c = -s;
         self.d = c;
         
         return self;
@@ -646,8 +646,8 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
         self.applySubMatrixTranspose();
         
         // The inverse of the translation is equal to -M^T * translation
-        var tx = -(self.a * self.tx + self.b * self.ty);
-        var ty = -(self.c * self.tx + self.d * self.ty);
+        var tx = -(self.a * self.tx + self.c * self.ty);
+        var ty = -(self.b * self.tx + self.d * self.ty);
         
         self.tx = tx;
         self.ty = ty;
