@@ -119,7 +119,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      * @return            The quaternion.
      **/
     public static inline
-    function fromYawPitchRoll( yaw: Float, pitch: Float, roll: Float ):Quaternion
+    function fromYawPitchRoll(yaw:Float, pitch:Float, roll:Float):Quaternion
     {
         var n9 = roll * 0.5;
         var n6 = Math.sin( n9 );
@@ -142,9 +142,10 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      * but set /gets internally as the Quaternion value
      * 
      **/
-    public var euler( get, set ): Quaternion;
+    public var euler(get, set): Quaternion;
     private inline
-    function set_euler( a: Quaternion ):Quaternion {
+    function set_euler(a: Quaternion):Quaternion 
+    {
         var x5 = a.x*.5;
         var y5 = a.y*.5;
         var z5 = a.z*.5;
@@ -161,7 +162,8 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         return this;
     }
     private inline
-    function get_euler(): Quaternion {
+    function get_euler(): Quaternion 
+    {
         return new Quaternion( 1.
                              , Math.atan2( 2*(this.s*this.x + this.y*this.z), 1 - 2*(this.x*this.x + this.y*this.y))
                              , Math.asin(2*(this.s*this.y - this.z*this.x))
