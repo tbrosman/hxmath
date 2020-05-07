@@ -130,6 +130,46 @@ class Test3D extends MathTestCase
         }
     }
     
+    public function testMatrixFrameDualQuaternionInverse()
+    {
+        for (i in 0...10)
+        {
+            // Create a non-degenerate frame
+            var dualQ_Frame3 = randomDualQuaternionAndFrame3();
+            var frame = dualQ_Frame3.frame3;
+            var dualQ = dualQ_Frame3.dualQ;
+            
+            // Get the inverse (the matrix should be equivalent)
+            var invFrame = frame.inverse();
+            var invDualQ = dualQ.invert();
+            var frameMatrix = frame.matrix;
+            var frameDualQ = dualQ.matrix;
+            
+            // Both methods of inverting the frame should be equivalent
+            var invFrameMatrix = invFrame.matrix;
+            var invDualQMatrix = invDualQ.matrix;
+            var frameMatrixInv = frame.matrix.applyInvertFrame();
+            var dualQMatrixInv = dualQ.matrix.applyInvertFrame();
+            
+            // A unit tetrahedron in 3D using homogenous points
+            var homogenous0 = new Vector4(0.0, 0.0, 0.0, 1.0);
+            var homogenousX = new Vector4(1.0, 0.0, 0.0, 1.0);
+            var homogenousY = new Vector4(0.0, 1.0, 0.0, 1.0);
+            var homogenousZ = new Vector4(0.0, 0.0, 1.0, 1.0);
+            
+            // The tetrahedron should be transformed identically by both matrices
+            assertApproxEquals(0.0, (invFrameMatrix * homogenous0 - frameMatrixInv * homogenous0).lengthSq);
+            assertApproxEquals(0.0, (invFrameMatrix * homogenousX - frameMatrixInv * homogenousX).lengthSq);
+            assertApproxEquals(0.0, (invFrameMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
+            assertApproxEquals(0.0, (invFrameMatrix * homogenousZ - frameMatrixInv * homogenousZ).lengthSq);
+            
+            assertApproxEquals(0.0, (invDualQMatrix * homogenous0 - frameMatrixInv * homogenous0).lengthSq);
+            assertApproxEquals(0.0, (invDualQMatrix * homogenousX - frameMatrixInv * homogenousX).lengthSq);
+            assertApproxEquals(0.0, (invDualQMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
+            assertApproxEquals(0.0, (invDualQMatrix * homogenousZ - frameMatrixInv * homogenousZ).lengthSq);
+        }
+    }
+    
     public function testQuaternionInverse()
     {
         for (i in 0...10)

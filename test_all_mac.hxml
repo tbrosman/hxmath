@@ -1,0 +1,26 @@
+-cmd haxe test_neko.hxml
+-cmd cd bin
+-cmd cd neko/
+-cmd neko Test.n
+-D EXIT_ON_FINISH
+--next
+-cmd cd ../../
+-cmd haxe test_cppia.hxml
+-cmd cd bin
+-cmd cd cppia/
+-cmd haxelib run hxcpp test.cppia
+-D EXIT_ON_FINISH
+--next
+-cmd cd ../../
+-cmd haxe test_eval.hxml
+-D EXIT_ON_FINISH
+--next
+-cmd cd ../../
+-cmd haxe test_cpp.hxml
+-cmd cd bin
+-cmd cd cpp/
+-cmd ./Test-debug
+-D EXIT_ON_FINISH
+--next
+-D EXIT_ON_FINISH
+# waiting for brew HashLink formula so not currently easy to test on mac?

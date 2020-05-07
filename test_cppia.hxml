@@ -1,0 +1,8 @@
+-cp .
+-main Test
+-lib nanotest
+-dce full
+-cppia test.cppia
+-cmd mkdir -p bin/cppia
+-cmd mv test.cppia bin/cppia/test.cppia
+-D EXIT_ON_FINISH
