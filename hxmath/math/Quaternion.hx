@@ -111,6 +111,32 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     }
     
     /**
+     * used to set yaw pitch and roll ( very similar to set euler ) but static.
+     *
+     * @param x           Pitch
+     * @param y           Yaw
+     * @param z           Roll
+     * @return            The quaternion.
+     **/
+    public static inline
+    function fromYawPitchRoll( yaw: Float, pitch: Float, roll: Float ):Quaternion{
+        var n9 = roll * 0.5;
+        var n6 = Math.sin( n9 );
+        var n5 = Math.cos( n9 );
+        var n8 = pitch * 0.5;
+        var n4 = Math.sin( n8 );
+        var n3 = Math.cos( n8 );
+        var n7 = yaw * 0.5;
+        var n2 = Math.sin( n7 );
+        var n1 = Math.cos( n7 );
+        return new Quaternion(  ((n1 * n3) * n5) + ((n2 * n4) * n6) 
+                              , ((n1 * n4) * n5) + ((n2 * n3) * n6)
+                              , ((n2 * n3) * n5) - ((n1 * n4) * n6)
+                              , ((n1 * n3) * n6) - ((n2 * n4) * n5)
+                              );
+    }
+    
+    /**
      * Multiply a (real) scalar with a quaternion.
      * 
      * @param a
