@@ -179,7 +179,7 @@ class Test3D extends MathTestCase
         assertApproxEquals(1.0, product.real.s);
     }
 
-    public function testDualQuaternionInverse_GeometricTest()
+    public function testDualQuaternionInverse_Basic()
     {
         // (Translate(10, 0, 0) * Rotate(90, y))^-1 =
         // Rotate(-90, y) * Translate(-Rotate(-90, y) * (10, 0, 0)) =
