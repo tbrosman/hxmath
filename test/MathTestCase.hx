@@ -154,7 +154,7 @@ class MathTestCase extends NanoTestCase
     {
         var real = randomQuaternion(precision).normal;
         var vec3 = randomVector3(precision);
-        var vec4 = new Vector4(1., vec3.x, vec3.y, vec3.z);
+        var vec4 = new Vector4(vec3.x, vec3.y, vec3.z, 1.0);
         return { dualQ: DualQuaternion.create(real, vec4), frame3: new Frame3(vec3, real)};
     }
 }

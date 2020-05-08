@@ -126,9 +126,8 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
      */
     public inline function getTranslation(): Vector4 
     {
-        var q = ( this.dual * 2. );
-        q = q * ~this.real;
-        return new Vector4(q.x, q.y, q.z, 1.);
+        var q = this.dual * (~this.real) * 2.0;
+        return new Vector4(q.x, q.y, q.z, 1.0);
     }
     
     /**
@@ -313,7 +312,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
      */
     public inline function addWith(a:DualQuaternion):DualQuaternion
     {
-        return new DualQuaternion( this.real - a.real, this.dual - a.dual );
+        return new DualQuaternion( this.real + a.real, this.dual + a.dual );
     }
     
     /**
@@ -342,7 +341,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
     }
     
     /**
-     * Multiply two dualquaternions.
+     * Multiply two dual quaternions.
      * 
      * @param a
      * @param b
@@ -352,7 +351,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
     public static inline
     function multiplyQ( q1: DualQuaternion, q2: DualQuaternion ):DualQuaternion
     {
-        return new DualQuaternion(q2.real * q1.real, q2.dual * q1.real + q1.dual * q2.real);
+        return new DualQuaternion(q1.real * q2.real, q1.real * q2.dual + q1.dual * q2.real);
     }
     
     private static inline function get_zero(): DualQuaternion
@@ -407,7 +406,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
     }
     
     @:to
-    public inline function toMatrix4x4(): Matrix4x4
+    public function toMatrix4x4(): Matrix4x4
     {
         var q = normalize();
         var m = Matrix4x4.identity;
@@ -429,7 +428,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
         m.m22 = s*s + z*z - x*x - y*y; 
         m.m23 = 0.;
         // Extract translation information
-        var t = q.getTranslation();
+        var t = getTranslation();
         m.m30 = t.x;
         m.m31 = t.y;
         m.m32 = t.z;
@@ -492,14 +491,25 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
         this.dual.set(s, x, y, z);
         return self;
     }
+
     /**
      * Create an inverted copy.
+     * 
+     * The inverse of (p + eq) (where e is nilpotent under multiplication) is p^-1 (1 - e q p^1). Short proof of right-hand inverse
+     * (left-hand can be proved similarly):
+     * 
+     * (p + e q) (p^-1 (1 - e q p^1)) =
+     * (p + e q) (p^-1 - e (p^-1 q p^1)) =
+     * (p p^-1) - e (p p^-1 q p^1) + e (q p^-1) - e^2 (q p^-1 q p^1) =
+     * (p p^-1) - e (q p^-1) + e (q p^-1) =
+     * 1
      * 
      * @return  The inverse.
      */
     public inline function invert():DualQuaternion
     {
-        return new DualQuaternion( this.real.invert(), this.dual.invert() );
+        var realInv = this.real.invert();
+        return new DualQuaternion(realInv, Quaternion.zero) * new DualQuaternion(Quaternion.identity, -this.dual * realInv);
     }
     
     /**
@@ -627,8 +637,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
      */
     public inline function applyInvert():DualQuaternion
     {
-        this.real.applyInvert;
-        this.dual.applyInvert;
+        this = invert();
         var self: DualQuaternion = this;
         return self;
     }

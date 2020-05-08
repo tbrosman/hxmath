@@ -148,7 +148,7 @@ class Test3D extends MathTestCase
             // Both methods of inverting the frame should be equivalent
             var invFrameMatrix = invFrame.matrix;
             var invDualQMatrix = invDualQ.matrix;
-            var frameMatrixInv = frame.matrix.applyInvertFrame();
+            var frameMatrixInv = frame.matrix.clone().applyInvertFrame();
             var dualQMatrixInv = dualQ.matrix.applyInvertFrame();
             
             // A unit tetrahedron in 3D using homogenous points
@@ -168,6 +168,44 @@ class Test3D extends MathTestCase
             assertApproxEquals(0.0, (invDualQMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
             assertApproxEquals(0.0, (invDualQMatrix * homogenousZ - frameMatrixInv * homogenousZ).lengthSq);
         }
+    }
+
+    public function testDualQuaternionInverse_Multiplication()
+    {
+        var dualQ = DualQuaternion.fromAxisAngle(90, Vector3.yAxis, new Vector4(10, 0, 0, 1));
+        var dualQInv = dualQ.invert();
+        var product = dualQ * dualQInv;
+        assertApproxEquals(1.0, product.length);
+        assertApproxEquals(1.0, product.real.s);
+    }
+
+    public function testDualQuaternionInverse_Basic()
+    {
+        // (Translate(10, 0, 0) * Rotate(90, y))^-1 =
+        // Rotate(-90, y) * Translate(-Rotate(-90, y) * (10, 0, 0)) =
+        // Rotate(-90, y) * Translate(0, 0, -10)
+        var dualQ = DualQuaternion.fromAxisAngle(90, Vector3.yAxis, new Vector4(10, 0, 0, 1));
+
+        var dualQInv = dualQ.invert();
+        var dualQInvTranslation = dualQInv.getTranslation();
+        var dualQInvRotation = dualQInv.real;
+
+        assertApproxEquals(0.0, (dualQInvTranslation - new Vector4(0, 0, -10, 1)).length);
+        assertApproxEquals(0.0, (dualQInvRotation - Quaternion.fromAxisAngle(-90, Vector3.yAxis)).length);
+
+        var expectedMatrix = new Matrix4x4(
+            0, 0, -1,   0,
+            0, 1, 0,    0,
+            1, 0, 0,   -10,
+            0, 0, 0,    1
+        );
+
+        var dualQInvMatrix = dualQInv.matrix;
+
+        assertApproxEquals(0.0, (dualQInvMatrix.col(0) - expectedMatrix.col(0)).length);
+        assertApproxEquals(0.0, (dualQInvMatrix.col(1) - expectedMatrix.col(1)).length);
+        assertApproxEquals(0.0, (dualQInvMatrix.col(2) - expectedMatrix.col(2)).length);
+        assertApproxEquals(0.0, (dualQInvMatrix.col(3) - expectedMatrix.col(3)).length);
     }
     
     public function testMatrixFrameDualQuaternionInverse()
