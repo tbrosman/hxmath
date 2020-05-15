@@ -136,7 +136,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
      * 
      * @return         The rotational Quaternion
      */
-    public inline function getRotationQuat(): Quaternion 
+    public inline function getRotation(): Quaternion 
     {
         return this.real.clone();
     }
@@ -199,7 +199,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
      * @return       ~a
      */
     @:op(~A)
-    public static inline function conjugate(a: DualQuaternion):DualQuaternion
+    public static inline function complexConjugate(a: DualQuaternion):DualQuaternion
     {
         return new DualQuaternion(~a.real, ~a.dual);
     }
@@ -349,7 +349,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
      */
     @:op(A * B)
     public static inline
-    function multiplyQ( q1: DualQuaternion, q2: DualQuaternion ):DualQuaternion
+    function multiply( q1: DualQuaternion, q2: DualQuaternion ):DualQuaternion
     {
         return new DualQuaternion(q1.real * q2.real, q1.real * q2.dual + q1.dual * q2.real);
     }
@@ -361,7 +361,7 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
     
     private static inline function get_identity():DualQuaternion
     {
-        return new DualQuaternion(Quaternion.identity, Quaternion.identity);
+        return new DualQuaternion(Quaternion.identity, Quaternion.zero);
     }
     
     private inline function get_normal():DualQuaternion
@@ -457,39 +457,6 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
         return new DualQuaternion( Quaternion.slerp(a.real, b.real,t)
                                  , Quaternion.slerp(a.dual, b.dual,t)
                                  );
-    }
-    
-    /**
-     * Sets real fields of this structure without allocation.
-     * does not normalize see 'create'
-     * 
-     * @param s
-     * @param x
-     * @param y
-     * @param z
-     * @return self
-     */
-    public inline function setReal(s:Float, x:Float, y:Float, z:Float):DualQuaternion
-    {
-        var self: DualQuaternion = this;
-        this.real.set(s, x, y, z);
-        return self;
-    }
-    
-    /**
-     * Sets real fields of this structure without allocation.
-     * 
-     * @param s
-     * @param x
-     * @param y
-     * @param z
-     * @return self
-     */
-    public inline function setDual(s:Float, x:Float, y:Float, z:Float):DualQuaternion
-    {
-        var self: DualQuaternion = this;
-        this.dual.set(s, x, y, z);
-        return self;
     }
 
     /**
@@ -618,11 +585,22 @@ abstract DualQuaternion(DualQuaternionType) from DualQuaternionType to DualQuate
     
     
     /**
-     * Conjugate the quaternion in-place.
+     * Dual Conjugate the Dual Quaternion in-place.
      * 
      * @return  The modified object.
      */
-    public inline function applyConjugate():DualQuaternion
+    public inline function applyDualConjugate():DualQuaternion
+    {
+        return throw( 'net yet implemented' );
+    }
+    
+    
+    /**
+     * Complex Conjugate the Dual Quaternion in-place.
+     * 
+     * @return  The modified object.
+     */
+    public inline function applyComplexConjugate():DualQuaternion
     {
         this.real.applyConjugate;
         this.dual.applyConjugate;

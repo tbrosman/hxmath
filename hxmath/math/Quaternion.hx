@@ -32,6 +32,38 @@ class QuaternionDefault
     }
 }
 
+// yaw (Z), pitch (Y), roll (X)
+@:forward
+abstract Euler( Vector3 ) from Vector3 to Vector3 {
+    public inline function new( roll: Float, pitch: Float, yaw: Float ){
+        this = new Vector3( roll, pitch, yaw );
+    }
+    public var roll( get, set ): Float;
+    public inline function get_roll():Float {
+        return this.x;
+    }
+    public inline function set_roll( x: Float ):Float {
+        this.x = x;
+        return x;
+    }
+    public var pitch( get, set ): Float;
+    public inline function get_pitch():Float {
+        return this.y;
+    }
+    public inline function set_pitch( y: Float ):Float {
+        this.y = y;
+        return y;
+    }
+    public var yaw( get, set ): Float;
+    public inline function get_yaw():Float {
+        return this.z;
+    }
+    public inline function set_yaw( z: Float ):Float {
+        this.z = z;
+        return z;
+    }
+}
+
 typedef QuaternionType = QuaternionDefault;
 
 /**
@@ -113,62 +145,50 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     /**
      * used to set yaw pitch and roll ( very similar to set euler ) but static.
      *
-     * @param x           Pitch
-     * @param y           Yaw
-     * @param z           Roll
+     * @param x           Roll
+     * @param y           Pitch
+     * @param z           Yaw
      * @return            The quaternion.
      **/
-    public static inline
-    function fromYawPitchRoll(yaw:Float, pitch:Float, roll:Float):Quaternion
+    public static inline function fromYawPitchRoll(roll:Float, pitch:Float, yaw:Float):Quaternion
     {
-        var n9 = roll * 0.5;
-        var n6 = Math.sin( n9 );
-        var n5 = Math.cos( n9 );
-        var n8 = pitch * 0.5;
-        var n4 = Math.sin( n8 );
-        var n3 = Math.cos( n8 );
-        var n7 = yaw * 0.5;
-        var n2 = Math.sin( n7 );
-        var n1 = Math.cos( n7 );
-        return new Quaternion(  ((n1 * n3) * n5) + ((n2 * n4) * n6) 
-                              , ((n1 * n4) * n5) + ((n2 * n3) * n6)
-                              , ((n2 * n3) * n5) - ((n1 * n4) * n6)
-                              , ((n1 * n3) * n6) - ((n2 * n4) * n5)
-                              );
+        var q = Quaternion.identity;
+        var e = new Euler( roll, pitch, yaw );
+        q.euler = e;
+        return q;
     }
     
     /**
-     * input/output euler as rotation angles around x, y, z axis ( as faux Quaternion ), 
-     * but set /gets internally as the Quaternion value
+     * input/output euler as rotation angles around x, y, z axis 
      * 
+     * @param             Euler
+     * @return            Eular
      **/
-    public var euler(get, set): Quaternion;
+    public var euler(get, set): Euler;
     private inline
-    function set_euler(a: Quaternion):Quaternion 
+    function set_euler(e: Euler):Euler 
     {
-        var x5 = a.x*.5;
-        var y5 = a.y*.5;
-        var z5 = a.z*.5;
-        var cx = Math.cos( x5 );
-        var sx = Math.sin( x5 );
-        var cy = Math.cos( y5 );
-        var sy = Math.sin( y5 );
-        var cz = Math.cos( z5 );
-        var sz = Math.sin( z5 );
-        this.s = cx*cy*cz + sx*sy*sz;
-        this.x = sx*cy*cz - cx*sy*sz;
-        this.y = cx*sy*cz + sx*cy*sz;
-        this.z = cx*cy*sz - sx*sy*cz;
-        return this;
+        var roll5 = e.roll*.5;
+        var pitch5 = e.pitch*.5;
+        var yaw5 = e.yaw*.5;
+        var croll = Math.cos( roll5 );
+        var sroll = Math.sin( roll5 );
+        var cpitch = Math.cos( pitch5 );
+        var spitch = Math.sin( pitch5 );
+        var cyaw = Math.cos( yaw5 );
+        var syaw = Math.sin( yaw5 );
+        this.s = croll*cpitch*cyaw + sroll*spitch*syaw;
+        this.x = sroll*cpitch*cyaw - croll*spitch*syaw;
+        this.y = croll*spitch*cyaw + sroll*cpitch*syaw;
+        this.z = croll*cpitch*syaw - sroll*spitch*cyaw;
+        return e;
     }
-    private inline
-    function get_euler(): Quaternion 
+    private inline function get_euler(): Euler 
     {
-        return new Quaternion( 1.
-                             , Math.atan2( 2*(this.s*this.x + this.y*this.z), 1 - 2*(this.x*this.x + this.y*this.y))
-                             , Math.asin(2*(this.s*this.y - this.z*this.x))
-                             , Math.atan2(2*(this.s*this.z + this.x*this.y), 1 - 2*(this.y*this.y + this.z*this.z))
-                             );
+        var roll = Math.atan2(2*(this.s*this.x + this.y*this.z), 1 - 2*(this.x*this.x + this.y*this.y));
+        var pitch = Math.asin(2*(this.s*this.y - this.z*this.x));
+        var yaw = Math.atan2(2*(this.s*this.z + this.x*this.y), 1 - 2*(this.y*this.y + this.z*this.z));
+        return new Euler( roll, pitch, yaw ); 
     }
     
     /**
