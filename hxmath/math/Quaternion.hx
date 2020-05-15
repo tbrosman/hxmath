@@ -150,7 +150,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      * @param z           Yaw
      * @return            The quaternion.
      **/
-    public static inline function fromYawPitchRoll(roll:Float, pitch:Float, yaw:Float):Quaternion
+    public static inline function fromYawPitchRoll( yaw:Float, pitch:Float, roll:Float ):Quaternion
     {
         var q = Quaternion.identity;
         var e = new Euler( roll, pitch, yaw );
