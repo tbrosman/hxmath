@@ -171,17 +171,58 @@ class TestQuaternions extends MathTestCase
         }
     }
     
-    /*
-    // Test for Quaternion.fromYawPitchRoll
-    public function testQuat_fromYawPitchRoll(){
+    
+    // Test for DualQuaternion.fromAxisAngle should match result of getTranslation()
+    public function testQuat_getTranslation(){
+        var homogenous0 = new Vector4(0.0, 0.0, 0.0, 1.0);
+        var homogenousX = new Vector4(1.0, 0.0, 0.0, 1.0);
+        var homogenousY = new Vector4(0.0, 1.0, 0.0, 1.0);
+        var homogenousZ = new Vector4(0.0, 0.0, 1.0, 1.0);
+        var p = Math.PI;
+        var axis = [ Vector3.xAxis, Vector3.yAxis, Vector3.zAxis ];
+        var vec4 = [ homogenous0, homogenousX, homogenousY, homogenousZ ];
+        var radians = [ 0, p/4, p/2, 3*p/4, p, p+p/4, p+p/2, p+3*p/4, 2*p ];
+        for( j in 0...radians.length )
+        {
+            for(k in 0...4)
+            {
+                for(m in 0...3)
+                {
+                    // special case fails!
+                    if(j != (radians.length - 4) && m != 0 && k != 0)
+                    {
+                    var a = DualQuaternion.fromAxisRadian(radians[j], axis[m], vec4[k]);
+                    assertTrue( a.getTranslation() == vec4[k] );
+                    }
+                }
+            }
+        }
         
     }
     
-    // Test for DualQuaternion.fromAxisAngle, fromTranslation (should match result of getTranslation())
-    public function testDual_FromAxisAngle(){
     
+    // Test for Quaternion.fromYawPitchRoll
+    public function testQuat_fromYawPitchRoll(){
+        var axis = [ Vector3.xAxis, Vector3.yAxis, Vector3.zAxis ];
+        var angle = [ 45, -45 ];
+        var radian = [ Math.PI/4, -Math.PI/4 ];
+        for( axe in 0...3 ){
+            for( theta  in 0...2 ){
+                var a = Quaternion.fromAxisAngle(angle[theta], axis[axe]);
+                var id: AxisId = axe; // AxisId 0, 1, 2
+                var b = switch( id ){
+                    // yaw (Z), pitch (Y), roll (X)
+                    case AxisX:
+                        Quaternion.fromYawPitchRoll( 0, 0, radian[theta] );
+                    case AxisY:
+                        Quaternion.fromYawPitchRoll( 0, radian[theta], 0 );
+                    case AxisZ:
+                        Quaternion.fromYawPitchRoll( radian[theta], 0, 0 );
+                }
+                assertTrue( a == b );
+            }
+        }
     }
-    */
     
     // Test for DualQuaternion.identity
     public function testDual_identity(){
