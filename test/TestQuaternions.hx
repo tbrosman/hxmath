@@ -7,6 +7,13 @@ import hxmath.math.Matrix4x4;
 import hxmath.math.Quaternion;
 import hxmath.math.DualQuaternion;
 
+
+enum abstract AxisId( Int ) from Int to Int {
+    var AxisX = 0;
+    var AxisY = 1;
+    var AxisZ = 2;
+}
+
 class TestQuaternions extends MathTestCase
 {
     public function testDualQuaternionInverse_Multiplication()
