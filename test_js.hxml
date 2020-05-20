@@ -1,0 +1,7 @@
+-cp .
+-main Test
+-lib nanotest
+-dce full
+-js bin/javascript/Test.js
+-debug
+-D EXIT_ON_FINISH

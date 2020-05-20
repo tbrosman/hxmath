@@ -57,6 +57,7 @@ Both affine and linear structures:
   * Vector2, Vector3, Vector4
   * Matrix2x2, Matrix3x2, Matrix3x3, Matrix4x4
   * Quaternion
+  * DualQuaternion
 
 ### Coordinate frames
 

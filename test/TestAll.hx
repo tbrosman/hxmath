@@ -19,6 +19,7 @@ class TestAll
             runner.add(new TestStructures());
             runner.add(new Test2D());
             runner.add(new Test3D());
+            runner.add(new TestQuaternions());
             runner.add(new TestMathUtil());
             runner.add(new TestConverters());
             runner.add(new TestFrames());
@@ -29,7 +30,9 @@ class TestAll
         
         if (doStressTests)
         {
+            #if !js
             runner.add(new TestStress());
+            #end
         }
         
         return runner.run();

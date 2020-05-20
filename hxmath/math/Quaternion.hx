@@ -32,6 +32,38 @@ class QuaternionDefault
     }
 }
 
+// yaw (Z), pitch (Y), roll (X)
+@:forward
+abstract Euler( Vector3 ) from Vector3 to Vector3 {
+    public inline function new( roll: Float, pitch: Float, yaw: Float ){
+        this = new Vector3( roll, pitch, yaw );
+    }
+    public var roll( get, set ): Float;
+    public inline function get_roll():Float {
+        return this.x;
+    }
+    public inline function set_roll( x: Float ):Float {
+        this.x = x;
+        return x;
+    }
+    public var pitch( get, set ): Float;
+    public inline function get_pitch():Float {
+        return this.y;
+    }
+    public inline function set_pitch( y: Float ):Float {
+        this.y = y;
+        return y;
+    }
+    public var yaw( get, set ): Float;
+    public inline function get_yaw():Float {
+        return this.z;
+    }
+    public inline function set_yaw( z: Float ):Float {
+        this.z = z;
+        return z;
+    }
+}
+
 typedef QuaternionType = QuaternionDefault;
 
 /**
@@ -108,6 +140,55 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             sinHalfAngle * axis.x,
             sinHalfAngle * axis.y,
             sinHalfAngle * axis.z);
+    }
+    
+    /**
+     * used to set yaw pitch and roll ( very similar to set euler ) but static.
+     *
+     * @param x           Roll
+     * @param y           Pitch
+     * @param z           Yaw
+     * @return            The quaternion.
+     **/
+    public static inline function fromYawPitchRoll( yaw:Float, pitch:Float, roll:Float ):Quaternion
+    {
+        var q = Quaternion.identity;
+        var e = new Euler( roll, pitch, yaw );
+        q.euler = e;
+        return q;
+    }
+    
+    /**
+     * input/output euler as rotation angles around x, y, z axis 
+     * 
+     * @param             Euler
+     * @return            Eular
+     **/
+    public var euler(get, set): Euler;
+    private inline
+    function set_euler(e: Euler):Euler 
+    {
+        var roll5 = e.roll*.5;
+        var pitch5 = e.pitch*.5;
+        var yaw5 = e.yaw*.5;
+        var croll = Math.cos( roll5 );
+        var sroll = Math.sin( roll5 );
+        var cpitch = Math.cos( pitch5 );
+        var spitch = Math.sin( pitch5 );
+        var cyaw = Math.cos( yaw5 );
+        var syaw = Math.sin( yaw5 );
+        this.s = croll*cpitch*cyaw + sroll*spitch*syaw;
+        this.x = sroll*cpitch*cyaw - croll*spitch*syaw;
+        this.y = croll*spitch*cyaw + sroll*cpitch*syaw;
+        this.z = croll*cpitch*syaw - sroll*spitch*cyaw;
+        return e;
+    }
+    private inline function get_euler(): Euler 
+    {
+        var roll = Math.atan2(2*(this.s*this.x + this.y*this.z), 1 - 2*(this.x*this.x + this.y*this.y));
+        var pitch = Math.asin(2*(this.s*this.y - this.z*this.x));
+        var yaw = Math.atan2(2*(this.s*this.z + this.x*this.y), 1 - 2*(this.y*this.y + this.z*this.z));
+        return new Euler( roll, pitch, yaw ); 
     }
     
     /**
@@ -618,6 +699,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
             .normalize();
     }
     
+    public static inline function scalarReal( s: Float ): Quaternion 
+    {
+        return new Quaternion( Math.sqrt( s ), 0, 0, 0 );
+    }
+    
     private static inline function get_zero():Quaternion
     {
         return new Quaternion(0, 0, 0, 0);
@@ -662,4 +748,5 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
         var self:Quaternion = this;
         return (1.0 / self.length) * self;
     }
+    
 }

@@ -8,6 +8,7 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
 import hxmath.math.Quaternion;
+import hxmath.math.DualQuaternion;
 import hxmath.math.ShortVector2;
 import hxmath.math.Vector2;
 import hxmath.math.Vector3;
@@ -133,5 +134,27 @@ class MathTestCase extends NanoTestCase
     private function randomFrame3(precision:Float = 1e-4):Frame3
     {
         return new Frame3(randomVector3(precision), randomQuaternion(precision).normal);
+    }
+    
+    private function randomDualQuaternion(precision:Float = 1e-4):DualQuaternion
+    {
+        var real = randomQuaternion(precision).normal;
+        var dual = randomQuaternion(precision).normal;
+        return new DualQuaternion(real, dual);
+    }
+    
+    private function randomDualQuaternionCreate(precision:Float = 1e-4):DualQuaternion
+    {
+        var real = randomQuaternion(precision).normal;
+        var vec4 = randomVector4(precision);
+        return DualQuaternion.create(real, vec4);
+    }
+    
+    private function randomDualQuaternionAndFrame3(precision:Float = 1e-4):{ dualQ: DualQuaternion, frame3: Frame3 }
+    {
+        var real = randomQuaternion(precision).normal;
+        var vec3 = randomVector3(precision);
+        var vec4 = new Vector4(vec3.x, vec3.y, vec3.z, 1.0);
+        return { dualQ: DualQuaternion.create(real, vec4), frame3: new Frame3(vec3, real)};
     }
 }

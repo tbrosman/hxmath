@@ -1,0 +1,7 @@
+-cp .
+-main Test
+-lib nanotest
+-dce full
+-cmd mkdir -p bin/eval
+--interp
+-D EXIT_ON_FINISH
