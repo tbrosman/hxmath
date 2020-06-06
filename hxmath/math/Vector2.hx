@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 typedef Vector2Shape =
 {
     public var x:Float;
@@ -25,12 +27,6 @@ class Vector2Default
         return '($x, $y)';
     }
 }
-
-#if HXMATH_USE_OPENFL_STRUCTURES
-typedef Vector2Type = flash.geom.Point;
-#else
-typedef Vector2Type = Vector2Default;
-#end
 
 /**
  * A 2D vector.
@@ -76,11 +72,7 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
      */
     public inline function new(x:Float, y:Float)
     {
-        #if HXMATH_USE_OPENFL_STRUCTURES
-        this = new flash.geom.Point(x, y);
-        #else
-        this = new Vector2Default(x, y);
-        #end
+        this = new Vector2Type(x, y);
     }
     
     /**
