@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 /**
  * The default underlying type.
  */
@@ -24,7 +26,7 @@ class IntVector2Default
  * A 2D vector with integer values. Used primarily for indexing into 2D grids.
  */
 @:forward(x, y)
-abstract IntVector2(IntVector2Default) from IntVector2Default to IntVector2Default
+abstract IntVector2(IntVector2Type) from IntVector2Type to IntVector2Type
 {
     // The number of elements in this structure
     public static inline var elementCount:Int = 2;
@@ -55,7 +57,7 @@ abstract IntVector2(IntVector2Default) from IntVector2Default to IntVector2Defau
      */
     public function new(x:Int, y:Int)
     {
-        this = new IntVector2Default(x, y);
+        this = new IntVector2Type(x, y);
     }
     
     /**

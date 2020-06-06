@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 // Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix2x2Shape = 
 {
@@ -40,8 +42,6 @@ class Matrix2x2Default
     }
 }
 
-typedef Matrix2x2Type = Matrix2x2Default;
-
 /**
  * 2x2 matrix for linear operations defined over a shape matching the 2x2 linear sub-matrix in flash.geom.Matrix.
  */
@@ -77,7 +77,7 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
      */
     public inline function new(a:Float, b:Float, c:Float, d:Float) 
     {
-        this = new Matrix2x2Default(a, b, c, d);
+        this = new Matrix2x2Type(a, b, c, d);
     }
     
     /**

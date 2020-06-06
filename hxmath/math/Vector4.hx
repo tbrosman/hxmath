@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 typedef Vector4Shape =
 {
     public var x:Float;
@@ -31,12 +33,6 @@ class Vector4Default
         return '($x, $y, $z, $w)';
     }
 }
-
-#if HXMATH_USE_OPENFL_STRUCTURES
-typedef Vector4Type = flash.geom.Vector3D;
-#else
-typedef Vector4Type = Vector4Default;
-#end
 
 /**
  * A 4D vector (used with homogenous/projection matrices in 3D).
@@ -78,11 +74,7 @@ abstract Vector4(Vector4Type) from Vector4Type to Vector4Type
      */
     public inline function new(x:Float, y:Float, z:Float, w:Float)
     {
-        #if HXMATH_USE_OPENFL_STRUCTURES
-        this = new flash.geom.Vector3D(x, y, z, w);
-        #else
-        this = new Vector4Default(x, y, z, w);
-        #end
+        this = new Vector4Type(x, y, z, w);
     }
     
     /**

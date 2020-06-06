@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 // Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix3x3Shape = 
 {
@@ -57,8 +59,6 @@ class Matrix3x3Default
     }
 }
 
-typedef Matrix3x3Type = Matrix3x3Default;
-
 /**
  * 3x3 matrix for linear transformations in 3D.
  */
@@ -101,7 +101,7 @@ abstract Matrix3x3(Matrix3x3Type) from Matrix3x3Type to Matrix3x3Type
         m01:Float, m11:Float, m21:Float,
         m02:Float, m12:Float, m22:Float)
     {
-        this = new Matrix3x3Default(
+        this = new Matrix3x3Type(
             m00, m10, m20,
             m01, m11, m21,
             m02, m12, m22);

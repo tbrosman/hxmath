@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 // Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix4x4Shape = 
 {
@@ -82,8 +84,6 @@ class Matrix4x4Default
     }
 }
 
-typedef Matrix4x4Type = Matrix4x4Default;
-
 /**
  * 4x4 matrix for homogenous/projection transformations in 3D.
  */
@@ -141,7 +141,7 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
         m02:Float, m12:Float, m22:Float, m32:Float,
         m03:Float, m13:Float, m23:Float, m33:Float) 
     {
-        this = new Matrix4x4Default(
+        this = new Matrix4x4Type(
             m00, m10, m20, m30,
             m01, m11, m21, m31,
             m02, m12, m22, m32,
