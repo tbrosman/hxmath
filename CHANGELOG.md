@@ -1,3 +1,8 @@
+## 0.17.0 (6/20/2020)
+* Minor: Make Vector2.rotate actually use the sin/cos it calculates.
+* Move type definitions to single file. (@Yanrishatum)
+* Breaking change: Changed Matrix2x2 and Matrix3x2's multiplication convention to be compatible with Heaps and OpenFL.
+
 ## 0.16.0 (5/25/2019)
 * Haxe 4 support
 
