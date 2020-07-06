@@ -167,4 +167,17 @@ class Test2D extends MathTestCase
             assertEquals(-u.y, v.y);
         }
     }
+
+    public function testSetVectorAngle()
+    {
+        for (i in 0...10)
+        {
+            var v = randomVector2();
+            var a = randomFloat();
+
+            v.angle = a;
+
+            assertApproxEquals(a, v.angle);
+        }
+    }
 }
