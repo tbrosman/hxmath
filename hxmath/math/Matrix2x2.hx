@@ -1,15 +1,17 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 // Note: All notation is column-major, e.g. m10 is the top element of the 2nd column
 typedef Matrix2x2Shape = 
 {
     // m00
     public var a:Float;
     
-    // m10
+    // m01
     public var b:Float;
     
-    // m01
+    // m10
     public var c:Float;
     
     // m11
@@ -40,8 +42,6 @@ class Matrix2x2Default
     }
 }
 
-typedef Matrix2x2Type = Matrix2x2Default;
-
 /**
  * 2x2 matrix for linear operations defined over a shape matching the 2x2 linear sub-matrix in flash.geom.Matrix.
  */
@@ -71,13 +71,13 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
      * Note: parameters are in row-major order for syntactic niceness.
      * 
      * @param a     m00
-     * @param b     m10
-     * @param c     m01
+     * @param b     m01
+     * @param c     m10
      * @param d     m11
      */
     public inline function new(a:Float, b:Float, c:Float, d:Float) 
     {
-        this = new Matrix2x2Default(a, b, c, d);
+        this = new Matrix2x2Type(a, b, c, d);
     }
     
     /**
@@ -134,8 +134,8 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     public static inline function multiplyVector(m:Matrix2x2, v:Vector2):Vector2
     {
         return new Vector2(
-            m.a * v.x + m.b * v.y,
-            m.c * v.x + m.d * v.y);
+            m.a * v.x + m.c * v.y,
+            m.b * v.x + m.d * v.y);
     }
     
     /**
@@ -149,10 +149,10 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     public static inline function multiply(m:Matrix2x2, n:Matrix2x2):Matrix2x2
     {
         return new Matrix2x2(
-            m.a * n.a + m.b * n.c,  // p_00 = m_i0 * n_0i
-            m.a * n.b + m.b * n.d,  // p_10 = m_i0 * n_1i
-            m.c * n.a + m.d * n.c,  // p_01 = m_i1 * n_0i
-            m.c * n.b + m.d * n.d); // p_11 = m_i1 * n_1i
+            m.a * n.a + m.c * n.b,  // p_00 = m_i0 * n_0i
+            m.a * n.c + m.c * n.d,  // p_10 = m_i0 * n_1i
+            m.b * n.a + m.d * n.b,  // p_01 = m_i1 * n_0i
+            m.b * n.c + m.d * n.d); // p_11 = m_i1 * n_1i
     }
     
     /**
@@ -258,8 +258,8 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
         var c = Math.cos(angle);
         
         self.a = c;
-        self.b = -s;
-        self.c = s;
+        self.b = s;
+        self.c = -s;
         self.d = c;
         
         return self;
@@ -481,9 +481,9 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
         switch (index)
         {
             case 0:
-                return new Vector2(self.a, self.c);
+                return new Vector2(self.a, self.b);
             case 1:
-                return new Vector2(self.b, self.d);
+                return new Vector2(self.c, self.d);
             default:
                 throw "Invalid column";
         }
@@ -502,9 +502,9 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
         switch (index)
         {
             case 0:
-                return new Vector2(self.a, self.b);
+                return new Vector2(self.a, self.c);
             case 1:
-                return new Vector2(self.c, self.d);
+                return new Vector2(self.b, self.d);
             default:
                 throw "Invalid row";
         }
@@ -521,8 +521,8 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
         var self:Matrix2x2 = this;
         
         return new Vector2(
-            self.a * v.x + self.c * v.y,
-            self.b * v.x + self.d * v.y);
+            self.a * v.x + self.b * v.y,
+            self.c * v.x + self.d * v.y);
     }
     
     /**
@@ -561,8 +561,8 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     {
         var self:Matrix2x2 = this;
         return MathUtil.det2x2(
-            self.a, self.b,
-            self.c, self.d);
+            self.a, self.c,
+            self.b, self.d);
     }
     
     private inline function get_transpose():Matrix2x2

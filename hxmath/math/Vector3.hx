@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 typedef Vector3Shape =
 {
     public var x:Float;
@@ -28,8 +30,6 @@ class Vector3Default
         return '($x, $y, $z)';
     }
 }
-
-typedef Vector3Type = Vector3Default;
 
 /**
  * A 3D vector.
@@ -67,7 +67,7 @@ abstract Vector3(Vector3Type) from Vector3Type to Vector3Type
      */
     public inline function new(x:Float, y:Float, z:Float)
     {
-        this = new Vector3Default(x, y, z);
+        this = new Vector3Type(x, y, z);
     }
     
     /**

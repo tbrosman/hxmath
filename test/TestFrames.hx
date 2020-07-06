@@ -38,19 +38,31 @@ class TestFrames extends MathTestCase
 {
     public function testFrame2Concat()
     {
+        // T(1, 1) * R(90 degrees)
+        // [ 0 -1 | 1 ]
+        // [ 1  0 | 1 ]
         var originA = new Vector2(1.0, 1.0);
         var a = new Frame2(originA, 90.0);
-        var b = new Frame2(Vector2.xAxis, 90.0);
+
+        // T(1, 0) * R(90 degrees)
+        // [ 0 -1 | 1 ]
+        // [ 1  0 | 0 ]
+        var originB = new Vector2(1.0, 0.0);
+        var b = new Frame2(originB, 90.0);
+
+        // T(1, 2) * R(180 degrees)
+        // [ -1  0  | 1 ]
+        // [  0  -1 | 2 ]
         var c = a.concat(b);
         
-        assertTrue(a.transformFrom(b.offset) == Vector2.yAxis + originA);
-
-        // (R(90) * xAxis) + originA = yAxis + originA
-        assertTrue(c.offset == Vector2.yAxis + originA);
+        // (R(90) * (1, 0)) + originA = (0, 1) + originA
+        var bOffsetInA = new Vector2(1.0, 2.0);
+        assertTrue(a.transformFrom(b.offset) == bOffsetInA);
+        assertTrue(c.offset == bOffsetInA);
         assertEquals(c.angleDegrees, 180.0);
         
         // Should just give the offset point
-        assertTrue(c.matrix * Vector2.zero == Vector2.yAxis + originA);
+        assertTrue(c.matrix * Vector2.zero == bOffsetInA);
     }
     
     public function testFrame3Concat()

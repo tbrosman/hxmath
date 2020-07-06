@@ -1,5 +1,7 @@
 package hxmath.math;
 
+import hxmath.math.MathTypes;
+
 typedef QuaternionShape = 
 {
     public var s:Float;
@@ -31,8 +33,6 @@ class QuaternionDefault
         return '[$s, ($x, $y, $z)]';
     }
 }
-
-typedef QuaternionType = QuaternionDefault;
 
 /**
  * Quaternion for rotation in 3D.
@@ -71,7 +71,7 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
      */
     public inline function new(s:Float, x:Float, y:Float, z:Float) 
     {
-        this = new QuaternionDefault(s, x, y, z);
+        this = new QuaternionType(s, x, y, z);
     }
     
     /**
