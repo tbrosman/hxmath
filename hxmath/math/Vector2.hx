@@ -51,7 +51,7 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     public static var yAxis(get, never):Vector2;
     
     // Magnitude
-    public var length(get, set):Float;
+    public var length(get, never):Float;
     
     // Vector dotted with itself
     public var lengthSq(get, never):Float;
@@ -740,8 +740,14 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
         
         var cos = Math.cos(angle);
         var sin = Math.sin(angle);
-        var dx = pivot == null ? self.x : self.x - pivot.x;
-        var dy = pivot == null ? self.y : self.y - pivot.y;
+        var dx = self.x;
+        var dy = self.y;
+
+        if (pivot != null)
+        {
+            dx = self.x - pivot.x;
+            dy = self.y - pivot.y;
+        }
         
         self.x = dx * cos - dy * sin;
         self.y = dx * sin + dy * cos;
@@ -840,19 +846,12 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
             .rotateRight();
     }
 
-    private inline function set_length(v:Float):Float
-    {
-        var self:Vector2 = this;
-        self.normalizeTo(v);
-        return v;
-    }
-
-    private inline function set_angle(v:Float):Float
+    private inline function set_angle(angle:Float):Float
     {
         var self:Vector2 = this;
         var len = length;
-		self.set(len * Math.cos(v), len * Math.sin(v));
-		return v;
+        self.set(len * Math.cos(angle), len * Math.sin(angle));
+        return angle;
     }
 }
 
