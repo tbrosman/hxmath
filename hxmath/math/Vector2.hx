@@ -730,8 +730,8 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     {
         var self:Vector2 = this;
         
-        var cos = Math.cos(angle);
-        var sin = Math.sin(angle);
+        var cosAngle = Math.cos(angle);
+        var sinAngle = Math.sin(angle);
         var dx = self.x;
         var dy = self.y;
 
@@ -741,8 +741,8 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
             dy = self.y - pivot.y;
         }
         
-        self.x = dx * cos - dy * sin;
-        self.y = dx * sin + dy * cos;
+        self.x = dx * cosAngle - dy * sinAngle;
+        self.y = dx * sinAngle + dy * cosAngle;
         
         return self;
     }
