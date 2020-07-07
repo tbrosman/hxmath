@@ -1,3 +1,6 @@
+## 0.18.0 (7/6/2020)
+* Fixed Matrix3x2 multiplication (issue #71)
+
 ## 0.17.0 (6/20/2020)
 * Minor: Make Vector2.rotate actually use the sin/cos it calculates.
 * Move type definitions to single file. (@Yanrishatum)
