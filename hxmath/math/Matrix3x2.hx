@@ -78,7 +78,7 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
     /**
      * Constructor.
      * 
-     * Note: the linear portion (a, b, c, d) is row-major, but the affine portion (tx, ty) is column-major.
+     * Note: column-major ordering. (a, b) is the first column, (c, d) is the second, (tx, ty) is the third.
      * 
      * @param a     m00
      * @param b     m01
@@ -152,7 +152,7 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
     
     /**
      * Concatenate two transformations.
-     * Treat as homogenous matrix multiplication, i.e. there is an implicit 3rd row [0, 0, 1] in both matrices
+     * Treated as homogenous matrix multiplication, i.e. there is an implicit 3rd row [0, 0, 1] in both matrices
      * 
      * @param m     The first matrix (the second transformation in the order of application).
      * @param n     The second matrix (the first transformation in the order of application).
@@ -162,10 +162,14 @@ abstract Matrix3x2(Matrix3x2Type) from Matrix3x2Type to Matrix3x2Type
     public static inline function concat(m:Matrix3x2, n:Matrix3x2):Matrix3x2
     {
         // TODO: speed this up if it becomes an issue
+        //
+        // Matrices are split into linear and affine portions, then multiplied as follows:
+        // [M t] [N u]   [MN Mu + t]
+        // [0 1] [0 1] = [ 0    1  ]
         var mLinear:Matrix2x2 = m.linearSubMatrix;
         var nLinear:Matrix2x2 = n.linearSubMatrix;
         var resultLinear:Matrix2x2 = mLinear * nLinear;
-        var resultAffine:Vector2 = nLinear * new Vector2(m.tx, m.ty) + new Vector2(n.tx, n.ty);
+        var resultAffine:Vector2 = mLinear * new Vector2(n.tx, n.ty) + new Vector2(m.tx, m.ty);
         
         return new Matrix3x2(
             resultLinear.a, resultLinear.b,

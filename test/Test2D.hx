@@ -167,4 +167,37 @@ class Test2D extends MathTestCase
             assertEquals(-u.y, v.y);
         }
     }
+
+    public function testMatrix3x2Concat()
+    {
+        var a = Matrix3x2.identity;
+        a.setRotate(Math.PI / 2);
+        a.setTranslate(1, 2);
+        
+        var b = Matrix3x2.identity;
+        b.setRotate(-Math.PI / 2);
+        b.setTranslate(3, 4);
+
+        // a * b
+        //
+        // = Translate(1, 2) * Rotate(pi/2) * Translate(3, 4) * Rotate(-pi/2)
+        //
+        //   [cos(pi/2) -sin(pi/2) 1] [cos(-pi/2) -sin(-pi/2) 3]
+        // = [sin(pi/2)  cos(pi/2) 2] [sin(-pi/2)  cos(-pi/2) 4]
+        //
+        //   [0 -1 1] [ 0 1 3]
+        // = [1  0 2] [-1 0 4]
+        //
+        //   [1 0 -3]
+        // = [0 1  5]
+        //
+        // = Translate(-3, 5)
+        var c = a * b;
+        var expectedC = new Matrix3x2(1, 0, 0, 1, -3, 5);
+
+        for (i in 0...6)
+        {
+            assertApproxEquals(expectedC.getArrayElement(i), c.getArrayElement(i));
+        }
+    }
 }
