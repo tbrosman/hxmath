@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["math", "cross", "openfl", "heaps"],
   "description": "A 2D/3D math library for Haxe implemented using abstracts for maximum compatibility with existing libraries (specifically OpenFL and Heaps).",
-  "version": "0.17.0",
-  "releasenote": "Breaking change: OpenFL/Heaps Matrix layout.",
+  "version": "0.18.0",
+  "releasenote": "Fixed Matrix3x2 multiplication (issue #71)",
   "contributors": ["tbrosman"],
   "dependencies": {
   }
