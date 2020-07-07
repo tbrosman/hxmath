@@ -1,5 +1,6 @@
 package test;
 
+import hxmath.math.MathUtil;
 import haxe.ds.Vector;
 import hxmath.math.IntVector2;
 import hxmath.math.Matrix2x2;
@@ -170,14 +171,22 @@ class Test2D extends MathTestCase
 
     public function testSetVectorAngle()
     {
-        for (i in 0...10)
-        {
-            var v = randomVector2();
-            var a = randomFloat();
+        // Get a random Vector2
+        var v = randomVector2();
 
+        var iterations = 8;
+        for (i in 0...iterations)
+        {
+            // Get incremental radian based on number of iterations
+            var a = (2 * Math.PI) * (i / iterations); 
+            
+            // Set vector2's angle
             v.angle = a;
 
-            assertApproxEquals(a, v.angle);
+            // Wrap the the vector's angle output, as Math.atan2 (used in Vector2.angle) may return a negative value
+            var va = MathUtil.wrap(v.angle, 2 * Math.PI);
+            
+            assertApproxEquals(a, va);
         }
     }
 }
