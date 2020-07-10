@@ -52,8 +52,8 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     // Vector dotted with itself
     public var lengthSq(get, never):Float;
     
-    // The angle between this vector and the X axis
-    public var angle(get, never):Float;
+    // The angle between this vector and the X axis (in radians)
+    public var angle(get, set):Float;
     
     // The normalized vector
     public var normal(get, never):Vector2;
@@ -726,14 +726,20 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
      * @param pivot     The pivot point to rotate around.
      * @return          The modified object.
      */
-    public inline function rotate(angle:Float, pivot:Vector2):Vector2
+    public inline function rotate(angle:Float, ?pivot:Vector2):Vector2
     {
         var self:Vector2 = this;
         
         var cosAngle = Math.cos(angle);
         var sinAngle = Math.sin(angle);
-        var dx = self.x - pivot.x;
-        var dy = self.y - pivot.y;
+        var dx = self.x;
+        var dy = self.y;
+
+        if (pivot != null)
+        {
+            dx = self.x - pivot.x;
+            dy = self.y - pivot.y;
+        }
         
         self.x = dx * cosAngle - dy * sinAngle;
         self.y = dx * sinAngle + dy * cosAngle;
@@ -830,6 +836,14 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
         var self:Vector2 = this;
         return self.clone()
             .rotateRight();
+    }
+
+    private inline function set_angle(angle:Float):Float
+    {
+        var self:Vector2 = this;
+        var len = length;
+        self.set(len * Math.cos(angle), len * Math.sin(angle));
+        return angle;
     }
 }
 
