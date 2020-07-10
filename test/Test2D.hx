@@ -204,10 +204,9 @@ class Test2D extends MathTestCase
 
     public function testSetVectorAngle()
     {
-        // Get a random Vector2
-        var v = randomVector2();
-
+        var v = new Vector2(1,0);
         var iterations = 8;
+        
         for (i in 0...iterations)
         {
             // Get incremental radian based on number of iterations
