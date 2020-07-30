@@ -20,7 +20,7 @@ class QuaternionDefault
     public var y:Float;
     public var z:Float;
     
-    public function new(s:Float, x:Float, y:Float, z:Float)
+    public inline function new(s:Float, x:Float, y:Float, z:Float)
     {
         this.s = s;
         this.x = x;

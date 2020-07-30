@@ -10,7 +10,7 @@ class IntVector2Default
     public var x:Int;
     public var y:Int;
     
-    public function new(x:Int, y:Int)
+    public inline function new(x:Int, y:Int)
     {
         this.x = x;
         this.y = y;
