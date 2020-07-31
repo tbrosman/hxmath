@@ -35,7 +35,7 @@ class Matrix3x2Default
     public var tx:Float;
     public var ty:Float;
     
-    public function new(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float)
+    public inline function new(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float)
     {
         this.a = a;
         this.b = b;

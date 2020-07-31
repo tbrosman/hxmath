@@ -20,7 +20,7 @@ class Vector4Default
     public var z:Float;
     public var w:Float;
     
-    public function new(x:Float, y:Float, z:Float, w:Float)
+    public inline function new(x:Float, y:Float, z:Float, w:Float)
     {
         this.x = x;
         this.y = y;
