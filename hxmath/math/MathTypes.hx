@@ -323,6 +323,7 @@ abstract Matrix4x4Type(kha.math.Matrix4) from kha.math.Matrix4 to kha.math.Matri
     private inline function set_m33(v:Float):Float return this._33 = v;
 }
 
+// Kha Quaternion uses `w` instead of `s` to store scalar.
 abstract QuaternionType(kha.math.Quaternion) from kha.math.Quaternion to kha.math.Quaternion
 {
 
