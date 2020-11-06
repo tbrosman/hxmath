@@ -157,6 +157,189 @@ abstract QuaternionType(h3d.Quat) from h3d.Quat to h3d.Quat
     private inline function set_s(v:Float):Float return this.w = v;
 
 }
+#elseif HXMATH_USE_KHA_STRUCTURES
+
+typedef IntVector2Type = kha.math.Vector2i;
+typedef Matrix3x2Type = hxmath.math.Matrix3x2.Matrix3x2Default;
+
+abstract Matrix2x2Type(kha.math.Matrix2) from kha.math.Matrix2 to kha.math.Matrix2
+{
+    public inline function new(
+        a:Float, b:Float,
+        c:Float, d:Float)
+    {
+        this = new kha.math.Matrix2(
+            a, b,
+            c, d
+        );
+    }
+
+    public var a(get, set):Float;
+    private inline function get_a():Float return this._00;
+    private inline function set_a(v:Float):Float return this._00 = v;
+
+    public var b(get, set):Float;
+    private inline function get_b():Float return this._10;
+    private inline function set_b(v:Float):Float return this._10 = v;
+
+    public var c(get, set):Float;
+    private inline function get_c():Float return this._01;
+    private inline function set_c(v:Float):Float return this._01 = v;
+
+    public var d(get, set):Float;
+    private inline function get_d():Float return this._11;
+    private inline function set_d(v:Float):Float return this._11 = v;
+}
+
+abstract Matrix3x3Type(kha.math.Matrix3) from kha.math.Matrix3 to kha.math.Matrix3
+{
+    public inline function new(
+        m00:Float, m10:Float, m20:Float,
+        m01:Float, m11:Float, m21:Float,
+        m02:Float, m12:Float, m22:Float)
+    {
+        this = new kha.math.Matrix3(
+            m00, m10, m20,
+            m01, m11, m21,
+            m02, m12, m22
+        );
+    }
+
+    public var m00(get, set):Float;
+    private inline function get_m00():Float return this._00;
+    private inline function set_m00(v:Float):Float return this._00 = v;
+
+    public var m10(get, set):Float;
+    private inline function get_m10():Float return this._10;
+    private inline function set_m10(v:Float):Float return this._10 = v;
+
+    public var m20(get, set):Float;
+    private inline function get_m20():Float return this._20;
+    private inline function set_m20(v:Float):Float return this._20 = v;
+
+    public var m01(get, set):Float;
+    private inline function get_m01():Float return this._01;
+    private inline function set_m01(v:Float):Float return this._01 = v;
+
+    public var m11(get, set):Float;
+    private inline function get_m11():Float return this._11;
+    private inline function set_m11(v:Float):Float return this._11 = v;
+
+    public var m21(get, set):Float;
+    private inline function get_m21():Float return this._21;
+    private inline function set_m21(v:Float):Float return this._21 = v;
+
+    public var m02(get, set):Float;
+    private inline function get_m02():Float return this._02;
+    private inline function set_m02(v:Float):Float return this._02 = v;
+
+    public var m12(get, set):Float;
+    private inline function get_m12():Float return this._12;
+    private inline function set_m12(v:Float):Float return this._12 = v;
+
+    public var m22(get, set):Float;
+    private inline function get_m22():Float return this._22;
+    private inline function set_m22(v:Float):Float return this._22 = v;
+}
+
+abstract Matrix4x4Type(kha.math.Matrix4) from kha.math.Matrix4 to kha.math.Matrix4
+{
+    public inline function new(
+        m00:Float, m10:Float, m20:Float, m30:Float,
+        m01:Float, m11:Float, m21:Float, m31:Float,
+        m02:Float, m12:Float, m22:Float, m32:Float,
+        m03:Float, m13:Float, m23:Float, m33:Float)
+    {
+        this = new kha.math.Matrix4(
+            m00, m10, m20, m30,
+            m01, m11, m21, m31,
+            m02, m12, m22, m32,
+            m03, m13, m23, m33
+        );
+    }
+
+    public var m00(get, set):Float;
+    private inline function get_m00():Float return this._00;
+    private inline function set_m00(v:Float):Float return this._00 = v;
+
+    public var m10(get, set):Float;
+    private inline function get_m10():Float return this._10;
+    private inline function set_m10(v:Float):Float return this._10 = v;
+
+    public var m20(get, set):Float;
+    private inline function get_m20():Float return this._20;
+    private inline function set_m20(v:Float):Float return this._20 = v;
+
+    public var m30(get, set):Float;
+    private inline function get_m30():Float return this._30;
+    private inline function set_m30(v:Float):Float return this._30 = v;
+
+    public var m01(get, set):Float;
+    private inline function get_m01():Float return this._01;
+    private inline function set_m01(v:Float):Float return this._01 = v;
+
+    public var m11(get, set):Float;
+    private inline function get_m11():Float return this._11;
+    private inline function set_m11(v:Float):Float return this._11 = v;
+
+    public var m21(get, set):Float;
+    private inline function get_m21():Float return this._21;
+    private inline function set_m21(v:Float):Float return this._21 = v;
+
+    public var m31(get, set):Float;
+    private inline function get_m31():Float return this._31;
+    private inline function set_m31(v:Float):Float return this._31 = v;
+
+    public var m02(get, set):Float;
+    private inline function get_m02():Float return this._02;
+    private inline function set_m02(v:Float):Float return this._02 = v;
+
+    public var m12(get, set):Float;
+    private inline function get_m12():Float return this._12;
+    private inline function set_m12(v:Float):Float return this._12 = v;
+
+    public var m22(get, set):Float;
+    private inline function get_m22():Float return this._22;
+    private inline function set_m22(v:Float):Float return this._22 = v;
+
+    public var m32(get, set):Float;
+    private inline function get_m32():Float return this._32;
+    private inline function set_m32(v:Float):Float return this._32 = v;
+
+    public var m03(get, set):Float;
+    private inline function get_m03():Float return this._03;
+    private inline function set_m03(v:Float):Float return this._03 = v;
+
+    public var m13(get, set):Float;
+    private inline function get_m13():Float return this._13;
+    private inline function set_m13(v:Float):Float return this._13 = v;
+
+    public var m23(get, set):Float;
+    private inline function get_m23():Float return this._23;
+    private inline function set_m23(v:Float):Float return this._23 = v;
+
+    public var m33(get, set):Float;
+    private inline function get_m33():Float return this._33;
+    private inline function set_m33(v:Float):Float return this._33 = v;
+}
+
+// Kha Quaternion uses `w` instead of `s` to store scalar.
+abstract QuaternionType(kha.math.Quaternion) from kha.math.Quaternion to kha.math.Quaternion
+{
+
+    public inline function new(s:Float, x:Float, y:Float, z:Float)
+    {
+        this = new kha.math.Quaternion(x, y, z, s);
+    }
+
+    public var s(get, set):Float;
+    private inline function get_s():Float return this.w;
+    private inline function set_s(v:Float):Float return this.w = v;
+
+}
+typedef Vector2Type = kha.math.Vector2;
+typedef Vector3Type = kha.math.Vector3;
+typedef Vector4Type = kha.math.Vector4;
 
 #else
 /**
