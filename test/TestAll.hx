@@ -25,6 +25,7 @@ class TestAll
             runner.add(new TestIntMath());
             runner.add(new TestGeom());
             runner.add(new TestDataStructures());
+            runner.add(new TestComplex());
         }
         
         if (doStressTests)
