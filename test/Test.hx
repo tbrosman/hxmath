@@ -1,4 +1,4 @@
-import test.TestAll;
+package test;
 
 class Test {
     static function main() {

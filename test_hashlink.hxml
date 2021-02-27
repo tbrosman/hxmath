@@ -1,5 +1,5 @@
--cp .
--main Test
+-cp src
+-main test.Test
 -lib nanotest
 -hl bin/hl/Test.hl
 -D EXIT_ON_FINISH

@@ -1,5 +1,6 @@
 {
   "name": "hxmath",
+  "classPath": "src",
   "url": "https://github.com/tbrosman/hxmath",
   "license": "MIT",
   "tags": ["math", "cross", "openfl", "heaps"],

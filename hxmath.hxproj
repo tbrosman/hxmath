@@ -23,7 +23,7 @@
     <option directives="" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
-    <option mainClass="Test" />
+    <option mainClass="test.Test" />
     <option enabledebug="True" />
     <option additional="-dce no" />
   </build>
