@@ -1,4 +1,4 @@
-package test;
+package hxmath.test;
 
 import hxmath.frames.adapters.FlxSpriteFrame2;
 import hxmath.frames.Frame2;

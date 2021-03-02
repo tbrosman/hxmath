@@ -1,4 +1,5 @@
-package test;
+package hxmath.test;
+
 import hxmath.ds.DenseArray2;
 import hxmath.ds.IArray2;
 import hxmath.ds.SparseArray2;

@@ -1,4 +1,4 @@
-package test;
+package hxmath.test;
 
 import hxmath.math.MathUtil;
 import haxe.ds.Vector;

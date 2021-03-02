@@ -1,4 +1,4 @@
-package test;
+package hxmath.test;
 import haxe.rtti.Meta;
 import hxmath.math.IntVector2;
 import hxmath.math.Matrix2x2;

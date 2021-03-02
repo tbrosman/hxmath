@@ -1,4 +1,5 @@
-package test;
+package hxmath.test;
+
 import hxmath.math.Matrix3x2;
 import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;

@@ -1,10 +1,10 @@
-package test;
+package hxmath.test;
 
 import hxmath.converters.flixel.Vector2Converter;
 import hxmath.math.Vector2;
 import hxmath.math.Vector3;
 import hxmath.math.Vector3.Vector3Shape;
-import test.TestConverters.FlxPointMock;
+import hxmath.test.TestConverters.FlxPointMock;
     
 class FlxPointMock
 {

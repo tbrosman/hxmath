@@ -1,4 +1,5 @@
-package test;
+package hxmath.test;
+
 import haxe.PosInfos;
 import hxmath.frames.Frame2;
 import hxmath.frames.Frame3;
