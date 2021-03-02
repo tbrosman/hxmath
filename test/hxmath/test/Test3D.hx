@@ -1,4 +1,4 @@
-package test;
+package hxmath.test;
 
 import hxmath.frames.Frame3;
 import hxmath.math.MathUtil;

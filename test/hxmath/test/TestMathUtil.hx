@@ -1,4 +1,5 @@
-package test;
+package hxmath.test;
+
 import hxmath.math.MathUtil;
 import hxmath.math.Vector2;
 

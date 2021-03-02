@@ -1,4 +1,4 @@
-package test;
+package hxmath.test;
 
 import hxmath.geom.Ray2;
 import hxmath.geom.Rect;

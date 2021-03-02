@@ -1,5 +1,6 @@
 -cp src
--main test.Test
+-cp test
+-main hxmath.Test
 -lib nanotest
 -hl bin/hl/Test.hl
 -D EXIT_ON_FINISH

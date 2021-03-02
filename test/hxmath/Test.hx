@@ -1,8 +1,8 @@
-package test;
+package hxmath;
 
 class Test {
     static function main() {
-        var passed = TestAll.main();
+        var passed = hxmath.test.TestAll.main();
         
         #if (sys && !EXIT_ON_FINISH)
         Sys.stdin().readLine();

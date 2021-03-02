@@ -1,4 +1,4 @@
-package test.openfl;
+package hxmath.openfl;
 
 import flash.display.Sprite;
 import hxmath.math.Matrix2x2;

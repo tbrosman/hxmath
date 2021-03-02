@@ -1,5 +1,6 @@
 -cp src
--main test.Test
+-cp test
+-main hxmath.Test
 -lib nanotest
 -cpp bin/cpp
 -debug
