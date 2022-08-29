@@ -8,7 +8,7 @@ import hxmath.math.Quaternion;
 import hxmath.math.Vector3;
 import hxmath.math.Vector4;
 
-class Test3D extends MathTestCase
+class Test3D extends NanoTestCase
 {
     public function testMatrixMult()
     {

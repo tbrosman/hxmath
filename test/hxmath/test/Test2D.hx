@@ -8,7 +8,7 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Vector2;
 import hxmath.math.Vector3;
 
-class Test2D extends MathTestCase
+class Test2D extends NanoTestCase
 {
     public function testVector2BasicOps()
     {

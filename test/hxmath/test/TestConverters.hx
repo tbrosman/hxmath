@@ -37,7 +37,7 @@ class FlxPointMock
  * ...
  * @author TABIV
  */
-class TestConverters extends MathTestCase
+class TestConverters extends NanoTestCase
 {
     public function new() 
     {

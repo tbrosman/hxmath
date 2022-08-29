@@ -34,7 +34,7 @@ class FlxObjectMock
     }
 }
 
-class TestFrames extends MathTestCase
+class TestFrames extends NanoTestCase
 {
     public function testFrame2Concat()
     {

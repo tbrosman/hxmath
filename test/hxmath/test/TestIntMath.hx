@@ -8,7 +8,7 @@ import hxmath.math.Vector2;
  * ...
  * @author TABIV
  */
-class TestIntMath extends MathTestCase
+class TestIntMath extends NanoTestCase
 {
     public function testIntVector2Conversion()
     {

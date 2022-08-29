@@ -5,7 +5,7 @@ import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
 import hxmath.math.Vector2;
 
-class TestStress extends MathTestCase
+class TestStress extends NanoTestCase
 {
     public function testDotProduct()
     {

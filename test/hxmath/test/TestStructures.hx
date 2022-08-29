@@ -1,4 +1,5 @@
 package hxmath.test;
+
 import haxe.rtti.Meta;
 import hxmath.math.IntVector2;
 import hxmath.math.Matrix2x2;
@@ -15,7 +16,7 @@ import hxmath.math.Vector4;
  * ...
  * @author TABIV
  */
-class TestStructures extends MathTestCase
+class TestStructures extends NanoTestCase
 {
     public function testEquals()
     {

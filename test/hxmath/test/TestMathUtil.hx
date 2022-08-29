@@ -3,7 +3,7 @@ package hxmath.test;
 import hxmath.math.MathUtil;
 import hxmath.math.Vector2;
 
-class TestMathUtil extends MathTestCase
+class TestMathUtil extends NanoTestCase
 {
     public function testOrient2D()
     {

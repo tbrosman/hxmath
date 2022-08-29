@@ -9,7 +9,7 @@ import hxmath.math.Vector2;
  * ...
  * @author TABIV
  */
-class TestGeom extends MathTestCase
+class TestGeom extends NanoTestCase
 {
     public function testRectIntersect()
     {

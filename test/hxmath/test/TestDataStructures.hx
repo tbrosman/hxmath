@@ -10,7 +10,7 @@ import hxmath.math.IntVector2;
  * ...
  * @author TABIV
  */
-class TestDataStructures extends MathTestCase
+class TestDataStructures extends NanoTestCase
 {
     public function new() 
     {
