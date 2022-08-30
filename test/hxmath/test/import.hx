@@ -1,2 +1,3 @@
 import hxmath.test.Random.*;
-import nanotest.NanoTestCase;
+import utest.Assert;
+import utest.Test;

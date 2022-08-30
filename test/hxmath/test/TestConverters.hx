@@ -37,7 +37,7 @@ class FlxPointMock
  * ...
  * @author TABIV
  */
-class TestConverters extends NanoTestCase
+class TestConverters extends Test
 {
     public function new() 
     {
@@ -51,21 +51,21 @@ class TestConverters extends NanoTestCase
         var v2c = randomVector2();
         v2a.copyToShape(v2b);
         v2c.copyFromShape(v2b);
-        assertTrue(v2a == v2c);
+        Assert.isTrue(v2a == v2c);
         
         var v3a = randomVector3();
         var v3b = { x: 0.0, y: 0.0, z: 0.0 };
         var v3c = randomVector3();
         v3a.copyToShape(v3b);
         v3c.copyFromShape(v3b);
-        assertTrue(v3a == v3c);
+        Assert.isTrue(v3a == v3c);
         
         var v4a = randomVector4();
         var v4b = { x: 0.0, y: 0.0, z: 0.0, w: 0.0 };
         var v4c = randomVector4();
         v4a.copyToShape(v4b);
         v4c.copyFromShape(v4b);
-        assertTrue(v4a == v4c);
+        Assert.isTrue(v4a == v4c);
         
         var m22a = randomMatrix2x2();
         var m22b = {
@@ -75,7 +75,7 @@ class TestConverters extends NanoTestCase
         var m22c = randomMatrix2x2();
         m22a.copyToShape(m22b);
         m22c.copyFromShape(m22b);
-        assertTrue(m22a == m22c);
+        Assert.isTrue(m22a == m22c);
         
         var m32a = randomMatrix3x2();
         var m32b = {
@@ -86,7 +86,7 @@ class TestConverters extends NanoTestCase
         var m32c = randomMatrix3x2();
         m32a.copyToShape(m32b);
         m32c.copyFromShape(m32b);
-        assertTrue(m32a == m32c);
+        Assert.isTrue(m32a == m32c);
         
         var m33a = randomMatrix3x3();
         var m33b = {
@@ -97,7 +97,7 @@ class TestConverters extends NanoTestCase
         var m33c = randomMatrix3x3();
         m33a.copyToShape(m33b);
         m33c.copyFromShape(m33b);
-        assertTrue(m33a == m33c);
+        Assert.isTrue(m33a == m33c);
         
         var m44a = randomMatrix4x4();
         var m44b = {
@@ -109,14 +109,14 @@ class TestConverters extends NanoTestCase
         var m44c = randomMatrix4x4();
         m44a.copyToShape(m44b);
         m44c.copyFromShape(m44b);
-        assertTrue(m44a == m44c);
+        Assert.isTrue(m44a == m44c);
         
         var qa = randomQuaternion();
         var qb = { s: 0.0, x: 0.0, y: 0.0, z: 0.0 };
         var qc = randomQuaternion();
         qa.copyToShape(qb);
         qc.copyFromShape(qb);
-        assertTrue(qa == qc);
+        Assert.isTrue(qa == qc);
     }
     
     public function testFlxPointConversion()
@@ -125,12 +125,12 @@ class TestConverters extends NanoTestCase
         
         var q = new FlxPointMock();
         Vector2Converter.copyToFlxPoint(v, q);
-        assertEquals(v.x, q.x);
-        assertEquals(v.y, q.y);
+        Assert.equals(v.x, q.x);
+        Assert.equals(v.y, q.y);
         
         var u = Vector2.zero;
         Vector2Converter.copyFromFlxPoint(u, q);
-        assertEquals(u.x, q.x);
-        assertEquals(u.y, q.y);
+        Assert.equals(u.x, q.x);
+        Assert.equals(u.y, q.y);
     }
 }

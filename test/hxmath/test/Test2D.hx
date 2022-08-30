@@ -8,27 +8,27 @@ import hxmath.math.Matrix3x2;
 import hxmath.math.Vector2;
 import hxmath.math.Vector3;
 
-class Test2D extends NanoTestCase
+class Test2D extends Test
 {
     public function testVector2BasicOps()
     {
-        assertTrue(Vector2.xAxis * Vector2.yAxis == 0.0);
-        assertTrue(0.0 * Vector2.xAxis == Vector2.zero);
+        Assert.isTrue(Vector2.xAxis * Vector2.yAxis == 0.0);
+        Assert.isTrue(0.0 * Vector2.xAxis == Vector2.zero);
         
-        assertTrue(IntVector2.xAxis * IntVector2.yAxis == 0);
-        assertTrue(0 * IntVector2.xAxis == IntVector2.zero);
+        Assert.isTrue(IntVector2.xAxis * IntVector2.yAxis == 0);
+        Assert.isTrue(0 * IntVector2.xAxis == IntVector2.zero);
     }
     
     public function testDeterminant()
     {
-        assertTrue(Matrix2x2.identity.det == 1.0);
+        Assert.isTrue(Matrix2x2.identity.det == 1.0);
     }
     
     public function testHomogenousTranslation()
     {
         var m = Matrix3x2.identity;
         m.t = new Vector2(3, -1);
-        assertTrue(m * Vector2.zero == m.t);
+        Assert.isTrue(m * Vector2.zero == m.t);
     }
     
     public function testTranspose()
@@ -42,7 +42,7 @@ class Test2D extends NanoTestCase
             
         var k = (m - n);
         var normSq = k.a * k.a + k.b * k.b + k.c * k.c + k.d * k.d;
-        assertTrue(normSq < 1e-6);
+        Assert.isTrue(normSq < 1e-6);
     }
     
     public function testRotation()
@@ -50,8 +50,8 @@ class Test2D extends NanoTestCase
         // After 90 degree ccw rotation:
         // x -> +y
         // y -> -x
-        assertApproxEquals(0.0, ((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length);
-        assertApproxEquals(0.0, ((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length);
+        Assert.floatEquals(0.0, ((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.xAxis) - Vector2.yAxis).length);
+        Assert.floatEquals(0.0, ((Matrix2x2.rotate(Math.PI / 2.0) * Vector2.yAxis) + Vector2.xAxis).length);
     }
     
     public function testVectorRotate()
@@ -59,36 +59,36 @@ class Test2D extends NanoTestCase
         // After 90 degree ccw rotation around 0, 0:
         // x -> +y
         // y -> -x
-        assertApproxEquals(0.0, ((Vector2.xAxis.rotate(Math.PI / 2.0, Vector2.zero)) - Vector2.yAxis).length);
-        assertApproxEquals(0.0, ((Vector2.yAxis.rotate(Math.PI / 2.0, Vector2.zero)) + Vector2.xAxis).length);
+        Assert.floatEquals(0.0, ((Vector2.xAxis.rotate(Math.PI / 2.0, Vector2.zero)) - Vector2.yAxis).length);
+        Assert.floatEquals(0.0, ((Vector2.yAxis.rotate(Math.PI / 2.0, Vector2.zero)) + Vector2.xAxis).length);
     }
     
     public function testPolarConversion()
     {
-        assertApproxEquals(0.0, (Vector2.fromPolar(Math.PI, 1.0) + Vector2.xAxis).length);
+        Assert.floatEquals(0.0, (Vector2.fromPolar(Math.PI, 1.0) + Vector2.xAxis).length);
         
         // Some backends give +PI, others -PI (they are both equivalent)
-        assertApproxEquals(Math.PI, Math.abs((-Vector2.xAxis).angle));
+        Assert.floatEquals(Math.PI, Math.abs((-Vector2.xAxis).angle));
     }
     
     public function testNorms()
     {
-        assertTrue(Vector2.yAxis.normal.rotatedLeft * new Vector2(-1, 0) > 0.0);
-        assertTrue(Vector2.yAxis.normal.rotatedRight * new Vector2(-1, 0) < 0.0);
+        Assert.isTrue(Vector2.yAxis.normal.rotatedLeft * new Vector2(-1, 0) > 0.0);
+        Assert.isTrue(Vector2.yAxis.normal.rotatedRight * new Vector2(-1, 0) < 0.0);
     }
     
     public function testAngles()
     {
-        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)), Math.PI / 4.0);
-        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, 1)), -Math.PI / 4.0);
-        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, -1)), 3.0 * Math.PI / 4.0);
-        assertApproxEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, -1)), -3.0 * Math.PI / 4.0);
+        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)), Math.PI / 4.0);
+        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, 1)), -Math.PI / 4.0);
+        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, -1)), 3.0 * Math.PI / 4.0);
+        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, -1)), -3.0 * Math.PI / 4.0);
         
-        assertApproxEquals(Vector2.yAxis.signedAngleWith(Vector2.xAxis), -Math.PI / 2.0);
-        assertApproxEquals(Vector2.xAxis.signedAngleWith(Vector2.yAxis), Math.PI / 2.0);
+        Assert.floatEquals(Vector2.yAxis.signedAngleWith(Vector2.xAxis), -Math.PI / 2.0);
+        Assert.floatEquals(Vector2.xAxis.signedAngleWith(Vector2.yAxis), Math.PI / 2.0);
         
-        assertApproxEquals(Vector2.yAxis.angleWith(Vector2.xAxis), Math.PI / 2.0);
-        assertApproxEquals(Vector2.xAxis.angleWith(Vector2.yAxis), Math.PI / 2.0);
+        Assert.floatEquals(Vector2.yAxis.angleWith(Vector2.xAxis), Math.PI / 2.0);
+        Assert.floatEquals(Vector2.xAxis.angleWith(Vector2.yAxis), Math.PI / 2.0);
     }
     
     public function testOrbit()
@@ -102,7 +102,7 @@ class Test2D extends NanoTestCase
             {
                 var point = randomVector2();
                 var pointAfter = m * point;
-                assertApproxEquals(0.0, (point - center) * (pointAfter - center));
+                Assert.floatEquals(0.0, (point - center) * (pointAfter - center));
             }
         }
     }
@@ -111,7 +111,7 @@ class Test2D extends NanoTestCase
     {
         var m = Matrix3x2.identity;
         m.linearSubMatrix = new Matrix2x2(1.0, 2.0, 3.0, 4.0);
-        assertTrue(m.linearSubMatrix == new Matrix2x2(1.0, 2.0, 3.0, 4.0));
+        Assert.isTrue(m.linearSubMatrix == new Matrix2x2(1.0, 2.0, 3.0, 4.0));
     }
     
     public function testMatrixFrameInverse()
@@ -136,9 +136,9 @@ class Test2D extends NanoTestCase
             var homogenousY = new Vector2(0.0, 1.0);
             
             // The tetrahedron should be transformed identically by both matrices
-            assertApproxEquals(0.0, (invFrameMatrix * homogenous0 - frameMatrixInv * homogenous0).lengthSq);
-            assertApproxEquals(0.0, (invFrameMatrix * homogenousX - frameMatrixInv * homogenousX).lengthSq);
-            assertApproxEquals(0.0, (invFrameMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
+            Assert.floatEquals(0.0, (invFrameMatrix * homogenous0 - frameMatrixInv * homogenous0).lengthSq);
+            Assert.floatEquals(0.0, (invFrameMatrix * homogenousX - frameMatrixInv * homogenousX).lengthSq);
+            Assert.floatEquals(0.0, (invFrameMatrix * homogenousY - frameMatrixInv * homogenousY).lengthSq);
         }
     }
     
@@ -151,9 +151,9 @@ class Test2D extends NanoTestCase
             
             Vector2.orthoNormalize(u, v);
             
-            assertApproxEquals(1.0, u.length);
-            assertApproxEquals(1.0, v.length);
-            assertApproxEquals(0.0, u * v);
+            Assert.floatEquals(1.0, u.length);
+            Assert.floatEquals(1.0, v.length);
+            Assert.floatEquals(0.0, u * v);
         }
     }
     
@@ -164,8 +164,8 @@ class Test2D extends NanoTestCase
             var u = randomVector2();
             var v = Vector2.reflect(u, Vector2.yAxis);
             
-            assertEquals(u.x, v.x);
-            assertEquals(-u.y, v.y);
+            Assert.equals(u.x, v.x);
+            Assert.equals(-u.y, v.y);
         }
     }
 
@@ -198,7 +198,7 @@ class Test2D extends NanoTestCase
 
         for (i in 0...6)
         {
-            assertApproxEquals(expectedC.getArrayElement(i), c.getArrayElement(i));
+            Assert.floatEquals(expectedC.getArrayElement(i), c.getArrayElement(i));
         }
     }
 
@@ -218,7 +218,7 @@ class Test2D extends NanoTestCase
             // Wrap the the vector's angle output, as Math.atan2 (used in Vector2.angle) may return a negative value
             var va = MathUtil.wrap(v.angle, 2 * Math.PI);
             
-            assertApproxEquals(a, va);
+            Assert.floatEquals(a, va);
         }
     }
 }

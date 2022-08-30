@@ -1,7 +1,7 @@
 -cp src
 -cp test
 -main hxmath.Test
--lib nanotest
+-lib utest
 -cpp bin/cpp
 -debug
 -D HXCPP_DEBUGGER

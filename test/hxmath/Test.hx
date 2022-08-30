@@ -1,13 +1,28 @@
 package hxmath;
 
+import hxmath.test.*;
+import utest.UTest;
+
 class Test {
-    static function main() {
-        var passed = hxmath.test.TestAll.main();
+    static function main()
+    {
+        UTest.run([
+            new TestStructures(),
+            new Test2D(),
+            new Test3D(),
+            new TestMathUtil(),
+            new TestConverters(),
+            new TestFrames(),
+            new TestIntMath(),
+            new TestGeom(),
+            new TestDataStructures()
+            #if STRESS_TESTS
+            , new TestStress()
+            #end
+        ]);
         
         #if (sys && !EXIT_ON_FINISH)
         Sys.stdin().readLine();
-        #else
-        Sys.exit(passed ? 0 : -1);
         #end
     }
 }

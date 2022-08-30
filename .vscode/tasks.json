@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "hxmath: test in C++",
+			"command": "haxe test_cpp.hxml --cmd ./bin/cpp",
+			"type": "shell",
+			"group": "test"
+		},
+		{
+			"label": "hxmath: test in HashLink",
+			"command": "haxe test_hashlink.hxml --cmd hl\\ bin/hl/Test.hl",
+			"type": "shell",
+			"group": "test"
+		},
+		{
+			"label": "hxmath: test in Neko",
+			"command": "haxe test_neko.hxml --cmd neko\\ bin/neko/Test.n",
+			"type": "shell",
+			"group": "test"
+		}
+	]
+}
