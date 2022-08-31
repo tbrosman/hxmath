@@ -103,8 +103,6 @@ class TestGeom extends Test
     
     public function testRectIntersectOverlapping()
     {
-        Assert.pass();
-        return;
         var a = new Rect(0.0, 0.0, 1.0, 1.0);
         var b = new Rect(0.5, 0.5, 1.0, 1.0);
         
