@@ -208,19 +208,6 @@ class TestGeom extends Test
         Assert.floatEquals(0.0, (new Vector2(unitMinusTwo.x, unitMinusTwo.y) + two).length);
     }
     
-    public function testRectDistanceAgainstRangeAlgorithm()
-    {
-        for (i in 0...100)
-        {
-            var a = new Rect(Math.random() - 0.5, Math.random() - 0.5, Math.random(), Math.random());
-            var b = new Rect(Math.random() - 0.5, Math.random() - 0.5, Math.random(), Math.random());
-            
-            var regularDist = a.distanceToRect(b);
-            var rangeDistance = a.distanceToRect(b);
-            Assert.floatEquals(rangeDistance, regularDist);
-        }
-    }
-    
     public function testRay2Cast()
     {
         var p = new Vector2(1.0, 1.0).normal;
