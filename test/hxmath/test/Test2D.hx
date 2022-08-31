@@ -12,23 +12,23 @@ class Test2D extends Test
 {
     public function testVector2BasicOps()
     {
-        Assert.isTrue(Vector2.xAxis * Vector2.yAxis == 0.0);
-        Assert.isTrue(0.0 * Vector2.xAxis == Vector2.zero);
+        Assert.equals(0.0, Vector2.xAxis * Vector2.yAxis);
+        Assert.isTrue(Vector2.zero == 0.0 * Vector2.xAxis);
         
-        Assert.isTrue(IntVector2.xAxis * IntVector2.yAxis == 0);
-        Assert.isTrue(0 * IntVector2.xAxis == IntVector2.zero);
+        Assert.equals(0, IntVector2.xAxis * IntVector2.yAxis);
+        Assert.isTrue(IntVector2.zero == 0 * IntVector2.xAxis);
     }
     
     public function testDeterminant()
     {
-        Assert.isTrue(Matrix2x2.identity.det == 1.0);
+        Assert.equals(1.0, Matrix2x2.identity.det);
     }
     
     public function testHomogenousTranslation()
     {
         var m = Matrix3x2.identity;
         m.t = new Vector2(3, -1);
-        Assert.isTrue(m * Vector2.zero == m.t);
+        Assert.isTrue(m.t == m * Vector2.zero);
     }
     
     public function testTranspose()
@@ -79,16 +79,16 @@ class Test2D extends Test
     
     public function testAngles()
     {
-        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)), Math.PI / 4.0);
-        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, 1)), -Math.PI / 4.0);
-        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(-1, -1)), 3.0 * Math.PI / 4.0);
-        Assert.floatEquals(Vector2.yAxis.signedAngleWith(new Vector2(1, -1)), -3.0 * Math.PI / 4.0);
+        Assert.floatEquals(Math.PI / 4.0, Vector2.yAxis.signedAngleWith(new Vector2(-1, 1)));
+        Assert.floatEquals(-Math.PI / 4.0, Vector2.yAxis.signedAngleWith(new Vector2(1, 1)));
+        Assert.floatEquals(3.0 * Math.PI / 4.0, Vector2.yAxis.signedAngleWith(new Vector2(-1, -1)));
+        Assert.floatEquals(-3.0 * Math.PI / 4.0, Vector2.yAxis.signedAngleWith(new Vector2(1, -1)));
         
-        Assert.floatEquals(Vector2.yAxis.signedAngleWith(Vector2.xAxis), -Math.PI / 2.0);
-        Assert.floatEquals(Vector2.xAxis.signedAngleWith(Vector2.yAxis), Math.PI / 2.0);
+        Assert.floatEquals(-Math.PI / 2.0, Vector2.yAxis.signedAngleWith(Vector2.xAxis));
+        Assert.floatEquals(Math.PI / 2.0, Vector2.xAxis.signedAngleWith(Vector2.yAxis));
         
-        Assert.floatEquals(Vector2.yAxis.angleWith(Vector2.xAxis), Math.PI / 2.0);
-        Assert.floatEquals(Vector2.xAxis.angleWith(Vector2.yAxis), Math.PI / 2.0);
+        Assert.floatEquals(Math.PI / 2.0, Vector2.yAxis.angleWith(Vector2.xAxis));
+        Assert.floatEquals(Math.PI / 2.0, Vector2.xAxis.angleWith(Vector2.yAxis));
     }
     
     public function testOrbit()

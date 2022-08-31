@@ -40,7 +40,7 @@ class Test3D extends Test
     
     public function testCrossProductPrecedence()
     {
-        Assert.isTrue(Vector3.xAxis + Vector3.yAxis % Vector3.zAxis == 2.0 * Vector3.xAxis);
+        Assert.isTrue(2.0 * Vector3.xAxis == Vector3.xAxis + Vector3.yAxis % Vector3.zAxis);
     }
     
     public function testAxialRotation()
@@ -50,20 +50,20 @@ class Test3D extends Test
         // After 90 degree ccw rotation around X:
         // y -> +z
         // z -> -y
-        Assert.floatEquals(((Matrix3x3.rotationX(quarterRot) * Vector3.yAxis) - Vector3.zAxis).length, 0.0);
-        Assert.floatEquals(((Matrix3x3.rotationX(quarterRot) * Vector3.zAxis) + Vector3.yAxis).length, 0.0);
+        Assert.floatEquals(0.0, ((Matrix3x3.rotationX(quarterRot) * Vector3.yAxis) - Vector3.zAxis).length);
+        Assert.floatEquals(0.0, ((Matrix3x3.rotationX(quarterRot) * Vector3.zAxis) + Vector3.yAxis).length);
         
         // After 90 degree ccw rotation around Y:
         // z -> +x
         // x -> -z
-        Assert.floatEquals(((Matrix3x3.rotationY(quarterRot) * Vector3.zAxis) - Vector3.xAxis).length, 0.0);
-        Assert.floatEquals(((Matrix3x3.rotationY(quarterRot) * Vector3.xAxis) + Vector3.zAxis).length, 0.0);
+        Assert.floatEquals(0.0, ((Matrix3x3.rotationY(quarterRot) * Vector3.zAxis) - Vector3.xAxis).length);
+        Assert.floatEquals(0.0, ((Matrix3x3.rotationY(quarterRot) * Vector3.xAxis) + Vector3.zAxis).length);
         
         // After 90 degree ccw rotation around Z:
         // x -> +y
         // y -> -x
-        Assert.floatEquals(((Matrix3x3.rotationZ(quarterRot) * Vector3.xAxis) - Vector3.yAxis).length, 0.0);
-        Assert.floatEquals(((Matrix3x3.rotationZ(quarterRot) * Vector3.yAxis) + Vector3.xAxis).length, 0.0);
+        Assert.floatEquals(0.0, ((Matrix3x3.rotationZ(quarterRot) * Vector3.xAxis) - Vector3.yAxis).length);
+        Assert.floatEquals(0.0, ((Matrix3x3.rotationZ(quarterRot) * Vector3.yAxis) + Vector3.xAxis).length);
     }
     
     public function testQuaternionToMatrix()
@@ -95,7 +95,7 @@ class Test3D extends Test
                     totalLength += (pair.n.col(c) - pair.m.col(c)).length;
                 }
                 
-                Assert.floatEquals(totalLength, 0.0);
+                Assert.floatEquals(0.0, totalLength);
             }
         }
     }
@@ -167,9 +167,9 @@ class Test3D extends Test
     
     public function testAngles()
     {
-        Assert.floatEquals(Vector3.xAxis.angleWith(Vector3.yAxis), Math.PI / 2.0);
-        Assert.floatEquals(Vector3.xAxis.angleWith(Vector3.zAxis), Math.PI / 2.0);
-        Assert.floatEquals(Vector3.yAxis.angleWith(Vector3.zAxis), Math.PI / 2.0);
+        Assert.floatEquals(Math.PI / 2.0, Vector3.xAxis.angleWith(Vector3.yAxis));
+        Assert.floatEquals(Math.PI / 2.0, Vector3.xAxis.angleWith(Vector3.zAxis));
+        Assert.floatEquals(Math.PI / 2.0, Vector3.yAxis.angleWith(Vector3.zAxis));
     }
     
     public function testReflect()

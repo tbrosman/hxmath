@@ -20,9 +20,9 @@ class TestMathUtil extends Test
         var d = new Vector2(0.5, 0.5);
         var e = new Vector2(0.0, -1.0);
         
-        Assert.equals(MathUtil.orient2d(a, b, c), Orient2DResult.Left);
-        Assert.equals(MathUtil.orient2d(a, b, d), Orient2DResult.Right);
-        Assert.equals(MathUtil.orient2d(a, b, e), Orient2DResult.Colinear);
+        Assert.equals(Orient2DResult.Left, MathUtil.orient2d(a, b, c));
+        Assert.equals(Orient2DResult.Right, MathUtil.orient2d(a, b, d));
+        Assert.equals(Orient2DResult.Colinear, MathUtil.orient2d(a, b, e));
     }
     
     public function testWrapAngle()

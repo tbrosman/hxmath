@@ -130,7 +130,7 @@ class TestConverters extends Test
         
         var u = Vector2.zero;
         Vector2Converter.copyFromFlxPoint(u, q);
-        Assert.equals(u.x, q.x);
-        Assert.equals(u.y, q.y);
+        Assert.equals(q.x, u.x);
+        Assert.equals(q.y, u.y);
     }
 }

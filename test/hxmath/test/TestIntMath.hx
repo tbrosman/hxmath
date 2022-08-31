@@ -23,8 +23,8 @@ class TestIntMath extends Test
         var one = new Vector2(1.0, 1.0);
         var flooredVec = (u + eps).toIntVector2();
         var cieldVec = (u + eps).toIntVector2(Math.ceil);
-        Assert.floatEquals((flooredVec.toVector2() - u).length, 0.0);
-        Assert.floatEquals((cieldVec.toVector2() - (u + one)).length, 0.0);
+        Assert.floatEquals(0.0, (flooredVec.toVector2() - u).length);
+        Assert.floatEquals(0.0, (cieldVec.toVector2() - (u + one)).length);
         
         // ShortVector2 => Vector2 conversion
         var vi = new ShortVector2(1, 2);
