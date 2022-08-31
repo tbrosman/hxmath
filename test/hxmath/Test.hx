@@ -12,10 +12,9 @@ class Test {
             new Test2D(),
             new Test3D(),
             new TestMathUtil(),
-            new TestConverters(),
             new TestFrames(),
-            new TestIntMath(),
-            new TestGeom()
+            new TestGeom(),
+            new TestVectors()
             #if STRESS_TESTS
             , new TestStress()
             #end

@@ -38,11 +38,6 @@ class Test3D extends Test
         }
     }
     
-    public function testCrossProductPrecedence()
-    {
-        Assert.isTrue(2.0 * Vector3.xAxis == Vector3.xAxis + Vector3.yAxis % Vector3.zAxis);
-    }
-    
     public function testAxialRotation()
     {
         var quarterRot = 90.0;
@@ -141,60 +136,6 @@ class Test3D extends Test
             
             Assert.floatEquals(1.0, p.s);
             Assert.floatEquals(0.0, new Vector3(p.x, p.y, p.z).length);
-        }
-    }
-    
-    public function testOrthoNormalize()
-    {
-        for (i in 0...10)
-        {
-            var u = randomVector3();
-            var v = randomVector3();
-            var w = randomVector3();
-            
-            Vector3.orthoNormalize(u, v, w);
-            
-            Assert.floatEquals(1.0, u.length);
-            Assert.floatEquals(1.0, v.length);
-            Assert.floatEquals(1.0, w.length);
-            Assert.floatEquals(0.0, u * v);
-            Assert.floatEquals(0.0, u * w);
-            Assert.floatEquals(0.0, v * w);
-            
-            Assert.floatEquals(0.0, ((u % v) % w).length);
-        }
-    }
-    
-    public function testAngles()
-    {
-        Assert.floatEquals(Math.PI / 2.0, Vector3.xAxis.angleWith(Vector3.yAxis));
-        Assert.floatEquals(Math.PI / 2.0, Vector3.xAxis.angleWith(Vector3.zAxis));
-        Assert.floatEquals(Math.PI / 2.0, Vector3.yAxis.angleWith(Vector3.zAxis));
-    }
-    
-    public function testReflect()
-    {
-        for (i in 0...10)
-        {
-            var u = randomVector3();
-            var v = Vector3.reflect(u, Vector3.zAxis);
-            
-            Assert.equals(u.x, v.x);
-            Assert.equals(u.y, v.y);
-            Assert.equals(-u.z, v.z);
-        }
-    }
-    
-    public function testProjectOntoPlane()
-    {
-        for (i in 0...10)
-        {
-            var u = randomVector3();
-            var normal = randomVector3();
-            
-            u.projectOntoPlane(normal);
-            
-            Assert.floatEquals(0.0, u * normal);
         }
     }
     
