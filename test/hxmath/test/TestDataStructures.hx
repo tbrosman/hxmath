@@ -21,7 +21,8 @@ class TestDataStructures extends Test
     {
         var dense:IArray2<Dynamic> = new DenseArray2<Dynamic>(100, 100);
         var sparse:IArray2<Dynamic> = new SparseArray2<Dynamic>();
-        Assert.pass();
+        Assert.notNull(dense);
+        Assert.notNull(sparse);
     }
     
     public function testDenseArray2Resize()
