@@ -3,14 +3,14 @@ package hxmath.test;
 import hxmath.ds.DenseArray2;
 import hxmath.ds.IArray2;
 import hxmath.ds.SparseArray2;
-import hxmath.math.ShortVector2;
 import hxmath.math.IntVector2;
+import hxmath.math.ShortVector2;
 
 /**
  * ...
  * @author TABIV
  */
-class TestDataStructures extends Test
+class TestArrays extends Test
 {
     public function new() 
     {

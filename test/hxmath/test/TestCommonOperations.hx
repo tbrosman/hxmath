@@ -15,7 +15,7 @@ import hxmath.math.Vector4;
  * ...
  * @author TABIV
  */
-class TestStructures extends Test
+class TestCommonOperations extends Test
 {
     public function specEquals()
     {
