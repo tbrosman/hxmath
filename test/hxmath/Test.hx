@@ -12,6 +12,7 @@ class Test {
             new Test2D(),
             new Test3D(),
             new TestMathUtil(),
+            new TestMatrices(),
             new TestFrames(),
             new TestGeom(),
             new TestVectors()
