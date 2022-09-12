@@ -104,20 +104,20 @@ class TestFrames extends Test
         // Vector test_a -> test_world
         var testLinearInOuter = a.linearTransformFrom(testInA);
         var expectedLinearResult = new Vector2(-1.0, 1.0);
-        Assert.floatEquals(0.0, (testLinearInOuter - expectedLinearResult).length);
+        MathAssert.floatEquals(testLinearInOuter, expectedLinearResult);
         
         // Point test_a -> test_world
         var testAffineInOuter = a.transformFrom(testInA);
         var expectedAffineResult = expectedLinearResult + originA;
-        Assert.floatEquals(0.0, (testAffineInOuter - expectedAffineResult).length);
+        MathAssert.floatEquals(testAffineInOuter, expectedAffineResult);
         
         // Vector test_world -> test_a
         var testLinearBackToInner = a.linearTransformTo(testLinearInOuter);
-        Assert.floatEquals(0.0, (testLinearBackToInner - testInA).length);
+        MathAssert.floatEquals(testLinearBackToInner, testInA);
         
         // Point test_world -> test_a 
         var testAffineBackToInner = a.transformTo(testAffineInOuter);
-        Assert.floatEquals(0.0, (testAffineBackToInner - testInA).length);
+        MathAssert.floatEquals(testAffineBackToInner, testInA);
     }
     
     public function testFrame2Inverse()
@@ -156,23 +156,23 @@ class TestFrames extends Test
         // Lerping from either direction should be equivalent at t = 0.5
         var frameC = Frame2.lerp(frameA, frameB, 0.5);
         var frameC2 = Frame2.lerp(frameB, frameA, 0.5);
-        Assert.floatEquals(0.0, (frameC.offset - new Vector2(0.5, 0.5)).length);
+        MathAssert.floatEquals(frameC.offset, new Vector2(0.5, 0.5));
         Assert.floatEquals(15.0, frameC.angleDegrees);
-        Assert.floatEquals(0.0, (frameC2.offset - new Vector2(0.5, 0.5)).length);
+        MathAssert.floatEquals(frameC2.offset, new Vector2(0.5, 0.5));
         Assert.floatEquals(15.0, frameC2.angleDegrees);
         
         var frameD = Frame2.lerp(frameA, frameB, 1.0 / 3.0);
         var frameD2 = Frame2.lerp(frameB, frameA, 2.0 / 3.0);
-        Assert.floatEquals(0.0, (frameD.offset - new Vector2(2.0 / 3.0, 1.0 / 3.0)).length);
+        MathAssert.floatEquals(frameD.offset, new Vector2(2.0 / 3.0, 1.0 / 3.0));
         Assert.floatEquals(0.0, frameD.angleDegrees);
-        Assert.floatEquals(0.0, (frameD2.offset - new Vector2(2.0 / 3.0, 1.0 / 3.0)).length);
+        MathAssert.floatEquals(frameD2.offset, new Vector2(2.0 / 3.0, 1.0 / 3.0));
         Assert.floatEquals(0.0, frameD2.angleDegrees);
         
         var frameE = Frame2.lerp(frameA, frameB, 2.0 / 3.0);
         var frameE2 = Frame2.lerp(frameB, frameA, 1.0 / 3.0);
-        Assert.floatEquals(0.0, (frameE.offset - new Vector2(1.0 / 3.0, 2.0 / 3.0)).length);
+        MathAssert.floatEquals(frameE.offset, new Vector2(1.0 / 3.0, 2.0 / 3.0));
         Assert.floatEquals(30.0, frameE.angleDegrees);
-        Assert.floatEquals(0.0, (frameE2.offset - new Vector2(1.0 / 3.0, 2.0 / 3.0)).length);
+        MathAssert.floatEquals(frameE2.offset, new Vector2(1.0 / 3.0, 2.0 / 3.0));
         Assert.floatEquals(30.0, frameE2.angleDegrees);
     }
     

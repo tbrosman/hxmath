@@ -196,7 +196,7 @@ class TestGeom extends Test
             .addWith(two);
         
         Assert.floatEquals(expectedArea, unitPlusTwo.area);
-        Assert.floatEquals(0.0, (new Vector2(unitPlusTwo.x, unitPlusTwo.y) - new Vector2(unit.x, unit.y)).length);
+        MathAssert.floatEquals(new Vector2(unitPlusTwo.x, unitPlusTwo.y), new Vector2(unit.x, unit.y));
         
         // In the direction of the negative quadrants
         var unitMinusTwo = unit.clone()

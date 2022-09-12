@@ -150,7 +150,9 @@ class TestVectors extends Test {
     
     public function testPolarCoordinates()
     {
-        Assert.floatEquals(0.0, (Vector2.fromPolar(Math.PI, 1.0) + Vector2.xAxis).length);
+        MathAssert.floatEquals(Vector2.fromPolar(Math.PI * 0.5, 1.0), Vector2.yAxis);
+        MathAssert.floatEquals(Vector2.fromPolar(Math.PI * 1.0, 1.0), -Vector2.xAxis);
+        MathAssert.floatEquals(Vector2.fromPolar(Math.PI * 1.5, 1.0), -Vector2.yAxis);
         
         // Some backends give +PI, others -PI (they are both equivalent)
         Assert.floatEquals(Math.PI, Math.abs((-Vector2.xAxis).angle));
@@ -229,12 +231,12 @@ class TestVectors extends Test {
     public function testRotate()
     {
         Assert.isTrue(Vector2.yAxis == Vector2.xAxis.rotateLeft());
-		Assert.floatEquals(0.0, (Vector2.yAxis - Vector2.xAxis.rotate(Math.PI / 2.0, Vector2.zero)).length);
-		Assert.floatEquals(0.0, (new Vector2(0, 2) - Vector2.zero.rotate(Math.PI, Vector2.yAxis)).length);
-		Assert.floatEquals(0.0, (new Vector2(2, 2) - new Vector2(0, 2).rotate(Math.PI, new Vector2(1, 2))).length);
+		MathAssert.floatEquals(Vector2.yAxis, Vector2.xAxis.rotate(Math.PI / 2.0, Vector2.zero));
+		MathAssert.floatEquals(new Vector2(0, 2), Vector2.zero.rotate(Math.PI, Vector2.yAxis));
+		MathAssert.floatEquals(new Vector2(2, 2), new Vector2(0, 2).rotate(Math.PI, new Vector2(1, 2)));
 		
         Assert.isTrue(-Vector2.xAxis == Vector2.yAxis.rotateLeft());
-		Assert.floatEquals(0.0, (-Vector2.xAxis - Vector2.yAxis.rotate(Math.PI / 2.0, Vector2.zero)).length);
+		MathAssert.floatEquals((-Vector2.xAxis), Vector2.yAxis.rotate(Math.PI / 2.0, Vector2.zero));
     }
 }
 

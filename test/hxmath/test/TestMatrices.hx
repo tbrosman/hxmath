@@ -118,7 +118,7 @@ class TestMatrices extends Test {
 				var orbitPoint = m * point;
 				var rotatePoint = point.rotate(angle, center);
 				
-                Assert.floatEquals(0.0, (orbitPoint - rotatePoint).length);
+                MathAssert.floatEquals(orbitPoint, rotatePoint);
             }
         }
     }
@@ -128,20 +128,20 @@ class TestMatrices extends Test {
         // After 90 degree ccw rotation around X:
         // y -> +z
         // z -> -y
-        Assert.floatEquals(0.0, ((Matrix3x3.rotationX(90.0) * Vector3.yAxis) - Vector3.zAxis).length);
-        Assert.floatEquals(0.0, ((Matrix3x3.rotationX(90.0) * Vector3.zAxis) + Vector3.yAxis).length);
+        MathAssert.floatEquals((Matrix3x3.rotationX(90.0) * Vector3.yAxis), Vector3.zAxis);
+        MathAssert.floatEquals((Matrix3x3.rotationX(90.0) * Vector3.zAxis), -Vector3.yAxis);
         
         // After 90 degree ccw rotation around Y:
         // z -> +x
         // x -> -z
-        Assert.floatEquals(0.0, ((Matrix3x3.rotationY(90.0) * Vector3.zAxis) - Vector3.xAxis).length);
-        Assert.floatEquals(0.0, ((Matrix3x3.rotationY(90.0) * Vector3.xAxis) + Vector3.zAxis).length);
+        MathAssert.floatEquals((Matrix3x3.rotationY(90.0) * Vector3.zAxis), Vector3.xAxis);
+        MathAssert.floatEquals((Matrix3x3.rotationY(90.0) * Vector3.xAxis), -Vector3.zAxis);
         
         // After 90 degree ccw rotation around Z:
         // x -> +y
         // y -> -x
-        Assert.floatEquals(0.0, ((Matrix3x3.rotationZ(90.0) * Vector3.xAxis) - Vector3.yAxis).length);
-        Assert.floatEquals(0.0, ((Matrix3x3.rotationZ(90.0) * Vector3.yAxis) + Vector3.xAxis).length);
+        MathAssert.floatEquals((Matrix3x3.rotationZ(90.0) * Vector3.xAxis), Vector3.yAxis);
+        MathAssert.floatEquals((Matrix3x3.rotationZ(90.0) * Vector3.yAxis), -Vector3.xAxis);
     }
     
     public function specTranslation()
