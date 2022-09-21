@@ -9,11 +9,11 @@ class Test {
         UTest.run([
             new TestArrays(),
             new TestCommonOperations(),
-            new Test3D(),
-            new TestMathUtil(),
-            new TestMatrices(),
             new TestFrames(),
             new TestGeom(),
+            new TestMathUtil(),
+            new TestMatrices(),
+            new TestQuaternions(),
             new TestVectors()
             #if STRESS_TESTS
             , new TestStress()
