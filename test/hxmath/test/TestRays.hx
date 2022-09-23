@@ -24,8 +24,7 @@ class TestRays extends Test {
         Assert.floatEquals(1, r.intersectPoint(new Vector2(1, 1).normal));
         Assert.equals(Math.NEGATIVE_INFINITY, r.intersectPoint(new Vector2(0, 1)));
         
-        // Fails because `intersectPoint()` doesn't call `Math.abs(d)`:
-        // Assert.equals(Math.NEGATIVE_INFINITY, r.intersectPoint(new Vector2(1, 0)));
+        Assert.equals(Math.NEGATIVE_INFINITY, r.intersectPoint(new Vector2(1, 0)));
     }
     
     public function testGetClosestPoint()
@@ -43,8 +42,7 @@ class TestRays extends Test {
         
         MathAssert.isTrue(0 == r.getClosestPoint([
             new Vector2(200, 200),
-            // Fails because `intersectPoint()` doesn't call `Math.abs(d)`:
-            // new Vector2(1, 0),
+            new Vector2(1, 0),
             new Vector2(0, 1)
         ]));
     }
