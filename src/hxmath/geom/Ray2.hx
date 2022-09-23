@@ -49,7 +49,7 @@ class Ray2
         
         // Check the perpendicular distance from the line defining the ray
         var d = (point - origin) * perpNorm;
-        if (d < tolerance)
+        if (Math.abs(d) < tolerance)
         {
             // Test the distance along the ray
             var t = (point - origin) * normal;
