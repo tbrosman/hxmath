@@ -150,8 +150,8 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     {
         return new Matrix2x2(
             m.a * n.a + m.c * n.b,  // p_00 = m_i0 * n_0i
-            m.a * n.c + m.c * n.d,  // p_10 = m_i0 * n_1i
-            m.b * n.a + m.d * n.b,  // p_01 = m_i1 * n_0i
+            m.b * n.a + m.d * n.b,  // p_10 = m_i1 * n_0i
+            m.a * n.c + m.c * n.d,  // p_01 = m_i0 * n_1i
             m.b * n.c + m.d * n.d); // p_11 = m_i1 * n_1i
     }
     
