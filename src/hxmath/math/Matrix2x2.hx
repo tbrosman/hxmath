@@ -68,7 +68,7 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     /**
      * Constructor.
      * 
-     * Note: parameters are in row-major order for syntactic niceness.
+     * Note: parameters are in column-major order.
      * 
      * @param a     m00
      * @param b     m01
@@ -386,7 +386,7 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     
     /**
      * Get an element by position.
-     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * The implicit array is column-major (e.g. element 2 is the first element of the second column).
      * 
      * @param i         The element index.
      * @return          The element.
