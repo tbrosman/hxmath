@@ -741,8 +741,8 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
             dy = self.y - pivot.y;
         }
         
-        self.x = dx * cosAngle - dy * sinAngle;
-        self.y = dx * sinAngle + dy * cosAngle;
+        self.x = dx * cosAngle - dy * sinAngle + pivot.x;
+        self.y = dx * sinAngle + dy * cosAngle + pivot.y;
         
         return self;
     }
