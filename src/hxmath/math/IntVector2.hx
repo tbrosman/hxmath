@@ -222,11 +222,11 @@ abstract IntVector2(IntVector2Type) from IntVector2Type to IntVector2Type
     
     /**
      * Multiply a vector with a scalar in place.
-     * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i *= s
      */
+    @:op(A *= B)
     public inline function multiplyWith(s:Int):IntVector2
     {
         var self:IntVector2 = this;
@@ -239,11 +239,11 @@ abstract IntVector2(IntVector2Type) from IntVector2Type to IntVector2Type
     
     /**
      * Add a vector in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i += a_i
      */
+    @:op(A += B)
     public inline function addWith(a:IntVector2):IntVector2
     {
         var self:IntVector2 = this;
@@ -256,11 +256,11 @@ abstract IntVector2(IntVector2Type) from IntVector2Type to IntVector2Type
     
     /**
      * Subtract a vector in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i -= a_i
      */
+    @:op(A -= B)
     public inline function subtractWith(a:IntVector2):IntVector2
     {
         var self:IntVector2 = this;

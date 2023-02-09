@@ -363,11 +363,11 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     
     /**
      * Add a matrix in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_ij += a_ij
      */
+    @:op(A += B)
     public inline function addWith(a:Matrix4x4):Matrix4x4
     {
         var self:Matrix4x4 = this;
@@ -394,11 +394,11 @@ abstract Matrix4x4(Matrix4x4Type) from Matrix4x4Type to Matrix4x4Type
     
     /**
      * Subtract a matrix in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_ij -= a_ij
      */
+    @:op(A -= B)
     public inline function subtractWith(a:Matrix4x4):Matrix4x4
     {
         var self:Matrix4x4 = this;
