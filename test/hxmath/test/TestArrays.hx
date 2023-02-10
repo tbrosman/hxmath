@@ -3,14 +3,14 @@ package hxmath.test;
 import hxmath.ds.DenseArray2;
 import hxmath.ds.IArray2;
 import hxmath.ds.SparseArray2;
-import hxmath.math.ShortVector2;
 import hxmath.math.IntVector2;
+import hxmath.math.ShortVector2;
 
 /**
  * ...
  * @author TABIV
  */
-class TestDataStructures extends MathTestCase
+class TestArrays extends Test
 {
     public function new() 
     {
@@ -21,6 +21,8 @@ class TestDataStructures extends MathTestCase
     {
         var dense:IArray2<Dynamic> = new DenseArray2<Dynamic>(100, 100);
         var sparse:IArray2<Dynamic> = new SparseArray2<Dynamic>();
+        Assert.notNull(dense);
+        Assert.notNull(sparse);
     }
     
     public function testDenseArray2Resize()
@@ -31,24 +33,24 @@ class TestDataStructures extends MathTestCase
         var defaultValue:Int = -1;
         dense.resize(4, 2, defaultValue);
         
-        assertEquals(4, dense.width);
-        assertEquals(2, dense.height);
+        Assert.equals(4, dense.width);
+        Assert.equals(2, dense.height);
         
-        assertEquals(3, dense.get(0, 0));
-        assertEquals(5, dense.get(1, 0));
-        assertEquals(7, dense.get(0, 1));
-        assertEquals(11, dense.get(1, 1));
+        Assert.equals(3, dense.get(0, 0));
+        Assert.equals(5, dense.get(1, 0));
+        Assert.equals(7, dense.get(0, 1));
+        Assert.equals(11, dense.get(1, 1));
         
         // The value at the border should match the default provided to resize
-        assertEquals(defaultValue, dense.get(3, 1));
+        Assert.equals(defaultValue, dense.get(3, 1));
         
         dense.resize(2, 3, defaultValue);
         
-        assertEquals(2, dense.width);
-        assertEquals(3, dense.height);
+        Assert.equals(2, dense.width);
+        Assert.equals(3, dense.height);
         
-        assertEquals(3, dense.get(0, 0));
-        assertEquals(5, dense.get(1, 0));
+        Assert.equals(3, dense.get(0, 0));
+        Assert.equals(5, dense.get(1, 0));
     }
     
     public function testArray2Iterate()
@@ -57,13 +59,13 @@ class TestDataStructures extends MathTestCase
         setPrimesSquare(sparse);
         var dense = sparse.toDenseArray();
         
-        assertEquals(2, dense.width);
-        assertEquals(2, dense.height);
+        Assert.equals(2, dense.width);
+        Assert.equals(2, dense.height);
         
         var sparseSum = Lambda.fold(sparse, function(a, b) return a + b, 0);
         var denseSum = Lambda.fold(dense, function(a, b) return a + b, 0);
         
-        assertEquals(sparseSum, denseSum);
+        Assert.equals(sparseSum, denseSum);
     }
     
     public function testSparseArray2KeysIterate()
@@ -83,7 +85,7 @@ class TestDataStructures extends MathTestCase
             function(a:Int, b:Int) return sparse.get(cast(a, ShortVector2).x, cast(a, ShortVector2).y) + b,
             0);
         
-        assertEquals(sparseSum1, sparseSum2);
+        Assert.equals(sparseSum1, sparseSum2);
     }
     
     public function testSparseArray2OrderedKeysIterate()
@@ -100,14 +102,20 @@ class TestDataStructures extends MathTestCase
         
         var lastX:Int = -1;
         var lastY:Int = -1;
+        var outOfOrderCount:Int = 0;
         
         // Keys should be monotonically increasing
         for (key in sparse.orderedKeys)
         {
-            assertTrue(key.x > lastX || key.y > lastY);
+            if(key.x <= lastX && key.y <= lastY)
+            {
+                outOfOrderCount++;
+            }
             lastX = key.x;
             lastY = key.y;
         }
+        
+        Assert.equals(0, outOfOrderCount);
     }
     
     public function testBlit()
@@ -152,23 +160,20 @@ class TestDataStructures extends MathTestCase
             
             var actualOverlap = sum(target);
             
-            if (actualOverlap != blitCase.overlap)
-            {
-                trace('Broken on case $key: expected overlap = ${blitCase.overlap}, actual overlap = $actualOverlap');
-                assertFalse(true);
-            }
+            Assert.equals(blitCase.overlap, actualOverlap,
+                'Broken on case $key: expected overlap = ${blitCase.overlap}, actual overlap = $actualOverlap');
         }
     }
     
     public function testSparseArray2IndexBounds()
     {
         var min:ShortVector2 = new ShortVector2(0, 0);
-        assertEquals(0, min.x);
-        assertEquals(0, min.y);
+        Assert.equals(0, min.x);
+        Assert.equals(0, min.y);
         
         var max:ShortVector2 = new ShortVector2(ShortVector2.fieldMax, ShortVector2.fieldMax);
-        assertEquals(ShortVector2.fieldMax, max.x);
-        assertEquals(ShortVector2.fieldMax, max.y);
+        Assert.equals(ShortVector2.fieldMax, max.x);
+        Assert.equals(ShortVector2.fieldMax, max.y);
     }
     
     public function testDenseArray2FromNestedRectangularArray()
@@ -179,20 +184,20 @@ class TestDataStructures extends MathTestCase
         ];
         
         var result = DenseArray2.fromNestedArray(rectangularArray);
-        assertEquals(3, result.width);
-        assertEquals(2, result.height);
-        assertEquals(5, result.get(2, 1));
+        Assert.equals(3, result.width);
+        Assert.equals(2, result.height);
+        Assert.equals(5, result.get(2, 1));
     }
     
     public function testGetByKey()
     {
         var denseArray = new DenseArray2<Int>(3, 3);
         denseArray.set(1, 2, 3);
-        assertEquals(3, denseArray.getByKey(new ShortVector2(1, 2)));
+        Assert.equals(3, denseArray.getByKey(new ShortVector2(1, 2)));
         
         var sparseArray = new SparseArray2<Int>();
         sparseArray.set(1, 2, 3);
-        assertEquals(3, sparseArray.getByKey(new ShortVector2(1, 2)));
+        Assert.equals(3, sparseArray.getByKey(new ShortVector2(1, 2)));
     }
     
     public function testDenseKeysIterator()
@@ -208,7 +213,7 @@ class TestDataStructures extends MathTestCase
         {
             var sourceElement = initialArray[key.y][key.x];
             var targetElement = denseArray.getByKey(key);
-            assertEquals(sourceElement, targetElement);
+            Assert.equals(sourceElement, targetElement);
         }
     }
     
@@ -242,13 +247,13 @@ class TestDataStructures extends MathTestCase
         // Dense -> Sparse: Domain is a (potentially improper) subset of codomain
         for (key in denseA.keys)
         {
-            assertEquals(denseA.getByKey(key), sparseB.getByKey(key));
+            Assert.equals(denseA.getByKey(key), sparseB.getByKey(key));
         }
         
         // Dense -> Sparse: Codomain is a (potentially improper) subset of domain
         for (key in sparseB.keys)
         {
-            assertEquals(sparseB.getByKey(key), denseA.getByKey(key));
+            Assert.equals(sparseB.getByKey(key), denseA.getByKey(key));
         }
         
         // Build a non-rectangular sparse array
@@ -265,7 +270,7 @@ class TestDataStructures extends MathTestCase
         // Sparse -> Dense: Domain is a (potentially improper) subset of codomain
         for (key in sparseC.keys)
         {
-            assertEquals(sparseC.getByKey(key), denseD.getByKey(key));
+            Assert.equals(sparseC.getByKey(key), denseD.getByKey(key));
         }
     }
     

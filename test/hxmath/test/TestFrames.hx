@@ -1,12 +1,150 @@
 package hxmath.test;
 
+import hxmath.math.MathUtil;
 import hxmath.frames.adapters.FlxSpriteFrame2;
 import hxmath.frames.Frame2;
-import hxmath.frames.Frame2Default;
 import hxmath.frames.Frame3;
 import hxmath.math.Quaternion;
 import hxmath.math.Vector2;
 import hxmath.math.Vector3;
+import hxmath.math.Vector4;
+
+class TestFrames extends Test
+{
+    public function testAdapters()
+    {
+        var dummySprite = new FlxObjectMock();
+        var frame:Frame2 = new FlxSpriteFrame2(dummySprite);
+        frame.offset = randomVector2();
+        frame.angleDegrees = randomFloat(90, 180);
+        
+        Assert.equals(dummySprite.x, frame.offset.x);
+        Assert.equals(dummySprite.y, frame.offset.y);
+        Assert.equals(dummySprite.angle, frame.angleDegrees);
+    }
+    
+    public function testConcat()
+    {
+        // 2D
+        var combined = new Frame2(new Vector2(1, 1), 90).concat(
+            new Frame2(new Vector2(1, 1), -90));
+        Assert.floatEquals(0, combined.offset.x);
+        Assert.floatEquals(2, combined.offset.y);
+        Assert.equals(0, combined.angleDegrees);
+        
+        MathAssert.floatEquals(new Vector2(0, 2), combined.transformFrom(Vector2.zero));
+        MathAssert.floatEquals(new Vector2(1, 2), combined.transformFrom(Vector2.xAxis));
+        MathAssert.floatEquals(new Vector2(0, 3), combined.transformFrom(Vector2.yAxis));
+        
+        // 3D
+        var combined = new Frame3(new Vector3(1, 1, 0), Quaternion.fromAxisAngle(90, Vector3.zAxis))
+            .concat(new Frame3(new Vector3(1, 1, 0), Quaternion.fromAxisAngle(-90, Vector3.zAxis)));
+        Assert.floatEquals(0, combined.offset.x);
+        Assert.floatEquals(2, combined.offset.y);
+        Assert.floatEquals(0, combined.offset.z);
+        
+        MathAssert.floatEquals(new Vector3(0, 2, 0), combined.transformFrom(Vector3.zero));
+        MathAssert.floatEquals(new Vector3(1, 2, 0), combined.transformFrom(Vector3.xAxis));
+        MathAssert.floatEquals(new Vector3(0, 3, 0), combined.transformFrom(Vector3.yAxis));
+    }
+    
+    public function testInverse()
+    {
+        // 2D
+        for (i in 0...10)
+        {
+            var frame = randomFrame2();
+            var inverse = frame.inverse();
+            var samplePoint = new Vector2(1, 1);
+            
+            var results = [
+                MathAssert.floatEquals(Vector2.zero, frame.concat(inverse).offset),
+                Assert.floatEquals(0.0, frame.concat(inverse).angleDegrees),
+                MathAssert.floatEquals(frame.matrix.applyInvertFrame() * samplePoint,
+                    inverse.matrix * samplePoint)
+            ];
+            
+            if (results.contains(false))
+            {
+                trace('Iteration #$i: $frame');
+            }
+        }
+        
+        // 3D
+        for (i in 0...10)
+        {
+            var frame = randomFrame3();
+            var inverse = frame.inverse();
+            var samplePoint = new Vector4(1, 1, 1, 1);
+            
+            var results = [
+                MathAssert.floatEquals(Vector3.zero, frame.concat(inverse).offset),
+                MathAssert.floatEquals(Quaternion.identity, frame.concat(inverse).orientation),
+                MathAssert.floatEquals(frame.matrix.applyInvertFrame() * samplePoint,
+                        inverse.matrix * samplePoint)
+            ];
+            
+            if (results.contains(false))
+            {
+                trace('Iteration #$i: $frame');
+            }
+        }
+    }
+    
+    public function testLerp()
+    {
+        var cos30 = Math.cos(Math.PI / 6);
+        var sin30 = Math.sin(Math.PI / 6);
+        
+        // 2D
+        var frameA = new Frame2(new Vector2(0, 0), 330);
+        var frameB = new Frame2(new Vector2(8, 4), 90);
+        
+        MathAssert.floatEquals(new Vector2(2 + 1, 1 + 0),
+            Frame2.lerp(frameA, frameB, 0.25).transformFrom(Vector2.xAxis));
+        MathAssert.floatEquals(new Vector2(4 + cos30, 2 + sin30),
+            Frame2.lerp(frameA, frameB, 0.5).transformFrom(Vector2.xAxis));
+        
+        // 3D
+        var frameA = new Frame3(new Vector3(0, 0, 0), Quaternion.fromAxisAngle(-30, Vector3.zAxis));
+        var frameB = new Frame3(new Vector3(8, 4, 0), Quaternion.fromAxisAngle(90, Vector3.zAxis));
+        frameA.orientation.normalize();
+        frameB.orientation.normalize();
+        
+        // Allow for error in `Quaternion.lerp()`.
+        MathAssert.floatEquals(new Vector3(2 + 1, 1 + 0, 0),
+            Frame3.lerp(frameA, frameB, 0.25).transformFrom(Vector3.xAxis),
+            0.3);
+        MathAssert.floatEquals(new Vector3(4 + cos30, 2 + sin30, 0),
+            Frame3.lerp(frameA, frameB, 0.5).transformFrom(Vector3.xAxis),
+            0.3);
+    }
+    
+    public function testLinearTransform()
+    {
+        var frame = new Frame2(new Vector2(1.0, 1.0), 90.0);
+        var point = new Vector2(1.0, 2.0);
+        
+        MathAssert.floatEquals(new Vector2(-2.0, 1.0), frame.linearTransformFrom(point));
+        MathAssert.floatEquals(new Vector2(-1.0, 2.0), frame.transformFrom(point));
+        
+        MathAssert.floatEquals(new Vector2(2.0, -1.0), frame.linearTransformTo(point));
+        MathAssert.floatEquals(new Vector2(1.0, 0.0), frame.transformTo(point));
+    }
+    
+    public function testToString()
+    {
+        // 2D
+        var frame2 = new Frame2(new Vector2(23.0, 0.0), 42.0);
+        Assert.isTrue('$frame2'.indexOf("23") != -1);
+        Assert.isTrue('$frame2'.indexOf("42") != -1);
+        
+        // 3D
+        var frame3 = new Frame3(new Vector3(23.0, 0.0, 0.0), new Quaternion(42.0, 0.0, 0.0, 0.0));
+        Assert.isTrue('$frame3'.indexOf("23") != -1);
+        Assert.isTrue('$frame3'.indexOf("42") != -1);
+    }
+}
 
 class FlxObjectMock
 {
@@ -31,159 +169,5 @@ class FlxObjectMock
     private function set_angle(angle:Float):Float
     {
         return this.angle = angle;
-    }
-}
-
-class TestFrames extends MathTestCase
-{
-    public function testFrame2Concat()
-    {
-        // T(1, 1) * R(90 degrees)
-        // [ 0 -1 | 1 ]
-        // [ 1  0 | 1 ]
-        var originA = new Vector2(1.0, 1.0);
-        var a = new Frame2(originA, 90.0);
-
-        // T(1, 0) * R(90 degrees)
-        // [ 0 -1 | 1 ]
-        // [ 1  0 | 0 ]
-        var originB = new Vector2(1.0, 0.0);
-        var b = new Frame2(originB, 90.0);
-
-        // T(1, 2) * R(180 degrees)
-        // [ -1  0  | 1 ]
-        // [  0  -1 | 2 ]
-        var c = a.concat(b);
-        
-        // (R(90) * (1, 0)) + originA = (0, 1) + originA
-        var bOffsetInA = new Vector2(1.0, 2.0);
-        assertTrue(a.transformFrom(b.offset) == bOffsetInA);
-        assertTrue(c.offset == bOffsetInA);
-        assertEquals(c.angleDegrees, 180.0);
-        
-        // Should just give the offset point
-        assertTrue(c.matrix * Vector2.zero == bOffsetInA);
-    }
-    
-    public function testFrame3Concat()
-    {
-        var originA = new Vector3(1.0, 1.0, 0.0);
-        var a = new Frame3(originA, Quaternion.fromAxisAngle(90.0, Vector3.zAxis));
-        var b = new Frame3(Vector3.xAxis, Quaternion.fromAxisAngle(90.0, Vector3.zAxis));
-        var c = a.concat(b);
-        
-        assertApproxEquals(0.0, (a.transformFrom(b.offset) - (Vector3.yAxis + originA)).length);
-        
-        // (R(90) * xAxis) + originA = yAxis + originA
-        assertApproxEquals(0.0, (c.offset - (Vector3.yAxis + originA)).length);
-        
-        // R(90, z) * R(90, z) should be orthogonal to identity
-        assertApproxEquals(0.0, Quaternion.dot(c.orientation, Quaternion.identity));
-        
-        // Should just give the offset point
-        assertApproxEquals(0.0, (c.transformFrom(Vector3.zero) - (Vector3.yAxis + originA)).length);
-    }
-    
-    public function testFrame2LinearAffineTransform()
-    {
-        /*
-         *    test
-         * 2_|.
-         *   |   |
-         * 1_|_ _a
-         *   |
-         * 0_.- - - -
-         *  0|  1|
-         */
-        
-        var originA = new Vector2(1.0, 1.0);
-        var a = new Frame2(originA, 90.0);
-        
-        var testInA = new Vector2(1.0, 1.0);
-        
-        // Vector test_a -> test_world
-        var testLinearInOuter = a.linearTransformFrom(testInA);
-        var expectedLinearResult = new Vector2(-1.0, 1.0);
-        assertApproxEquals((testLinearInOuter - expectedLinearResult).length, 0.0);
-        
-        // Point test_a -> test_world
-        var testAffineInOuter = a.transformFrom(testInA);
-        var expectedAffineResult = expectedLinearResult + originA;
-        assertApproxEquals((testAffineInOuter - expectedAffineResult).length, 0.0);
-        
-        // Vector test_world -> test_a
-        var testLinearBackToInner = a.linearTransformTo(testLinearInOuter);
-        assertApproxEquals((testLinearBackToInner - testInA).length, 0.0);
-        
-        // Point test_world -> test_a 
-        var testAffineBackToInner = a.transformTo(testAffineInOuter);
-        assertApproxEquals((testAffineBackToInner - testInA).length, 0.0);
-    }
-    
-    public function testFrame2Inverse()
-    {
-        var originA = new Vector2(1.0, 1.0);
-        var a = new Frame2(originA, 90.0);
-
-        var aInv = a.inverse();
-        
-        // The following properties must hold:
-        // - Frames commute with their inverses (A^-1 * A == A * A^-1 == I, i.e. no unique left vs. right inverses)
-        // - The identity for a frame is an offset of (0, 0) with a rotation of 0 degrees.
-        assertApproxEquals((a.concat(aInv).offset - Vector2.zero).length, 0.0);
-        assertApproxEquals((aInv.concat(a).offset - Vector2.zero).length, 0.0);
-        assertApproxEquals(a.concat(aInv).angleDegrees, 0.0);
-        assertApproxEquals(aInv.concat(a).angleDegrees, 0.0);
-    }
-    
-    public function testFlxSpriteFrame2()
-    {
-        var dummySprite = new FlxObjectMock();
-        var frame:Frame2 = new FlxSpriteFrame2(dummySprite);
-        frame.offset = Vector2.zero;
-        frame.angleDegrees = 90;
-        
-        assertEquals(frame.offset.x, dummySprite.x);
-        assertEquals(frame.offset.y, dummySprite.y);
-        assertEquals(frame.angleDegrees, dummySprite.angle);
-    }
-    
-    public function testLerpFrame2()
-    {
-        var frameA = new Frame2(new Vector2(1.0, 0.0), 330.0);
-        var frameB = new Frame2(new Vector2(0.0, 1.0), 60.0);
-        
-        // Lerping from either direction should be equivalent at t = 0.5
-        var frameC = Frame2.lerp(frameA, frameB, 0.5);
-        var frameC2 = Frame2.lerp(frameB, frameA, 0.5);
-        assertApproxEquals((frameC.offset - new Vector2(0.5, 0.5)).length, 0.0);
-        assertApproxEquals(frameC.angleDegrees, 15.0);
-        assertApproxEquals((frameC2.offset - new Vector2(0.5, 0.5)).length, 0.0);
-        assertApproxEquals(frameC2.angleDegrees, 15.0);
-        
-        var frameD = Frame2.lerp(frameA, frameB, 1.0 / 3.0);
-        var frameD2 = Frame2.lerp(frameB, frameA, 2.0 / 3.0);
-        assertApproxEquals((frameD.offset - new Vector2(2.0 / 3.0, 1.0 / 3.0)).length, 0.0);
-        assertApproxEquals(frameD.angleDegrees, 0.0);
-        assertApproxEquals((frameD2.offset - new Vector2(2.0 / 3.0, 1.0 / 3.0)).length, 0.0);
-        assertApproxEquals(frameD2.angleDegrees, 0.0);
-        
-        var frameE = Frame2.lerp(frameA, frameB, 2.0 / 3.0);
-        var frameE2 = Frame2.lerp(frameB, frameA, 1.0 / 3.0);
-        assertApproxEquals((frameE.offset - new Vector2(1.0 / 3.0, 2.0 / 3.0)).length, 0.0);
-        assertApproxEquals(frameE.angleDegrees, 30.0);
-        assertApproxEquals((frameE2.offset - new Vector2(1.0 / 3.0, 2.0 / 3.0)).length, 0.0);
-        assertApproxEquals(frameE2.angleDegrees, 30.0);
-    }
-    
-    public function testFramesHaveToString()
-    {
-        var frame2 = new Frame2(new Vector2(23.0, 0.0), 42.0);
-        assertTrue('$frame2'.indexOf("23") != -1);
-        assertTrue('$frame2'.indexOf("42") != -1);
-        
-        var frame3 = new Frame3(new Vector3(23.0, 0.0, 0.0), new Quaternion(42.0, 0.0, 0.0, 0.0));
-        assertTrue('$frame3'.indexOf("23") != -1);
-        assertTrue('$frame3'.indexOf("42") != -1);
     }
 }

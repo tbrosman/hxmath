@@ -413,7 +413,7 @@ abstract Matrix2x2(Matrix2x2Type) from Matrix2x2Type to Matrix2x2Type
     
     /**
      * Set an element by position.
-     * The implicit array is row-major (e.g. element (column count) + 1 is the first element of the second row).
+     * The implicit array is column-major (e.g. element 2 is the first element of the second column).
      * 
      * @param i         The element index.
      * @param value     The new value.

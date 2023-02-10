@@ -5,7 +5,7 @@ import hxmath.math.Matrix3x3;
 import hxmath.math.Matrix4x4;
 import hxmath.math.Vector2;
 
-class TestStress extends MathTestCase
+class TestStress extends Test
 {
     public function testDotProduct()
     {
@@ -36,7 +36,7 @@ class TestStress extends MathTestCase
         }
         var time2End = Sys.cpuTime();
         
-        assertEquals(sum1, sum2);
+        Assert.equals(sum1, sum2);
         
         var time1 = time1End - time1Start;
         var time2 = time2End - time2Start;
@@ -106,7 +106,7 @@ class TestStress extends MathTestCase
         }
         var time2End = Sys.cpuTime();
         
-        assertEquals(sum1, sum2);
+        Assert.equals(sum1, sum2);
         
         var time1 = time1End - time1Start;
         var time2 = time2End - time2Start;
@@ -147,7 +147,7 @@ class TestStress extends MathTestCase
         }
         var classTimeEnd = Sys.cpuTime();
         
-        assertEquals(sum1, sum2);
+        Assert.equals(sum1, sum2);
         
         var abstractTime = abstractTimeEnd - abstractTimeStart;
         var classTime = classTimeEnd - classTimeStart;
@@ -200,7 +200,7 @@ class TestStress extends MathTestCase
         }
         var classTimeEnd = Sys.cpuTime();
         
-        assertEquals(sum1, sum2);
+        Assert.equals(sum1, sum2);
         
         var abstractTime = abstractTimeEnd - abstractTimeStart;
         var classTime = classTimeEnd - classTimeStart;
