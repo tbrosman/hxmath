@@ -345,11 +345,11 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     
     /**
      * Multiply a vector with a scalar in place.
-     * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i *= s
      */
+    @:op(A *= B)
     public inline function multiplyWith(s:Float):Vector2
     {
         var self:Vector2 = this;
@@ -362,11 +362,11 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     
     /**
      * Divide a vector by a scalar in place.
-     * Note: /= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i /= s
      */
+    @:op(A /= B)
     public inline function divideWith(s:Float):Vector2
     {
         var self:Vector2 = this;
@@ -379,11 +379,11 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     
     /**
      * Add a vector in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i += a_i
      */
+    @:op(A += B)
     public inline function addWith(a:Vector2):Vector2
     {
         var self:Vector2 = this;
@@ -396,11 +396,11 @@ abstract Vector2(Vector2Type) from Vector2Type to Vector2Type
     
     /**
      * Subtract a vector in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i -= a_i
      */
+    @:op(A -= B)
     public inline function subtractWith(a:Vector2):Vector2
     {
         var self:Vector2 = this;

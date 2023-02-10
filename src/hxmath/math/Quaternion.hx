@@ -310,11 +310,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     
     /**
      * Multiply a quaternion with a scalar in place.
-     * Note: *= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i *= s
      */
+    @:op(A *= B)
     public inline function multiplyWithScalar(s:Float):Quaternion
     {
         var self:Quaternion = this;
@@ -329,11 +329,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     
     /**
      * Add a quaternion in place.
-     * Note: += operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i += a_i
      */
+    @:op(A += B)
     public inline function addWith(a:Quaternion):Quaternion
     {
         var self:Quaternion = this;
@@ -348,11 +348,11 @@ abstract Quaternion(QuaternionType) from QuaternionType to QuaternionType
     
     /**
      * Subtract a quaternion in place.
-     * Note: -= operator on Haxe abstracts does not behave this way (a new object is returned).
      * 
      * @param a
      * @return      self_i -= a_i
      */
+    @:op(A -= B)
     public inline function subtractWith(a:Quaternion):Quaternion
     {
         var self:Quaternion = this;
